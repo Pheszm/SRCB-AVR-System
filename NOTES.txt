@@ -1,0 +1,10 @@
+CREATE PROJECT:
+npx create-next-app@latest
+
+
+MAP:
+npm install react-leaflet leaflet
+
+
+BOOTSTRAP:
+npm install bootstrap
