@@ -30,7 +30,7 @@ export default function Home() {
             <a href="#about">About</a>
           </li>
           <li>
-            <a href="#services">Services</a>
+            <a href="#features">Features</a>
           </li>
           <li>
             <a href="#team">Team</a>
@@ -69,7 +69,7 @@ export default function Home() {
                 Get Started
               </a>
               <a
-                href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
+                href="https://www.youtube.com/watch?v=aRQgMVM-p9s&t=30s"
                 className="glightbox btn-watch-video d-flex align-items-center text-decoration-none"
               >
                 <i className="bi bi-play-circle" />
@@ -102,54 +102,55 @@ export default function Home() {
       {/* End Section Title */}
       <div className="container">
         <div className="row gy-4">
+            <div className="col-lg-6" >
+            <p>
+            Welcome to St. Rita’s College of Balingasag! We are dedicated to empowering students through innovative education in Information Technology. Our project aims to revolutionize inventory management for AVR Inventory Coordinator, streamlining processes with real-time tracking and enhanced data organization. Join us on our journey to improve operational efficiency and support informed decision-making in today's fast-paced business environment.{" "}
+            </p>
+            <a href="#" className="read-more text-decoration-none ">
+              <span>Login Now</span>
+              <i className="bi bi-arrow-up" />
+            </a>
+          </div>
+
           <div
             className="col-lg-6 content"
-
           >
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Design and develop a comprehensive reservation and inventory management system for AVR Inventory Coordinator.
             </p>
             <ul>
               <li>
                 <i className="bi bi-check2-circle" />{" "}
                 <span>
-                  Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Availability of necessary resources.
                 </span>
               </li>
               <li>
                 <i className="bi bi-check2-circle" />{" "}
                 <span>
-                  Duis aute irure dolor in reprehenderit in voluptate velit.
+                  Established security measures.
                 </span>
               </li>
               <li>
                 <i className="bi bi-check2-circle" />{" "}
-                <span>Ullamco laboris nisi ut aliquip ex ea commodo</span>
+                <span>
+                  Accuracy of provided data.
+                </span>
               </li>
             </ul>
           </div>
-          <div className="col-lg-6" >
-            <p>
-            Welcome to St. Rita’s College of Balingasag! We are dedicated to empowering students through innovative education in Information Technology. Our project aims to revolutionize inventory management for AVR Inventory Coordinator, streamlining processes with real-time tracking and enhanced data organization. Join us on our journey to improve operational efficiency and support informed decision-making in today's fast-paced business environment.{" "}
-            </p>
-            <a href="#" className="read-more text-decoration-none ">
-              <span>Read More</span>
-              <i className="bi bi-arrow-right" />
-            </a>
-          </div>
+
         </div>
       </div>
     </section>
     {/* /About Section */}
-    {/* Services Section */}
-    <section id="services" className="services section light-background">
+    {/* Features Section */}
+    <section id="features" className="services section light-background">
       {/* Section Title */}
       <div className="container section-title" >
-        <h2>Services</h2>
+        <h2>Features</h2>
         <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
+        Our platform offers easy navigation, useful tools, and personalized options to help you work more efficiently. See how our features can support your needs and make your tasks easier.
         </p>
       </div>
       {/* End Section Title */}
@@ -159,16 +160,15 @@ export default function Home() {
             className="col-xl-3 col-md-6 d-flex">
             <div className="service-item position-relative">
               <div className="icon">
-                <i className="bi bi-activity icon" />
+                <i className="bi bi-qr-code-scan icon" />
               </div>
               <h4>
                 <a href="" className="stretched-link text-decoration-none">
-                  Lorem Ipsum
+                QR Integration
                 </a>
               </h4>
               <p>
-                Voluptatum deleniti atque corrupti quos dolores et quas
-                molestias excepturi
+              Easily create and scan QR codes for quick access to information and promotions.
               </p>
             </div>
           </div>
@@ -179,16 +179,15 @@ export default function Home() {
           >
             <div className="service-item position-relative">
               <div className="icon">
-                <i className="bi bi-bounding-box-circles icon" />
+                <i className="bi bi-calendar-check icon" />
               </div>
               <h4>
                 <a href="" className="stretched-link text-decoration-none">
-                  Sed ut perspici
+                Reservation System
                 </a>
               </h4>
               <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore
+              Effortlessly book and manage reservations in real time for a smooth experience.
               </p>
             </div>
           </div>
@@ -199,16 +198,15 @@ export default function Home() {
           >
             <div className="service-item position-relative">
               <div className="icon">
-                <i className="bi bi-calendar4-week icon" />
+                <i className="bi bi-box icon" />
               </div>
               <h4>
                 <a href="" className="stretched-link text-decoration-none">
-                  Magni Dolores
+                  Inventory Management
                 </a>
               </h4>
               <p>
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                qui officia
+              Keep track of your stock easily and stay organized in real time.
               </p>
             </div>
           </div>
@@ -219,16 +217,15 @@ export default function Home() {
           >
             <div className="service-item position-relative">
               <div className="icon">
-                <i className="bi bi-broadcast icon" />
+                <i className="bi bi-bar-chart icon" />
               </div>
               <h4>
                 <a href="" className="stretched-link text-decoration-none">
-                  Nemo Enim
+                  Reporting Features
                 </a>
               </h4>
               <p>
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                blanditiis
+              Get clear reports to help you understand data and make better decisions.
               </p>
             </div>
           </div>
@@ -248,10 +245,7 @@ export default function Home() {
           <div className="col-xl-9 text-center text-xl-start">
             <h3>Call To Action</h3>
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
+            Get started today! Log in to access all our features and make the most of your experience. Everything you need is just a click away. Don’t wait—dive in and see how we can support your success!
             </p>
           </div>
           <div className="col-xl-3 cta-btn-container text-center">
@@ -270,8 +264,7 @@ export default function Home() {
       <div className="container section-title">
         <h2>PROJECT TEAM</h2>
         <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
+          A dedicated group of students working collaboratively to achieve project goals and deliver successful outcomes.
         </p>
       </div>
       {/* End Section Title */}
@@ -290,16 +283,16 @@ export default function Home() {
                 <h4>Carl Wyne S. Gallardo</h4>
                 <span>Developer</span>
                 <p>
-                  Explicabo voluptatem mollitia et repellat qui dolorum quasi
+                A skilled developer committed to delivering innovative solutions and enhancing user experiences.
                 </p>
                 <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
+                  <a href="" target="_blank">
+                    <i className="bi bi-github" />
                   </a>
-                  <a href="">
+                  <a href="https://www.facebook.com/carlwyne.gallardo.9" target="_blank">
                     <i className="bi bi-facebook" />
                   </a>
-                  <a href="">
+                  <a href="https://www.instagram.com/pheszm/" target="_blank">
                     <i className="bi bi-instagram" />
                   </a>
 
@@ -321,16 +314,16 @@ export default function Home() {
                 <h4>Pamel T. Naypa</h4>
                 <span>Project Manager</span>
                 <p>
-                  Aut maiores voluptates amet et quis praesentium qui senda para
+                  An experienced project manager focused on leading teams, ensuring timely delivery, and achieving project goals.
                 </p>
                 <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
+                  <a href="" target="_blank">
+                    <i className="bi bi-github" />
                   </a>
-                  <a href="">
+                  <a href="https://www.facebook.com/pamel14.naypa" target="_blank">
                     <i className="bi bi-facebook" />
                   </a>
-                  <a href="">
+                  <a href="" target="_blank">
                     <i className="bi bi-instagram" />
                   </a>
 
@@ -349,19 +342,19 @@ export default function Home() {
                 />
               </div>
               <div className="member-info">
-                <h4>NAME</h4>
+                <h4>Joshua B. Salan</h4>
                 <span>Project Analyst</span>
                 <p>
-                  Quisquam facilis cum velit laborum corrupti fuga rerum quia
+                A detail-oriented project analyst dedicated to assessing project performance and providing insights for improvement.
                 </p>
                 <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
+                  <a href="" target="_blank">
+                    <i className="bi bi-github" />
                   </a>
-                  <a href="">
+                  <a href="" target="_blank">
                     <i className="bi bi-facebook" />
                   </a>
-                  <a href="">
+                  <a href="" target="_blank">
                     <i className="bi bi-instagram" />
                   </a>
 
@@ -386,13 +379,13 @@ export default function Home() {
                   Dolorum tempora officiis odit laborum officiis et et accusamus
                 </p>
                 <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
+                  <a href="" target="_blank">
+                    <i className="bi bi-github" />
                   </a>
-                  <a href="">
+                  <a href="" target="_blank">
                     <i className="bi bi-facebook" />
                   </a>
-                  <a href="">
+                  <a href="" target="_blank">
                     <i className="bi bi-instagram" />
                   </a>
 
@@ -424,8 +417,7 @@ export default function Home() {
       <div className="container section-title" >
         <h2>Contact</h2>
         <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
+        We’re here to help! Reach out with any questions or feedback, and our team will get back to you as soon as possible. Your input is important to us!
         </p>
       </div>
       {/* End Section Title */}
@@ -554,7 +546,7 @@ export default function Home() {
     <div className="container footer-top">
       <div className="row gy-4">
         <div className="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" className="d-flex align-items-center">
+          <a href="https://www.facebook.com/groups/290298278641236" target="_blank" className="d-flex align-items-center">
             <span className="sitename">SRCB BSIT</span>
           </a>
           <div className="footer-contact pt-3">
@@ -572,48 +564,47 @@ export default function Home() {
           <h4>Useful Links</h4>
           <ul>
             <li>
-              <i className="bi bi-chevron-right" /> <a href="#">Home</a>
+              <i className="bi bi-chevron-right" /> <a href="#hero">Home</a>
             </li>
             <li>
-              <i className="bi bi-chevron-right" /> <a href="#">About us</a>
+              <i className="bi bi-chevron-right" /> <a href="#about">About us</a>
             </li>
             <li>
-              <i className="bi bi-chevron-right" /> <a href="#">Services</a>
+              <i className="bi bi-chevron-right" /> <a href="#features">Features</a>
             </li>
             <li>
               <i className="bi bi-chevron-right" />{" "}
-              <a href="#">Terms of service</a>
+              <a href="#team">Team</a>
             </li>
           </ul>
         </div>
         <div className="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
+          <h4>Features</h4>
           <ul>
             <li>
-              <i className="bi bi-chevron-right" /> <a href="#">Web Design</a>
+              <i className="bi bi-chevron-right" /> <a href="#">QR Integration</a>
             </li>
             <li>
               <i className="bi bi-chevron-right" />{" "}
-              <a href="#">Web Development</a>
+              <a href="#">Reservation System</a>
             </li>
             <li>
               <i className="bi bi-chevron-right" />{" "}
-              <a href="#">Product Management</a>
+              <a href="#">Inventory Management</a>
             </li>
             <li>
-              <i className="bi bi-chevron-right" /> <a href="#">Marketing</a>
+              <i className="bi bi-chevron-right" /> <a href="#">Reporting Features</a>
             </li>
           </ul>
         </div>
         <div className="col-lg-4 col-md-12">
           <h4>Follow Us</h4>
           <p>
-            Cras fermentum odio eu feugiat lide par naso tierra videa magna
-            derita valies
+            Stay connected! Follow us for updates, news, and insights.
           </p>
           <div className="social-links d-flex">
 
-            <a href="">
+            <a href="https://www.facebook.com/srcbofficial" target="_blank">
               <i className="bi bi-facebook" />
             </a>
             <a href="">
