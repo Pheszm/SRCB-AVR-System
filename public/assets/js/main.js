@@ -15,7 +15,7 @@ const header = document.getElementById('header');
 // Function to change background color when user scrolls
 window.addEventListener('scroll', function() {
   if (window.scrollY > 50) { // Change 50 to your desired scroll threshold
-    header.style.backgroundColor = 'rgba(15, 40, 89, 0.92)';
+    header.style.backgroundColor = 'rgba(15, 40, 89, 0.9)';
   } else {
     header.style.backgroundColor = ''; // Reset to original color
   }

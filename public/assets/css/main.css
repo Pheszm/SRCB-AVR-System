@@ -92,6 +92,10 @@ h6 {
   font-family: var(--heading-font);
 }
 
+#loginadminbutton{
+  background-color: var(--accent-color);
+}
+
 /* PHP Email Form Messages
 ------------------------------*/
 .php-email-form .error-message {
@@ -207,6 +211,23 @@ h6 {
   .header .navmenu {
     order: 3;
   }
+}
+
+
+/* Modal Shifts to left. Fixed
+------------------------------*/
+.modal {
+  overflow-y: auto;
+}
+.modal-open { 
+  overflow: auto; padding-right: 0px !important;
+}
+
+
+
+#hero{
+  height: 100vh;
+  background-size: cover;
 }
 
 /* Index Page Header

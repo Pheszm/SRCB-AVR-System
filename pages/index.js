@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-
+import LoginForm from '../components/AdminLoginForm';
 
 export default function Home() {
 
@@ -41,7 +41,9 @@ export default function Home() {
         </ul>
         <i className="mobile-nav-toggle d-xl-none bi bi-list" />
       </nav>
-      <a className="btn-getstarted text-decoration-none" href="#hero">
+      <a className="btn-getstarted text-decoration-none"
+      data-bs-toggle="modal"
+      data-bs-target="#loginModal">
         Login
       </a>
     </div>
@@ -92,6 +94,38 @@ export default function Home() {
       </div>
     </section>
     {/* /Hero Section */}
+
+
+    {/* LOGIN FORM */}
+
+      {/* Modal structure */}
+      <div className="modal fade" id="loginModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="false">
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+            <h4 className="modal-title text-center" id="loginModalLabel">Login</h4>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <div className="row">
+                <div className="col-md-5">
+                  <img src="assets/img/why-us.png" alt="Description" className="img-fluid"/>
+                </div>
+                <div className="col-md-7">
+                  <h4 className="text-center">Admin Login</h4>
+                <LoginForm />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    {/* /LOGIN FORM */}
+
 
     {/* About Section */}
     <section id="about" className="about section">
@@ -239,7 +273,7 @@ export default function Home() {
       id="call-to-action"
       className="call-to-action section dark-background"
     >
-      <img src="assets/img/cta-bg.jpg" alt="" />
+      <img src="assets/img/CallToActionImage.png" alt="" />
       <div className="container">
         <div className="row">
           <div className="col-xl-9 text-center text-xl-start">
