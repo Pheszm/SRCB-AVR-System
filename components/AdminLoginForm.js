@@ -16,6 +16,10 @@ const LoginForm = () => {
     }
   };
 
+  function LoginProcess() {
+    window.location.href = '/Coordinatorpage'; 
+  }
+
   return (
     <div>
       
@@ -45,7 +49,7 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button type="submit" id="loginadminbutton" className="btn btn-primary w-100">Login</button>
+        <button type="submit" id="loginadminbutton" className="btn btn-primary w-100" onClick={LoginProcess}>Login</button>
       </form>
     </div>
   );
