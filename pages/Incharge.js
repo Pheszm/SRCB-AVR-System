@@ -39,7 +39,7 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
-        router.push('/');
+        router.replace('/');
     }
 
     return (
