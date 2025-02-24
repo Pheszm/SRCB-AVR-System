@@ -63,7 +63,7 @@ export default function Home() {
     <div className={styles.Gen_Background}>
       <div className={styles.mainForm}>
         <div className={styles.mainLogo}>
-          <img src="../public/Assets/Img/AVR_Logo_White.png" alt="Logo" />
+          <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
           <h2>SRCB</h2>
         </div>
         <h4>AVR Reservation & Management</h4>
