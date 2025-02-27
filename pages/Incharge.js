@@ -39,13 +39,14 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
-        router.prefetch('/');
+        router.push('/');
     }
 
     return (
         <div className={styles.Gen_Body}>
             <title>SRCB AVR | Incharge</title>
             {/* Sidebar */}
+            
             <aside className={`${styles.SidebarPart} ${isSidebarOpen ? styles.open : styles.closed}`}>   
                 <div className={styles.mainLogo}>
                     <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
@@ -65,7 +66,6 @@ export default function Incharge_Main() {
             {/* Right Side Area */}
             <div className={styles.RightSideArea}>
                 <header className={styles.HeaderPart}>
-                    
                     <button className={styles.BurgerIcon} onClick={toggleSidebar}><AiIcons.AiOutlineMenu size={30} /></button>
                     
                     <div className={styles.HeaderProfilePart}>
@@ -80,7 +80,7 @@ export default function Incharge_Main() {
                             </div>
                         )}
                         <div className={styles.SeparationLine}></div>
-                        <p>Carl Wyne S. Gallardo</p>
+                        <p>Carlos Yulo</p>
                         <img onClick={handleProfileClick} className={IsProfileDropdown === true ? styles.ProfileOpened : ""} src="./Assets/Img/CarlProfilePicture.jpg"></img>  
                         {IsProfileDropdown && (
                             <div className={styles.DropdownMenu}>
