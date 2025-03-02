@@ -1,0 +1,201 @@
+
+
+
+
+/* ============================================
+MAIN BODY AREA
+============================================ */
+.Gen_Background {
+    background-image: url("../public/Assets/Img/Login_SRCB_BackgroundImg.png");
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: #727272;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    color: #fff;
+}
+
+
+
+
+/* ============================================
+LOGIN FORM
+============================================ */
+.mainForm{
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+.mainLogo{
+    display: flex;
+    align-items: center;
+}
+.mainLogo img{
+    width: 40px;
+}
+.mainLogo h2{
+    padding-left: 10px;
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.mainForm input {
+    background-color: transparent;
+    border: none;  
+    border-bottom: 1px solid #A3D5FF;
+    margin-top: 20px;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    color: #d4d4d4;
+}
+.mainForm input:focus {
+    border-bottom: 1px solid #007BFF;
+    outline: none; 
+    background-color: rgba(163, 213, 255, 0.05);
+    transition: border-bottom 0.3s ease-in-out;
+}
+.mainForm h4{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+.mainForm h3{
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.Login_btn{
+    font-weight: bold;
+    border: none;
+    background-color: #4591CF;
+    color: #fff;
+    width: 300px;
+    margin-top: 40px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out;
+}
+.Login_btn:focus,
+.Login_btn:hover {
+    background-color: #5eadef;
+    border: none;
+    outline: none;
+}
+
+.passwordContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.passwordContainer input {
+    flex: 1;
+    padding-right: 35px;
+}
+
+.eyeIcon {
+    position: absolute;
+    bottom: 1px;
+    right: 10px;
+    background: none;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.eyeIcon:focus,
+.eyeIcon:hover{
+    outline: none;
+    color: #5eadef;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1); 
+    transition: 0.2s ease-in-out;
+}
+
+.loginwithQR{
+    margin-top: 15px;
+    font-size: 12px;
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #007BFF;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.loginwithQR:hover,
+.loginwithQR:focus {
+    transform: scale(1.05); 
+    color: #d1e7ff;
+    border: none;
+    outline: none;
+}
+
+
+
+
+/* ============================================
+QR SCANNER AREA
+============================================ */
+.qrOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.qrScanner {
+    position: relative;
+    width: 350px;
+    max-width: 350px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.qrReader {
+    width: 100%;
+    height: auto;
+}
+
+.closeBtn {
+    background-color: transparent;
+    z-index: 10;
+    position: absolute;
+    font-size: 30px;
+    top: 20px;
+    right: 15px;
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.closeBtn:hover,
+.closeBtn:focus{
+    scale: 1.1;
+    color: #cfcfcf;
+}

@@ -13,7 +13,9 @@
 html,
 body {
   max-width: 100vw;
+  max-height: 100vh;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 body {
@@ -35,8 +37,17 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+
+
+
+#reader{
+  background-color: #ffffff;
+}
+#html5-qrcode-anchor-scan-type-change,
+#reader__dashboard_section{
+  color: #171717;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
 }
