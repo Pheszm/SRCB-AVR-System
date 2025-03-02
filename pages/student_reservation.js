@@ -12,7 +12,6 @@ export default function Home() {
     setSelectedPage(page);
   };
 
-  // Open or Close the QR Scanner
   const [isScanning, setIsScanning] = useState(false);
   const toggleScan = () => {
     setIsScanning(prev => !prev);
@@ -29,77 +28,111 @@ export default function Home() {
 
 
   const LoginProcess = () => {
-    // Design Presentation Muna
     router.push('/Incharge');
-
-
-    // If Deployed
-    const username = document.getElementById("UserN").value;
-    const password = document.getElementById("PassW").value;
-    const user = Users.find((user) => user.username === username && user.password === password);
-    if (user) {
-      console.log("User found:", user);
-      router.push('/Incharge');
-    } else {
-      console.log("User not found");
-    }
   };
 
   return (
     <div className={styles.Gen_Background}>
-      <div className={styles.ItemReservationForm}>
-        <div className={styles.mainLogo}>
-          <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
-          <h2>SRCB</h2>
-        </div>
-        <h4>AVR Reservation Reservation Form</h4>
+      <title>SRCB AVR | Student Reservation Form</title>
 
-        <div className={styles.SelectionDiv}>
-          <button className={selectedPage === "AVRITEMS" ? styles.active : ""} onClick={() => handlePageChange("AVRITEMS")}>AVR ITEM</button>
-          <button className={selectedPage === "AVRVENUE" ? styles.active : ""} onClick={() => handlePageChange("AVRVENUE")}>AVR VENUE</button>
+
+
+      <div className={styles.SecondBodyLayer}>
+        <div className={styles.ItemReservationForm}>
+          <div className={styles.mainLogo}>
+            <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
+            <h2>SRCB</h2>
           </div>
+          <h4>AVR Reservation Reservation Form</h4>
+
+          <div className={styles.SelectionDiv}>
+            <button className={selectedPage === "AVRITEMS" ? styles.active : ""} onClick={() => handlePageChange("AVRITEMS")}>AVR ITEM</button>
+            <button className={selectedPage === "AVRVENUE" ? styles.active : ""} onClick={() => handlePageChange("AVRVENUE")}>AVR VENUE</button>
+            </div>
 
 
-        {selectedPage === "AVRITEMS" && (
-          <div className={styles.MAINAVRITEMSDIV}>
-          <div className={styles.InformationArea}>
-            <div>
-              <input id="FullName" type="text" placeholder="Full Name" />
-                
-                <label>Date & Time of Use</label>
-                <input id="UseDate" type="date" placeholder="Date of Use" />
-                
-                <span>
-                  <label>From</label>
-                  <input id="FromTime" type="time" placeholder="From Time" />
-                  <label>To</label>
-                  <input id="ToTime" type="time" placeholder="To Time" />
-                </span>
-                
-                <input id="Department" type="text" placeholder="Department" />
-                <input id="RequestedBy" type="text" placeholder="Requested By" />
-                
-                <textarea id="Message" className={styles.messagetypebox} placeholder="Message" />
-                              
-                <div className={styles.qrOverlay}>
-                  <button className={styles.closeBtn} onClick={toggleScan}>x</button>
-                  <div className={styles.qrScanner}>
-                    <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
+          {selectedPage === "AVRITEMS" && (
+            <div className={styles.MAINAVRITEMSDIV}>
+            <div className={styles.ItemInformationArea}>
+              <div>
+                <input id="IFullName" type="text" placeholder="Full Name" />
+                  
+                  <label>Date & Time of Use</label>
+                  <input id="IUseDate" type="date" placeholder="Date of Use" />
+                  
+                  <span>
+                    <label>From</label>
+                    <input id="IFromTime" type="time" placeholder="From Time" />
+                    <label>To</label>
+                    <input id="ToTime" type="time" placeholder="To Time" />
+                  </span>
+
+                  <span>
+                    <input id="ICategory" type="text" placeholder="Category" />
+                    <input id="ILevel" type="text" placeholder="Level" />
+                  </span>
+                  <input id="IRequestedBy" type="text" placeholder="Requested By" />
+                  
+                  <textarea id="IPurpose" className={styles.messagetypebox} placeholder="Purpose" />
+                                
+                  <div className={styles.qrOverlay}>
+                    <button className={styles.closeBtn} onClick={toggleScan}>x</button>
+                    <div className={styles.qrScanner}>
+                      <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            <div className={styles.ItemSelectionArea}>
-                <label>Materials Needed</label>
-                <textarea id="SelectedItems" type="text" placeholder="Materials" />
-                <button className={styles.ScanQRBtn} onClick={toggleScan}>Scan Item To Add</button>
+              <div className={styles.ItemSelectionArea}>
+                  <label>Materials Needed</label>
+                  <textarea id="SelectedItems" type="text" placeholder="Materials" />
+                  <button className={styles.ScanQRBtn} onClick={toggleScan}>Scan Item To Add</button>
+              </div>
             </div>
-          </div>
-          <button className={styles.SubmitBtn} onClick={LoginProcess}>Submit</button>
-          </div>
-        )}
-        
+            <button className={styles.SubmitBtn} onClick={LoginProcess}>Submit</button>
+            </div>
+          )}
+          
+          {selectedPage === "AVRVENUE" && (
+            <div className={styles.MAINAVRITEMSDIV}>
+            <div className={styles.VenueInformationArea}>
+              <div>
+                <input id="VFullName" type="text" placeholder="Full Name" />
+                  
+                  <label>Date & Time of Use</label>
+                  <input id="VUseDate" type="date" placeholder="Date of Use" />
+                  
+                  <span>
+                    <label>From</label>
+                    <input id="VFromTime" type="time" placeholder="From Time" />
+                    <label>To</label>
+                    <input id="VToTime" type="time" placeholder="To Time" />
+                  </span>
+
+                  <span>
+                    <input id="VCategory" type="text" placeholder="Category" />
+                    <input id="VLevel" type="text" placeholder="Level" />
+                  </span>
+                  <input id="VRequestedBy" type="text" placeholder="Requested By" />
+                  
+                  <textarea id="VPurpose" className={styles.messagetypebox} placeholder="Purpose" />
+                                
+                  <div className={styles.qrOverlay}>
+                    <button className={styles.closeBtn} onClick={toggleScan}>x</button>
+                    <div className={styles.qrScanner}>
+                      <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <button className={styles.SubmitBtn} onClick={LoginProcess}>Submit</button>
+            </div>
+          )}
+        </div>
       </div>
+
+
+
     </div>
   );
 }

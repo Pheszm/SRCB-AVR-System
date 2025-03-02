@@ -44,6 +44,8 @@ export default function Incharge_Items() {
     return (
         <div className={styles.ItemBodyArea}>
             <h2>AVR ITEMS</h2>
+            <p>Manage and track item availability</p>
+            <br/><br/>
             <div className={styles.ItemFilterArea}>
                 <input
                     type="search"
@@ -72,8 +74,8 @@ export default function Incharge_Items() {
             </div>
 
            
-            <button className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} onClick={() => handlePageChange("AddItem")}>
-                    AddItem
+            <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddItem")}>
+                    Add Item
                 </button>
 
                 <button className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} onClick={() => setShowActions(!showActions)}>

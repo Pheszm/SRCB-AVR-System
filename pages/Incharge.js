@@ -80,8 +80,8 @@ export default function Incharge_Main() {
                             </div>
                         )}
                         <div className={styles.SeparationLine}></div>
-                        <p>Carlos Yulo</p>
-                        <img onClick={handleProfileClick} className={IsProfileDropdown === true ? styles.ProfileOpened : ""} src="./Assets/Img/CarlProfilePicture.jpg"></img>  
+                        <p>Ma. Christie Flor Raganot</p>
+                        <img onClick={handleProfileClick} className={IsProfileDropdown === true ? styles.ProfileOpened : ""} src="./Assets/Img/UnknownProfile.jpg"></img>  
                         {IsProfileDropdown && (
                             <div className={styles.DropdownMenu}>
                                 <ul>

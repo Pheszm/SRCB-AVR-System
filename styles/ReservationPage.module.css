@@ -11,15 +11,19 @@ MAIN BODY AREA
     background-blend-mode: multiply;
     background-color: #727272;
     background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100vw;
     height: 100vh;
     color: #fff;
 }
 
-
+.SecondBodyLayer{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* ============================================
 LOGIN FORM
 ============================================ */
@@ -55,7 +59,7 @@ LOGIN FORM
 
 
 /* ============================================
-ITEM RESERVATION
+RESERVATION FORM
 ============================================ */
 .MAINAVRITEMSDIV{
     display: flex;
@@ -63,17 +67,31 @@ ITEM RESERVATION
     align-items: center;
 }
 
-.InformationArea{
+.ItemInformationArea{
     display: flex;
     width: 900px;
     gap: 20px;
 }
-.InformationArea label{
+@media (max-width: 600px) {
+    .ItemInformationArea{
+        display:block;
+        width: 320px;
+    }     
+    .VenueInformationArea{
+        display: flex;
+        width: 320px;
+        gap: 20px;
+}
+
+}
+.ItemInformationArea label,
+.VenueInformationArea label{
     color: #d0d0d0;
 }
 
 
-.InformationArea div{
+.ItemInformationArea div,
+.VenueInformationArea div{
     width: 100%;
 }
 
