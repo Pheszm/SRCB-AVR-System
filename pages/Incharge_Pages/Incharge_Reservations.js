@@ -47,7 +47,7 @@ export default function Incharge_Reservations() {
         <div className={styles.ItemBodyArea}>
             {/* Updated Header Section */}
             <header className={styles.HeaderSection}>
-                <h2>Reservation Status</h2>
+                <h2>Reservations</h2>
                 <p>Manage and track reservation requests</p>
                 <br/><br/>
             </header>

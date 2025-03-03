@@ -16,10 +16,12 @@ MAIN BODY AREA
     color: #fff;
 }
 
+
 .SecondBodyLayer{
     height: 100%;
     width: 100%;
     overflow: auto;
+    flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +134,8 @@ RESERVATION FORM
 
 
 .ItemReservationForm input,
-.ItemReservationForm textarea {
+.ItemReservationForm textarea,
+.ItemReservationForm time {
     margin: 10px 0px;
     background-color: rgba(0, 0, 0, 0.5); 
     border: none;  
@@ -141,7 +144,7 @@ RESERVATION FORM
     width: 100%;
     font-size: 15px;
     color: #ffffff;
-    color-scheme: dark;
+    color-scheme: dark !important;
 }
 .messagetypebox {
     resize: none; 
