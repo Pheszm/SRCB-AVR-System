@@ -104,8 +104,8 @@ export default function Incharge_Items() {
                             {showActions && (
                                 <td>
                                     <button>View</button>
-                                    <button>Update</button>
-                                    <button>Delete</button>
+                                    <button className={styles.EditBtnnn}>Update</button>
+                                    <button className={styles.RemoveBtnnn}>Delete</button>
                                 </td>
                             )}
                         </tr>

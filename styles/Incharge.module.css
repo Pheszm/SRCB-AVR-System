@@ -272,6 +272,151 @@ BODY AREA
 
 
 
+/* ============================================
+DASHBOARD AREA
+============================================ */
+.DashBodyArea{
+    width: 100%;
+    height: 100%;
+}
+
+.alignerforDIV{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .LowerSquares {
+        grid-template-columns: 1fr !important;
+    }
+
+    .DashBodyArea{
+        width: 100%;
+    } 
+    .UpperSquares{
+        display: block;
+        gap: 10px;
+        flex-direction: column;
+    }
+    
+
+
+}
+
+.UpperSquares{
+    display: flex;
+    gap: 10px;
+}
+
+.UpperSquares div{
+    background-color: #fff;
+    color: #0a1f48;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    white-space: nowrap;
+}
+.UpperSquares span{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.LowerSquares {
+    display: grid;            
+    grid-template-columns: 2fr 1fr; 
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.LowerSquares div{
+    background-color: #fff;
+    color: #0a1f48;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 500px;
+}
+
+.DashTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.DashTable th,
+.DashTable td {
+    color: #000;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    height: 30px !important; /* Apply height to th and td */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.DashTable th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+    padding: 5px;
+}
+
+.DashTableWrapper {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    height: 100% !important;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 0px !important;
+    position: relative;
+    background-color: #f9f9f9 !important;
+}
+
+.DashTable tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.DashTable tr:nth-child(odd) {
+    background-color: #e9e9e9;
+}
+
+.DashTable button {
+    padding: 2px 8px;
+    margin: 0 2px;
+    border: none;
+    background-color: #2a3c86;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.DashTable button:hover {
+    background-color: #1f2e6b;
+}
+
+.DashTable button:focus {
+    outline: none;
+    background-color: #182454;
+    box-shadow: 0 0 0 3px rgba(19, 142, 203, 0.5);
+}
 
 
 
@@ -425,6 +570,73 @@ ITEM TEBLE DESIGN
 .ItemTable button:hover {
     background-color: #1f2e6b;
 }
+
+.ItemTable button:focus {
+    outline: none; 
+    background-color: #182454; 
+    box-shadow: 0 0 0 3px rgba(19, 142, 203, 0.5);
+}
+
+
+
+
+.EditBtnnn {
+    background-color: #cbbc13 !important;
+    color: #fff;
+    padding: 10px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+.EditBtnnn:hover {
+    background-color: #ab9e11 !important;
+}
+.EditBtnnn:focus {
+    outline: none; 
+    background-color: #ab9e11 !important; 
+    box-shadow: 0 0 0 3px rgba(225, 255, 0, 0.5) !important;
+}
+
+
+.RemoveBtnnn {
+    background-color: #9f2424 !important;
+    color: #fff;
+    padding: 10px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+.RemoveBtnnn:hover {
+    background-color: #822020 !important;
+}
+.RemoveBtnnn:focus {
+    outline: none; 
+    background-color: #822020 !important; 
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5) !important;
+}
+
+.SuccessBtnnn {
+    background-color: #2dab1c !important;
+    color: #fff;
+    padding: 10px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+.SuccessBtnnn:hover {
+    background-color: #248117 !important;
+}
+.SuccessBtnnn:focus {
+    outline: none; 
+    background-color: #248117 !important; 
+    box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.5) !important;
+}
+
+
+
 
 .PagenationArea{
     gap: 10px;

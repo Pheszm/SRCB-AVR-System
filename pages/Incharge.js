@@ -55,8 +55,8 @@ export default function Incharge_Main() {
 
                 <button className={selectedPage === "Dashboard" ? styles.active : ""} onClick={() => handlePageChange("Dashboard")}><AiIcons.AiOutlineHome size={25}/>{isSidebarOpen && 'Dashboard'}</button>
                 <button className={selectedPage === "Reservations" ? styles.active : ""} onClick={() => handlePageChange("Reservations")}><AiIcons.AiOutlineCalendar size={25}/>{isSidebarOpen && 'Reservations'}</button>
-                <button className={selectedPage === "AVRLogs" ? styles.active : ""} onClick={() => handlePageChange("AVRLogs")}><AiIcons.AiOutlineFileSearch size={25}/>{isSidebarOpen && 'AVR Log'}</button>
                 <button className={selectedPage === "Items" ? styles.active : ""} onClick={() => handlePageChange("Items")}><AiIcons.AiOutlineAppstoreAdd size={25}/>{isSidebarOpen && 'Items'}</button>
+                <button className={selectedPage === "AVRLogs" ? styles.active : ""} onClick={() => handlePageChange("AVRLogs")}><AiIcons.AiOutlineFileSearch size={25}/>{isSidebarOpen && 'AVR Log'}</button>
 
                 <button className={styles.SidebarToggler} onClick={toggleSidebar}>
                     <AiIcons.AiOutlineArrowLeft size={25}/>
