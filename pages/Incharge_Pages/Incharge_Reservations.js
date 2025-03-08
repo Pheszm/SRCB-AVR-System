@@ -18,10 +18,18 @@ export default function Incharge_Reservations() {
 
     const data = Array.from({ length: 500 }, (_, index) => ({
         id: index + 1,
-        reservationDate: `2025-03-${(index % 30) + 1}`,  // Example date
+        reservationDate: `3/${(index % 30) + 1}/2025 ${(index % 12) + 1}:00PM to ${(index % 12) + 2}:00PM`,  // Example date and time
         userType: index % 2 === 0 ? 'Student' : 'Faculty', // Example usertype
-        fullName: `User ${index + 1}`,  // Example full name
-        need: `Need ${index + 1}`,  // Example need
+        fullName: index % 5 === 0 ? 'John Doe' :
+              index % 5 === 1 ? 'Jane Smith' :
+              index % 5 === 2 ? 'Alice Johnson' :
+              index % 5 === 3 ? 'Bob Brown' :
+              'Emily Davis',  // Example full name
+        need: index % 5 === 0 ? 'AVR Venue' :
+        index % 5 === 1 ? 'Microphone' :
+        index % 5 === 2 ? 'Speaker' :
+        index % 5 === 3 ? 'Projector' :
+        'Whiteboard',
         category: index % 2 === 0 ? 'Item' : 'Venue',   // Example category (Category 1 to Category 5)
     }));
 
@@ -45,17 +53,16 @@ export default function Incharge_Reservations() {
 
     return (
         <div className={styles.ItemBodyArea}>
-            {/* Updated Header Section */}
-            <header className={styles.HeaderSection}>
-                <h2>Reservations</h2>
-                <p>Manage and track reservation requests</p>
-                <br/><br/>
-            </header>
+
+            <h2>Reservations</h2>
+            <p>Manage and track reservation requests</p>
+            <br/><br/>
+
 
             <div className={styles.ItemFilterArea}>
                 <input
                     type="search"
-                    placeholder="Search"
+                    placeholder="Search for Reservations"
                     value={search}
                     onChange={(e) => {
                         setSearch(e.target.value); 
@@ -120,8 +127,8 @@ export default function Incharge_Reservations() {
                             {showActions && (
                             <td>
                                 <button>View</button>
-                                <button>Approve</button>
-                                <button>Decline</button>
+                                <button className={styles.SuccessBtnnn}>Approve</button>
+                                <button className={styles.RemoveBtnnn}>Decline</button>
                             </td>
                             )}
                         </tr>

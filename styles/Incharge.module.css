@@ -433,6 +433,16 @@ ITEM AREA
     width: 100%;
     height: 100%;
 }
+
+.ItemBodyArea h2{
+    color: #0a1f48;
+    font-size: 22px;
+}
+.ItemBodyArea p{
+    color: #1a2866;
+    font-size: 13px;
+}
+
 @media (max-width: 600px) {
     .ItemBodyArea{
         width: 400%;
@@ -455,7 +465,7 @@ ITEM AREA
 .ItemFilterArea input {
     width: 25%;  
     padding: 2px 15px;
-    font-size: 16px;  
+    font-size: 13px;  
     border: 2px solid #979797;  
     border-radius: 30px; 
     background-color: #f5f5f5; 
@@ -480,8 +490,8 @@ ITEM AREA
 .ItemFilterArea select {
     color: #000;
     width: 100%;
-    padding: 4px 10px;
-    font-size: 13px;
+    padding: 2px 10px;
+    font-size: 11px;
     border-radius: 8px;
     border: 2px solid #979797;  
     outline: none;
@@ -499,8 +509,9 @@ ITEM AREA
 
 
 .SettingsBtn{
-    padding: 6px 12px;
+    padding: 4px 11px;
     margin: 0 5px;
+    font-size: 11px;
     border: none;
     background-color: #1e2f71;
     color: white;
@@ -530,18 +541,16 @@ ITEM TEBLE DESIGN
     text-align: left;
     border: 1px solid #ddd;
 }
-.ItemTable th
-{
-    background-color: #ffffff !important;
-}
+
 .IdColumn{
     width: 20px !important;
 }
 .ItemTable th {
+    font-size: 12px;
     overflow: hidden;  
     text-overflow: ellipsis; 
     white-space: nowrap; 
-    background-color: #f4f4f4;
+    background-color: #ffffff !important;
     font-weight: bold;
     color: #333;
 }
@@ -552,13 +561,15 @@ ITEM TEBLE DESIGN
     background-color: #ececec; 
 }
 .ItemTable td {
+    font-size: 12px;
     overflow: hidden;  
     text-overflow: ellipsis; 
     white-space: nowrap; 
 }
 .ItemTable button {
-    padding: 6px 12px;
-    margin: 0 5px;
+    padding: 4px 7px;
+    margin: 0 3px;
+    font-size: 11px;
     border: none;
     background-color: #2a3c86;
     color: white;
@@ -577,6 +588,9 @@ ITEM TEBLE DESIGN
     box-shadow: 0 0 0 3px rgba(19, 142, 203, 0.5);
 }
 
+.Pagenumberr{
+    font-size: 12px;
+}
 
 
 
@@ -636,7 +650,15 @@ ITEM TEBLE DESIGN
 }
 
 
-
+.datefiltering{
+    font-size: 11px;
+    gap: 3px;
+    display: flex;
+    align-items: center;
+}
+.datefiltering input{
+    padding: 0px 3px;
+}
 
 .PagenationArea{
     gap: 10px;
@@ -644,10 +666,12 @@ ITEM TEBLE DESIGN
     justify-content: center;
     display: flex;
     padding-top: 20px;
+    padding-bottom: 20px;
     align-items: center;
 }
 .PagenationArea button{
-    padding: 6px 12px;
+    padding: 4px 12px;
+    font-size: 11px;
     margin: 0 5px;
     border: none;
     background-color: #1e2f71;
@@ -777,4 +801,12 @@ ADD ITEM FORM
 .closeBtn:focus{
     scale: 1.1;
     color: #cfcfcf;
+}
+
+
+
+.HeaderSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

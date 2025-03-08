@@ -7,7 +7,7 @@ import Dashboard from "./Incharge_Pages/Incharge_Dashboard";
 import Reservations from "./Incharge_Pages/Incharge_Reservations";
 import AVRLogs from "./Incharge_Pages/Incharge_AVRLogs";
 import Items from "./Incharge_Pages/Incharge_Items";
-
+import Transactions from "./Incharge_Pages/Incharge_Transactions";
 
 
 export default function Incharge_Main() {
@@ -56,8 +56,8 @@ export default function Incharge_Main() {
                 <button className={selectedPage === "Dashboard" ? styles.active : ""} onClick={() => handlePageChange("Dashboard")}><AiIcons.AiOutlineHome size={25}/>{isSidebarOpen && 'Dashboard'}</button>
                 <button className={selectedPage === "Reservations" ? styles.active : ""} onClick={() => handlePageChange("Reservations")}><AiIcons.AiOutlineCalendar size={25}/>{isSidebarOpen && 'Reservations'}</button>
                 <button className={selectedPage === "Items" ? styles.active : ""} onClick={() => handlePageChange("Items")}><AiIcons.AiOutlineAppstoreAdd size={25}/>{isSidebarOpen && 'Items'}</button>
-                <button className={selectedPage === "AVRLogs" ? styles.active : ""} onClick={() => handlePageChange("AVRLogs")}><AiIcons.AiOutlineFileSearch size={25}/>{isSidebarOpen && 'AVR Log'}</button>
-
+                <button className={selectedPage === "Transactions" ? styles.active : ""} onClick={() => handlePageChange("Transactions")}><AiIcons.AiOutlineBarChart size={25}/>{isSidebarOpen && 'Transactions'}</button>
+                <button className={selectedPage === "AVRLogs" ? styles.active : ""} onClick={() => handlePageChange("AVRLogs")}><AiIcons.AiOutlineFileSearch size={25}/>{isSidebarOpen && 'Activity Logs'}</button>
                 <button className={styles.SidebarToggler} onClick={toggleSidebar}>
                     <AiIcons.AiOutlineArrowLeft size={25}/>
                 </button>
@@ -97,6 +97,7 @@ export default function Incharge_Main() {
                     {selectedPage === "Reservations" && <Reservations />}
                     {selectedPage === "AVRLogs" && <AVRLogs />}
                     {selectedPage === "Items" && <Items />}
+                    {selectedPage === "Transactions" && <Transactions />}
                 </div>
             </div>
 

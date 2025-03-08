@@ -20,11 +20,11 @@ export default function Incharge_Items() {
 
     const data = Array.from({ length: 500 }, (_, index) => ({
         id: index + 1,
-        itemName: `Item ${index + 1}`,
+        itemName: ['Speaker', 'Microphone', 'Projector', 'Lighting', 'Laptop'][index % 5], 
         itemType: `${index + 1}`,
         serialNumber: `${index + 1}`,
-        category: `Category ${((index % 5) + 1)}`,  // Example category (Category 1 to Category 5)
-    }));
+        category: ['Educational Item', 'Cleaning Materials', 'Technical Equipment', 'Furniture', 'Stationery'][index % 5],
+        }));
 
     // Extract unique categories from the data
     const categories = [...new Set(data.map(item => item.category))];
@@ -45,11 +45,12 @@ export default function Incharge_Items() {
         <div className={styles.ItemBodyArea}>
             <h2>AVR ITEMS</h2>
             <p>Manage and track item availability</p>
+
             <br/><br/>
             <div className={styles.ItemFilterArea}>
                 <input
                     type="search"
-                    placeholder="Search"
+                    placeholder="Search for Items"
                     value={search}
                     onChange={(e) => {
                         setSearch(e.target.value); 
@@ -73,7 +74,6 @@ export default function Incharge_Items() {
                 </select>
             </div>
 
-           
             <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddItem")}>
                     Add Item
                 </button>
@@ -121,7 +121,7 @@ export default function Incharge_Items() {
                 >
                     Previous
                 </button>
-                <span>{currentPage}</span>
+                <span className={styles.Pagenumberr}>{currentPage}</span>
                 <button
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage === totalPages}

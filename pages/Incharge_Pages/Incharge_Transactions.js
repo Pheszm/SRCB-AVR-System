@@ -11,8 +11,8 @@ export default function Incharge_AVRLogs() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedAction, setSelectedAction] = useState("");  // Action filter
     const [selectedMonth, setSelectedMonth] = useState("");  // New state for month filter
+    const [showActions, setShowActions] = useState(false); // For toggling action buttons in the table
     const rowsPerPage = 10;
 
     // Sample names array
@@ -28,7 +28,7 @@ export default function Incharge_AVRLogs() {
         id: index + 1,
         reservationDate: `3/${(index % 30) + 1}/2025 ${(index % 12) + 1}:00PM to ${(index % 12) + 2}:00PM`,  // Example date and time
         fullName: sampleNames[index % sampleNames.length],  // Sample names cycle through
-        action: ['Update', 'Add', 'Remove', 'Approved', 'Canceled', 'Declined'][index % 6], // Random sample actions
+        action: ['Pending', 'Approved', 'Canceled', 'Declined'][index % 4], // Random sample actions
         record: index % 5 === 0 ? 'AVR Venue' : index % 5 === 1 ? 'Speaker' : index % 5 === 2 ? 'Microphone' : index % 5 === 3 ? 'Lighting' : 'Projector',
         category: index % 2 === 0 ? 'Venue' : 'Item',   // Example category (Venue and Item only)
     }));
@@ -45,7 +45,6 @@ export default function Incharge_AVRLogs() {
 
             return (
                 (selectedCategory === "" || category === selectedCategory) &&
-                (selectedAction === "" || action === selectedAction) &&
                 (selectedMonth === "" || yearMonth === selectedMonth) &&  // Filter by selected month
                 (reservationDate.toLowerCase().includes(search.toLowerCase()) ||
                     fullName.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,20 +62,25 @@ export default function Incharge_AVRLogs() {
         <div className={styles.ItemBodyArea}>
             {/* Updated Header Section */}
             <header className={styles.HeaderSection}>
-               <div>
-                <h2>Activity Logs</h2>
-                    <p>Monitor activity logs to track system events and user actions.</p>
+                <div>
+                    <h2>Transactions</h2>
+                    <p>Keep track of transactions to monitor system events and user activities.</p>
                     <br /><br />
-               </div>
-               <div>
+                </div>
+                <div>
                     <button className={styles.SettingsBtn}>Export Table</button>
-               </div>
+                    <button className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} onClick={() => setShowActions(!showActions)}>
+                    Settings
+                </button>
+                </div>
+
+
             </header>
 
             <div className={styles.ItemFilterArea}>
                 <input
                     type="search"
-                    placeholder="Search for Logs"
+                    placeholder="Search for Transactions"
                     value={search}
                     onChange={(e) => {
                         setSearch(e.target.value);
@@ -97,20 +101,6 @@ export default function Incharge_AVRLogs() {
 
                 <div>
                     <select
-                        value={selectedAction}
-                        onChange={(e) => { setSelectedAction(e.target.value), setCurrentPage(1); }}
-                    >
-                        <option value="">All Actions</option>
-                        {actions.map((action) => (
-                            <option key={action} value={action}>
-                                {action}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                
-                <div>
-                    <select
                         value={selectedCategory}
                         onChange={(e) => { setSelectedCategory(e.target.value), setCurrentPage(1); }}
                     >
@@ -125,24 +115,33 @@ export default function Incharge_AVRLogs() {
 
             </div>
 
+            {/* Updated Table */}
             <table className={styles.ItemTable}>
                 <thead>
                     <tr>
+                        <th>Status</th> {/* Could be the action or status */}
                         <th>Date & Time</th>
                         <th>Fullname</th>
-                        <th>Action</th>
-                        <th>Record</th>
+                        <th>Item/Venue</th> {/* Can be renamed based on context */}
                         <th>Category</th>
+                        {showActions && <th>Actions</th>} {/* Conditionally show the Actions column */}
                     </tr>
                 </thead>
                 <tbody>
                     {currentRows.map(({ id, reservationDate, fullName, action, record, category }) => (
                         <tr key={id}>
+                            <td>{action}</td>  {/* Display action/status */}
                             <td>{reservationDate}</td>
                             <td>{fullName}</td>
-                            <td>{action}</td>
                             <td>{record}</td>
                             <td>{category}</td>
+                            {showActions && (
+                                <td>
+                                    <button>View</button>
+                                    <button className={styles.EditBtnnn}>Update</button>
+                                    <button className={styles.RemoveBtnnn}>Delete</button>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -163,6 +162,8 @@ export default function Incharge_AVRLogs() {
                     Next
                 </button>
             </div>
+
+
 
             {SelectedModification === "AddItem" && (
                 <div className={styles.BlurryBackground}>
