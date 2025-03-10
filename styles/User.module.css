@@ -344,7 +344,7 @@ DASHBOARD AREA
     margin-top: 10px;
 }
 
-.LowerSquares div{
+.LowerSquaresDIV{
     background-color: #fff;
     color: #0a1f48;
     padding: 20px;
@@ -371,7 +371,8 @@ DASHBOARD AREA
     font-size: 12px;
     height: 30px !important; /* Apply height to th and td */
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
 
 }
 
@@ -388,11 +389,11 @@ DASHBOARD AREA
 .DashTableWrapper {
     border: 1px solid #ddd;
     border-radius: 3px;
-    height: 100% !important;
+
     overflow-y: auto;
     overflow-x: auto;
     padding: 0px !important;
-    position: relative;
+
     background-color: #f9f9f9 !important;
 }
 
@@ -669,6 +670,7 @@ ITEM TEBLE DESIGN
 }
 
 .PagenationArea{
+    padding-top: 15px;
     gap: 10px;
     width: 100%;
     justify-content: center;
@@ -735,6 +737,40 @@ ADD ITEM FORM
     border-radius: 5px;
     border: none;
 }
+.CenterItemDIV{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.CommonButtonn{
+    padding: 8px 20px;
+    width: 100%;
+    background-color: #00145a;
+    color: #fff;
+    margin: 5px 0px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Adds smooth transition for hover/focus */
+}
+.CommonButtonn:hover {
+    background-color: #0a1f48; 
+}
+
+.CommonButtonn:focus {
+    outline: none; 
+    background-color: #0a1f48; 
+    box-shadow: 0 0 0 3px rgba(4, 46, 255, 0.5);
+}
+
+
+
 .AddItemForm button {
     width: 100%;
     background-color: #138ecb;

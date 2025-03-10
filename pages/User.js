@@ -3,8 +3,10 @@ import * as AiIcons from "react-icons/ai";
 import * as AiIcons_md from "react-icons/md";
 import React, { useState } from 'react';
 import { useRouter } from "next/router";
+import AllTransact from "./User_Pages/User_allTransactions";
 
 export default function Incharge_Main() {
+        const [showActions, setShowActions] = useState(false);
     const router = useRouter(); 
     const today = new Date().toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
     const [search, setSearch] = useState("");
@@ -37,6 +39,11 @@ export default function Incharge_Main() {
 
     function LogoutProcess() {
         router.push('/');
+    }
+
+    
+    function GotoStudentResForm(){
+        router.push('/student_reservation');
     }
 
     return (
@@ -86,13 +93,14 @@ export default function Incharge_Main() {
                 <div className={styles.DashBodyArea}>
 
                     <div className={styles.UpperSquares}>
-                        <div>
+                        <div className={styles.CenterItemDIV}>
                             <span>
-                                <AiIcons.AiOutlineCalendar size={30} /> 
-                            </span>
-                            <span>
-                                <p>Pending Reservations</p>
-                                <h4>5</h4>
+                                <button 
+                                onClick={GotoStudentResForm}
+                                className={styles.CommonButtonn}>
+                                    <AiIcons.AiOutlineCalendar size={30} /> 
+                                    RESERVE NOW
+                                </button>
                             </span>
                         </div>
 
@@ -101,7 +109,7 @@ export default function Incharge_Main() {
                                 <AiIcons.AiOutlineAppstore  size={30} /> 
                             </span>
                             <span>
-                                <p>AVR Total Items</p>
+                                <p>Total Transactions</p>
                                 <h4>20</h4>
                             </span>
                         </div>
@@ -131,7 +139,7 @@ export default function Incharge_Main() {
 
                     <div className={styles.LowerSquares}>
 
-                        <div>
+                        <div className={styles.LowerSquaresDIV}>
                             <h3>Upcoming Transactions</h3>
                             <div className={styles.DashTableWrapper}>
                                 <table className={styles.DashTable}>
@@ -168,80 +176,14 @@ export default function Incharge_Main() {
                         </div> 
 
 
-                        <div>
-                            <h3>All Transaction</h3>
-                            
-                            <input
-                                className={styles.SearchBarrrr}
-                                type="search"
-                                placeholder="Search for Transactions"
-                                value={search}
-                                onChange={(e) => {
-                                    setSearch(e.target.value);
-                                    setCurrentPage(1);
-                                }}
-                            />
-
-                            <div className={styles.DashTableWrapper}>
-                                <table className={styles.DashTable}>
-                                    <thead>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>Date & Time</th>
-                                            <th>Item/Venue</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Upcoming</td>
-                                            <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                            <td>1 Microphone, 1 Speaker</td>
-                                            <td>
-                                                <button>View</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ongoing</td>
-                                            <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                            <td>1 Projector</td>
-                                            <td>
-                                                <button>View</button>
-                                                <button className={styles.SuccessBtnnn}>Returned</button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-
-                            <span className={styles.PagenationArea}>
-                                <button
-                                    onClick={() => setCurrentPage(currentPage - 1)}
-                                    disabled={currentPage === 1}
-                                >
-                                    Previous
-                                </button>
-                                <span>{currentPage}</span>
-                                <button
-                                    onClick={() => setCurrentPage(currentPage + 1)}
-                                    disabled={currentPage === totalPages}
-                                >
-                                    Next
-                                </button>
-                            </span>
-                        </div>  
+                        <div className={styles.LowerSquaresDIV}>
+                            <AllTransact/>
+                        </div>
                     </div>
-
-                    </div>
-
-
-
 
                 </div>
             </div>
-
         </div>
+    </div>
     );
 }

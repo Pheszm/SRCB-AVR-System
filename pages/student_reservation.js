@@ -22,15 +22,12 @@ export default function Home() {
   // QR Scanner Data Reciever
   const handleScanSuccess = (decodedText) => {
     console.log("QR Code Scanned:", decodedText);
-    QRLoginProcess(decodedText);
     toggleScan();
   };
 
-
-  const LoginProcess = () => {
-    router.push('/Incharge');
-  };
-
+  function GoBackk(){
+    router.push('/User');
+}
   return (
     <div className={styles.Gen_Background}>
       <title>SRCB AVR | Student Reservation Form</title>
@@ -39,6 +36,7 @@ export default function Home() {
 
       <div className={styles.SecondBodyLayer}>
         <div className={styles.ItemReservationForm}>
+          <button onClick={GoBackk} className={styles.ReturnBtnnnnn}><AiIcons.AiOutlineRollback size={20} />Return</button>
           <div className={styles.mainLogo}>
             <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
             <h2>SRCB</h2>
@@ -89,7 +87,7 @@ export default function Home() {
                   <button className={styles.ScanQRBtn} onClick={toggleScan}>Scan Item To Add</button>
               </div>
             </div>
-            <button className={styles.SubmitBtn} onClick={LoginProcess}>Submit</button>
+            <button className={styles.SubmitBtn}>Submit</button>
             </div>
           )}
           
@@ -125,7 +123,7 @@ export default function Home() {
                   </div>
                 </div>
             </div>
-            <button className={styles.SubmitBtn} onClick={LoginProcess}>Submit</button>
+            <button className={styles.SubmitBtn}>Submit</button>
             </div>
           )}
         </div>

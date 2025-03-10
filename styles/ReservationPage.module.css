@@ -110,6 +110,7 @@ RESERVATION FORM
 }
 
 .ItemReservationForm{
+    position: relative;
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
@@ -139,6 +140,22 @@ RESERVATION FORM
     width: 100%;
 }
 
+.ReturnBtnnnnn{
+    background-color: transparent;
+    position: absolute;
+    align-items: center;
+    color: #fff;
+    top: 10px;
+    left: 10px;
+    border: none;
+    display: flex;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.ReturnBtnnnnn:hover{
+    font-weight: bold;
+}
 
 .ItemReservationForm input,
 .ItemReservationForm textarea,
