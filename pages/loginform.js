@@ -37,26 +37,36 @@ export default function Home() {
 
   // Sample Data for Logging-in
   const Users = [
-    { id: "ID-C220023", username: "carl", password: "123", role:"Student" },
-    { id: "ID-C220228", username: "nazef", password: "hawk", role:"Student" }
+    { id: "ID-C220023", username: "incharge", password: "incharge", role:"Incharge" },
+    { id: "ID-C220228", username: "student", password: "student", role:"Student" },
+    { id: "ID-C220023", username: "staff", password: "staff", role:"Staff" },
+    { id: "ID-C220030", username: "admin", password: "admin", role:"Admin" },
   ];
 
   // Input Login Process
   const LoginProcess = () => {
-    // Design Presentation Muna
-    router.push('/Incharge');
+    // Get user input values
+  const username = document.getElementById("UserN").value;
+  const password = document.getElementById("PassW").value;
 
+  // Find the user matching the username and password
+  const user = Users.find((user) => user.username === username && user.password === password);
 
-    // If Deployed
-    const username = document.getElementById("UserN").value;
-    const password = document.getElementById("PassW").value;
-    const user = Users.find((user) => user.username === username && user.password === password);
-    if (user) {
-      console.log("User found:", user);
-      router.push('/Incharge');
-    } else {
-      console.log("User not found");
+  // If user is found
+  if (user) {
+    alert("User found: " + user.username);
+    if (user.role === "Admin") {
+      router.push('/Admin');
+    } else if (user.role === "Incharge") {
+        router.push('/Incharge');
+    } else if (user.role === "Staff") {
+      router.push('/User');
+    } else if (user.role === "Student") {
+      router.push('/User');
     }
+  } else {
+    alert("User not found");
+  }
   };
 
   return (

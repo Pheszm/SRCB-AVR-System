@@ -21,7 +21,7 @@ HEADER PART AREA
 ============================================ */
 .HeaderPart{
     display: flex;
-    justify-content: flex-end; 
+    justify-content:space-between;
     align-items: center;
     padding: 0px 10px;
     background-color: #fff;
@@ -102,6 +102,7 @@ HEADER PART AREA
     } 
 }
 .NotifBox{
+    z-index: 5;
     position: absolute;
     top: 50px;
     right: 160px;
@@ -113,7 +114,6 @@ HEADER PART AREA
     width: 200px;
     height: 200px;
     overflow: hidden;
-    z-index: 5;
 }
 .NotifBox h4{
     width: 100%;
@@ -157,20 +157,27 @@ SIDEBAR PART AREA
     justify-content: center; 
 }
 .mainLogo{
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); 
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.0)); 
     padding: 10px;
     display: flex;
     align-items: center;
-    margin-bottom: 100px;
+
 }
 .mainLogo img{
     width: 40px;
 }
+
+@media (max-width: 600px) {
+    .mainLogo h2{
+    display: none;
+    }
+}
+
 .mainLogo h2{
-    color: #fff;
-    padding-left: 10px;
-    font-size: 33px;
-    font-weight: 400;
+    color: #00145a;
+    padding-left: 3px;
+    font-size: 30px;
+    font-weight: 500;
 }
 .SidebarPart button {
     display: flex;
@@ -331,7 +338,7 @@ DASHBOARD AREA
 
 .LowerSquares {
     display: grid;            
-    grid-template-columns: 2fr 1fr; 
+    grid-template-columns: 1fr 1fr; 
     gap: 10px;
     width: 100%;
     margin-top: 10px;
@@ -464,8 +471,7 @@ ITEM AREA
 
 /* SEARCH BAR */
 
-.ItemFilterArea input {
-    width: 25%;  
+.SearchBarrrr {  
     padding: 2px 15px;
     font-size: 13px;  
     border: 2px solid #979797;  
@@ -476,14 +482,14 @@ ITEM AREA
     color: #000;
 }
 
-.ItemFilterArea input:focus {
+.SearchBarrrr:focus {
     border-color: #1a2866;  
     background-color: #fff; 
 }
-.ItemFilterArea input:hover {
+.SearchBarrrr:hover {
     border-color: #1a2866;  
 }
-.ItemFilterArea input::placeholder {
+.SearchBarrrr::placeholder {
     color: #888888;  
     font-style: italic;  
 }
@@ -667,8 +673,7 @@ ITEM TEBLE DESIGN
     width: 100%;
     justify-content: center;
     display: flex;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    flex-direction: row !important;
     align-items: center;
 }
 .PagenationArea button{

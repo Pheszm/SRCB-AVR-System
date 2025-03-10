@@ -14,8 +14,15 @@ MAIN BODY AREA
     width: 100vw;
     height: 100vh;
     color: #fff;
+    overflow: auto;
+
 }
 
+@media (max-width: 600px) {
+    .SecondBodyLayer{
+        height: 150% !important;
+    }
+}
 
 .SecondBodyLayer{
     height: 100%;
