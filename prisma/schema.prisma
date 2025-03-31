@@ -6,3 +6,21 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+
+enum UserType {
+  admin
+  student
+  staff
+  incharge
+}
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  userType  UserType @default(REGULAR)  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

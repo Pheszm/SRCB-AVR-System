@@ -81,3 +81,34 @@ CREATE TABLE activity_logs (
     Action VARCHAR(255),
     Record_Id INT
 );
+
+
+
+
+
+CREATE TABLE Transaction (
+    transac_id INT AUTO_INCREMENT PRIMARY KEY,
+    DateTimeFiled DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    Usertype VARCHAR(50),
+    User_id INT,
+
+    requestedby_id INT,
+
+    approvedby_id INT,
+    reservation_status VARCHAR(50) DEFAULT 'Pending',
+    
+    transac_status VARCHAR(50) DEFAULT 'Active',
+
+    transac_reason TEXT,
+    Transac_Category VARCHAR(255),
+    Transac_Needs TEXT,
+
+    dateofuse DATETIME,
+    fromtime DATETIME,
+    totime DATETIME,
+    returnedtime DATETIME,
+
+    comments_afteruse TEXT,
+    notif_status VARCHAR(50) DEFAULT 'Unread'
+);

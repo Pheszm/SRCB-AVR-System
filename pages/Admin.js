@@ -47,6 +47,7 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
+        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         router.push('/');
     }
 

@@ -72,6 +72,7 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
+        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         router.push('/');
     }
 
@@ -102,8 +103,7 @@ export default function Incharge_Main() {
                     <button className={styles.BurgerIcon} onClick={toggleSidebar}><AiIcons.AiOutlineMenu size={30} /></button>
                     
                     <div className={styles.HeaderProfilePart}>
-                        <button onClick={toggleNotifBar}   className={`${styles.NotifBtn} ${IsNotifBarOpen ? styles.NotifBtnOpened : ""}`}
-                        ><AiIcons_md.MdNotifications size={22} /></button>
+            
                         {IsNotifBarOpen && (
                             <div className={styles.NotifBox}>
                                 <h4>Notifications</h4>

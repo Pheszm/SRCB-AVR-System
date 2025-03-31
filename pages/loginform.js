@@ -131,6 +131,8 @@ export default function LoginForm() {
     // Store the user ID and role in sessionStorage
     sessionStorage.setItem('userId', user.id);
     sessionStorage.setItem('userRole', user.role);
+    
+    document.cookie = "user=authenticated; path=/";
 
     // SweetAlert for confirming login before navigation
     await Swal.fire({

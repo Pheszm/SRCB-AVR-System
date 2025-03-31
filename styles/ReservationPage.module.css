@@ -6,11 +6,6 @@
 MAIN BODY AREA
 ============================================ */
 .Gen_Background {
-    background-image: url("../public/Assets/Img/Login_SRCB_BackgroundImg.png");
-    background-size: cover;
-    background-blend-mode: multiply;
-    background-color: #727272;
-    background-position: center;
     width: 100vw;
     height: 100vh;
     color: #fff;
@@ -158,6 +153,7 @@ RESERVATION FORM
 }
 
 .ItemReservationForm input,
+.ItemReservationForm select,
 .ItemReservationForm textarea,
 .ItemReservationForm time {
     margin: 10px 0px;
@@ -175,6 +171,7 @@ RESERVATION FORM
     height: 100px !important;
 }
 .ItemReservationForm input:focus,
+.ItemReservationForm select:focus,
 .ItemReservationForm textarea:focus {
     border-bottom: 1px solid #007BFF;
     outline: none; 
@@ -227,7 +224,47 @@ RESERVATION FORM
     outline: none;
 }
 
+.AddItemBtn{
+    margin-top: 0px;
+    font-size: 12px;
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #f6f6f6;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.AddItemBtn:hover,
+.AddItemBtn:focus {
+    transform: scale(1.03); 
+    color: #d1e7ff;
+    border: none;
+    outline: none;
+}
 
+
+.WarningBtn{
+    margin-top: 0px;
+    font-size: 13px;
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: 500;
+    color: #df2020;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.WarningBtn:hover,
+.WarningBtn:focus {
+    transform: scale(1.05); 
+    color: #ffa3a3;
+    border: none;
+    outline: none;
+}
+
+.FlexBetweeen{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
 
 /* ============================================
@@ -282,4 +319,22 @@ QR SCANNER AREA
 .closeBtn:focus{
     scale: 1.1;
     color: #cfcfcf;
+}
+
+
+.HasDataAlr{
+    color: #73a7df !important;
+}
+
+.BlurryBackground{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(0, 0, 0, 0.7); 
+    top: 0;
+    right: 0;
+    z-index: 10;
 }

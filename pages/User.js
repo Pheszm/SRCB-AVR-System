@@ -4,39 +4,52 @@ import * as AiIcons_md from "react-icons/md";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import AllTransact from "./User_Pages/User_allTransactions";
+import StudentReservationForm from "./User_Pages/Reservation_Form/student_reservation_form";
+
 
 export default function Incharge_Main() {
     const router = useRouter();     
     const [UserFullData, setUserFullData] = useState(null);
+    const [userId, setuserId] = useState("");
+    const [userRole, setuserRole] = useState("");
+
+    const handleFormClose = () => {
+        handlePageChange("");
+        fetchItems();
+    };
+
+    const fetchUserData = async () => {
+        const storedUserId = sessionStorage.getItem('userId');
+        const storedUserRole = sessionStorage.getItem('userRole');
+  
+        if (!storedUserId || !storedUserRole) {
+          // If there's no userId or userRole, redirect to the login page
+          router.push('/'); // Adjust the path to your login page
+          return;
+        }
+  
+        setuserId(storedUserId); 
+        setuserRole(storedUserRole); 
+
+        try {
+          // Make the API call to fetch user data based on userId and userRole
+          const response = await fetch(`/api/User_Data/RetrieveData?userId=${storedUserId}&userRole=${storedUserRole}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+          }
+  
+          const data = await response.json();
+
+          setUserFullData(data.user); 
+
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
 
       useEffect(() => {
-            const fetchUserData = async () => {
-              const userId = sessionStorage.getItem('userId');
-              const userRole = sessionStorage.getItem('userRole');
-        
-              if (!userId || !userRole) {
-                // If there's no userId or userRole, redirect to the login page
-                router.push('/'); // Adjust the path to your login page
-                return;
-              }
-        
-              try {
-                // Make the API call to fetch user data based on userId and userRole
-                const response = await fetch(`/api/User_Data/RetrieveData?userId=${userId}&userRole=${userRole}`);
-                if (!response.ok) {
-                  throw new Error('Failed to fetch user data');
-                }
-        
-                const data = await response.json();
-    
-                setUserFullData(data.user); 
-    
-              } catch (error) {
-                console.error('Error fetching user data:', error);
-              }
-            };
-        
-            fetchUserData();
+        fetchUserData();
           }, [router]);
 
 
@@ -69,13 +82,19 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess() {
+        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         router.push('/');
     }
 
-    
-    function GotoStudentResForm(){
-        router.push('/student_reservation');
-    }
+
+    const [SelectedModification, setSelectForm] = useState("");
+    const handlePageChange = (page) => {
+            setSelectForm(page);
+        };
+    const handleReservationForm = () => {
+        handlePageChange("StudentReservation");
+    };
+
 
     return (
         <div className={styles.Gen_Body}>
@@ -127,7 +146,7 @@ export default function Incharge_Main() {
                         <div className={styles.CenterItemDIV}>
                             <span>
                                 <button 
-                                onClick={GotoStudentResForm}
+                                onClick={handleReservationForm}
                                 className={styles.CommonButtonn}>
                                     <AiIcons.AiOutlineCalendar size={30} /> 
                                     RESERVE NOW
@@ -214,6 +233,14 @@ export default function Incharge_Main() {
 
                 </div>
             </div>
+
+            {SelectedModification === "StudentReservation" && (
+                <div className={styles.BlurryBackground}>
+                <StudentReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
+                <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+            </div>
+
+            )}
         </div>
     </div>
     );

@@ -711,6 +711,7 @@ ITEM TEBLE DESIGN
     background-color:rgba(0, 0, 0, 0.7); 
     top: 0;
     right: 0;
+    z-index: 10;
 }
 
 /* ============================================
@@ -850,7 +851,7 @@ ADD ITEM FORM
 
 .closeBtn {
     background-color: transparent;
-    z-index: 10;
+    z-index: 8;
     position: absolute;
     font-size: 30px;
     top: 20px;
@@ -882,4 +883,65 @@ ADD ITEM FORM
 .SpanFlex{
     display: flex;
     justify-content: space-between;
+}
+
+
+
+.Formmm{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.Formmm h4{
+    color: #181818;
+}
+.Formmm p{
+    color: #181818;
+    font-size: 15px;
+}
+.Formmm label{
+    color: #181818;
+    font-size: 15px;
+}
+.ItemBoxxx {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #c8c8c8;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+.ItemBoxxx img{
+    border-radius: 8px;
+    height: 150px;
+    width: 300px;
+    background-color: #fff;
+}
+
+.ScrollableBoxx{
+    height: 300px;
+    overflow-y: auto;
+}
+
+.ItemBoxxxSelected{
+    background-color: #19e412;
+}
+
+.SelectedItemDetails p,
+.SelectedItemDetails h5,
+.SelectedItemDetails label {
+    color: #141414;
+}
+
+.SelectedItemDetails{
+    display: flex;
+    flex-direction: column;
+}
+
+.SpanFlexx{
+    display: flex;
+    justify-content:space-between;
 }
