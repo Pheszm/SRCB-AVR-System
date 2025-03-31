@@ -1,9 +1,26 @@
 import styles from "@/styles/Admin.module.css";
 import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
-import AddItemsForm from "./../Incharge_Pages/Forms/AddStudent";
+import React, { useState, useEffect } from 'react';
+import AddInchargeForm from "./Forms/Add_Incharge"; // Update form name to Add_Incharge
+import Swal from 'sweetalert2';  // Import SweetAlert2
+import UpdateInchargeForm from './Forms/Update_Incharge'; // Update form name to Update_Incharge
+import ViewInchargeForm from './Forms/View_Incharge'; // Update form name to View_Incharge
 
 export default function Incharge_Items() {
+    const [data, setData] = useState([]);
+    const [selectedIncharge, setSelectedIncharge] = useState(null);
+    
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/api/Admin_Func/InchargeFunc'); // Update API endpoint for Incharge
+            if (!response.ok) throw new Error('Failed to fetch data');
+            setData(await response.json());
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => { fetchData(); }, []);
 
     const [SelectedModification, setSelectForm] = useState("");
     const handlePageChange = (page) => {
@@ -13,43 +30,79 @@ export default function Incharge_Items() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [showActions, setShowActions] = useState(false); 
-    const [selectedCategory, setSelectedCategory] = useState("");
     const rowsPerPage = 10;
 
-    // Sample data generation for staff (including Fullname, Email, Username, and Password)
-    const data = Array.from({ length: 30 }, (_, index) => ({
-        id: index + 1,
-        fullname: [
-            "Alice Reyes", "Bob Santos", "Charlie Dela Cruz", "Diana Lopez", "Ethan Perez", "Fiona Garcia", 
-            "George Mendoza", "Hannah Flores", "Irene Bautista", "Jack Alvarez", "Karen Ramos", "Louis Villanueva", 
-            "Maria Cruz", "Nathan Diaz", "Olivia Santos", "Paulina Reyes", "Quincy Castillo", "Rafael Bautista", 
-            "Sophia Garcia", "Tommy Perez", "Ursula Valdez", "Victor Ramos", "Wendy Mendoza", "Xander Lopez", 
-            "Yvonne Flores", "Zack Alvarez", "Ariana Villanueva", "Brandon Diaz", "Cynthia Cruz", "Daryl Reyes"
-        ][index], // Appropriately set names
-        email: `user${index + 1}@example.com`, // Sample email
-        username: `user${index + 1}`, // Sample username
-        password: `password${index + 1}`, // Sample password
-    }));
-
-    // Extract unique categories from the data
-    const categories = [...new Set(data.map(item => item.category))];
-
+    // Filter data based on search input
     const filteredData = data.filter(
-        ({ fullname, email, username, category }) =>
-            (selectedCategory === "" || category === selectedCategory) &&
-            (email.toLowerCase().includes(search.toLowerCase()) ||
-            fullname.toLowerCase().includes(search.toLowerCase()) ||
-            username.toLowerCase().includes(search.toLowerCase()) ||
-            category.toLowerCase().includes(search.toLowerCase()))
+        ({ C_Fullname, C_Email, C_Username }) =>
+            C_Fullname.toLowerCase().includes(search.toLowerCase()) ||
+            C_Email.toLowerCase().includes(search.toLowerCase()) ||
+            C_Username.toLowerCase().includes(search.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const currentRows = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
+    const handleFormClose = () => {
+        // Refresh the data when the form is closed
+        fetchData();
+        setSelectForm(""); // Close the form
+    };
+
+    const handleUpdateIncharge = (incharge) => {
+        setSelectedIncharge(incharge);
+        setSelectForm("UpdateIncharge");
+    };
+
+    const handleViewIncharge = (incharge) => {
+        setSelectedIncharge(incharge);
+        setSelectForm("ViewIncharge");
+    };
+
+    const handleDeleteIncharge = async (inchargeId, fullname) => {
+        // SweetAlert confirmation before proceeding with the delete action
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: `Removing ${fullname}. You won't be able to revert this!`, 
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        });
+    
+        if (result.isConfirmed) {
+            // Optimistically remove the incharge from the UI first
+            setData(prevData => prevData.filter(incharge => incharge.C_id !== inchargeId));
+    
+            try {
+                const response = await fetch('/api/Admin_Func/InchargeFunc', { // Update API endpoint for Incharge
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ C_id: inchargeId }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to delete incharge');
+                }
+    
+                // Show success alert
+                await Swal.fire('Deleted!', 'The incharge has been deleted.', 'success');
+            } catch (error) {
+                console.error('Error deleting incharge:', error);
+                await Swal.fire('Error!', 'There was an issue deleting the incharge.', 'error');
+                // If there's an error, restore the deleted incharge to the table
+                fetchData(); 
+            }
+        }
+    };
+
     return (
         <div className={styles.ItemBodyArea}>
-            <h2>AVR INCHARGE</h2>
-            <p>Manage account for avr incharge</p>
+            <h2>SRCB INCHARGES</h2>
+            <p>Manage account for srcb incharges</p>
 
             <br /><br />
             <div className={styles.ItemFilterArea}>
@@ -62,23 +115,6 @@ export default function Incharge_Items() {
                         setCurrentPage(1); 
                     }}
                 />
-
-                <div>
-                    <select 
-                        value={selectedCategory} 
-                        onChange={(e) => {
-                            setSelectedCategory(e.target.value);
-                            setCurrentPage(1);
-                        }}
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-                </div>
 
                 <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddItem")}>
                     Add Incharge
@@ -100,19 +136,33 @@ export default function Incharge_Items() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRows.map(({ id, fullname, email, username, password }) => (
-                        <tr key={id}>
-                            <td>{fullname}</td>
-                            <td>{email}</td>
-                            <td>{username}</td>
+                    {currentRows.map((incharge) => (  // iterate over currentRows, each item is 'incharge'
+                        <tr key={incharge.C_id}>  {/* Use incharge.C_id as the unique key */}
+                            <td>{incharge.C_Fullname}</td> {/* Access incharge properties */}
+                            <td>{incharge.C_Email}</td>
+                            <td>{incharge.C_Username}</td>
                             <td>
-                                {showActions ? password : "******"} {/* Conditionally render password */}
+                                {showActions ? incharge.C_Password : "******"} 
                             </td>
                             {showActions && (
                                 <td>
-                                    <button>View</button>
-                                    <button className={styles.EditBtnnn}>Update</button>
-                                    <button className={styles.RemoveBtnnn}>Delete</button>
+                                    <button
+                                    onClick={() => handleViewIncharge(incharge)}
+                                    >View
+                                    </button>
+
+                                    <button 
+                                        className={styles.EditBtnnn} 
+                                        onClick={() => handleUpdateIncharge(incharge)}  // Pass full incharge object
+                                    >
+                                        Update
+                                    </button>
+                                    <button 
+                                        className={styles.RemoveBtnnn} 
+                                        onClick={() => handleDeleteIncharge(incharge.C_id, incharge.C_Fullname)}   
+                                        >                                 
+                                        Remove
+                                    </button>
                                 </td>
                             )}
                         </tr>
@@ -136,12 +186,26 @@ export default function Incharge_Items() {
                 </button>
             </div>
 
-            {SelectedModification === "AddItem" && (
+            {SelectedModification === "ViewIncharge" && selectedIncharge && (
                 <div className={styles.BlurryBackground}>
-                    {SelectedModification === "AddItem" && <AddItemsForm/>}
+                    <ViewInchargeForm incharge={selectedIncharge} onClose={handleFormClose} onUpdate={fetchData} />
                     <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
+
+            {SelectedModification === "AddItem" && (
+                <div className={styles.BlurryBackground}>
+                    <AddInchargeForm onClose={handleFormClose} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+            {SelectedModification === "UpdateIncharge" && selectedIncharge && (
+                <div className={styles.BlurryBackground}>
+                    <UpdateInchargeForm incharge={selectedIncharge} onClose={handleFormClose} onUpdate={fetchData} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+
         </div>
     );
 }

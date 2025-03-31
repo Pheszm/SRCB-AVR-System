@@ -1,7 +1,7 @@
 import styles from "@/styles/Admin.module.css";
 import * as AiIcons from "react-icons/ai";
 import * as AiIcons_md from "react-icons/md";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import Inchargee from "./Admin_Pages/Admin_Incharge";
 import Stafff from "./Admin_Pages/Admin_Staff";
@@ -10,6 +10,17 @@ import Studentt from "./Admin_Pages/Admin_Student";
 export default function Incharge_Main() {
     const router = useRouter(); 
 
+
+  useEffect(() => {
+    const userId = sessionStorage.getItem('userId');
+    const userRole = sessionStorage.getItem('userRole');
+
+    if (!userId || !userRole) {
+      router.push('/');  // Adjust the path to your actual login page
+    }
+  }, [router]);
+
+    
     // Function to set the selected page
     const [selectedPage, setSelectedPage] = useState("Student");
     const handlePageChange = (page) => {
@@ -41,7 +52,7 @@ export default function Incharge_Main() {
 
     return (
         <div className={styles.Gen_Body}>
-            <title>SRCB AVR | Incharge</title>
+            <title>SRCB AVR | Admin</title>
             {/* Sidebar */}
             
             <aside className={`${styles.SidebarPart} ${isSidebarOpen ? styles.open : styles.closed}`}>   

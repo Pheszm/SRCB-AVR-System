@@ -1,9 +1,24 @@
 import styles from "@/styles/Admin.module.css";
 import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
-import AddItemsForm from "./../Incharge_Pages/Forms/AddStudent";
+import React, { useState, useEffect } from 'react';
+import AddStaffForm from "./Forms/Add_Staff";
+import Swal from 'sweetalert2';  // Import SweetAlert2
+import UpdateStaffForm from './Forms/Update_Staff';
+import ViewStaffForm from './Forms/View_Staff';
 
 export default function Incharge_Items() {
+    const [data, setData] = useState([]);
+    const [selectedStaff, setSelectedStaff] = useState(null);
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/api/Admin_Func/StaffFunc');
+            if (!response.ok) throw new Error('Failed to fetch data');
+            setData(await response.json());
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => { fetchData(); }, []);
 
     const [SelectedModification, setSelectForm] = useState("");
     const handlePageChange = (page) => {
@@ -13,38 +28,79 @@ export default function Incharge_Items() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [showActions, setShowActions] = useState(false); 
-    const [selectedCategory, setSelectedCategory] = useState("");
     const rowsPerPage = 10;
-
-    // Sample data generation for staff (including Fullname, Email, Username, and Password)
-    const data = Array.from({ length: 30 }, (_, index) => ({
-        id: index + 1,
-        fullname: [
-            "Alice Reyes", "Bob Santos", "Charlie Dela Cruz", "Diana Lopez", "Ethan Perez", "Fiona Garcia", 
-            "George Mendoza", "Hannah Flores", "Irene Bautista", "Jack Alvarez", "Karen Ramos", "Louis Villanueva", 
-            "Maria Cruz", "Nathan Diaz", "Olivia Santos", "Paulina Reyes", "Quincy Castillo", "Rafael Bautista", 
-            "Sophia Garcia", "Tommy Perez", "Ursula Valdez", "Victor Ramos", "Wendy Mendoza", "Xander Lopez", 
-            "Yvonne Flores", "Zack Alvarez", "Ariana Villanueva", "Brandon Diaz", "Cynthia Cruz", "Daryl Reyes"
-        ][index], // Appropriately set names
-        email: `user${index + 1}@example.com`, // Sample email
-        username: `user${index + 1}`, // Sample username
-        password: `password${index + 1}`, // Sample password
-    }));
 
     // Extract unique categories from the data
     const categories = [...new Set(data.map(item => item.category))];
 
+    // Filter data based on search input
     const filteredData = data.filter(
-        ({ fullname, email, username, category }) =>
-            (selectedCategory === "" || category === selectedCategory) &&
-            (email.toLowerCase().includes(search.toLowerCase()) ||
-            fullname.toLowerCase().includes(search.toLowerCase()) ||
-            username.toLowerCase().includes(search.toLowerCase()) ||
-            category.toLowerCase().includes(search.toLowerCase()))
+        ({ T_Fullname, T_Email, T_Username }) =>
+            T_Fullname.toLowerCase().includes(search.toLowerCase()) ||
+            T_Email.toLowerCase().includes(search.toLowerCase()) ||
+            T_Username.toLowerCase().includes(search.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const currentRows = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+    const handleFormClose = () => {
+        // Refresh the data when the form is closed
+        fetchData();
+        setSelectForm(""); // Close the form
+    };
+
+
+    const handleUpdateStaff = (staff) => {
+        setSelectedStaff(staff);
+        setSelectForm("UpdateStaff");
+    };
+
+    const handleViewStaff = (staff) => {
+        setSelectedStaff(staff);
+        setSelectForm("ViewStaff");
+    };
+
+    const handleDeleteStaff = async (staffId, Fullnamee) => {
+        // SweetAlert confirmation before proceeding with the delete action
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: `Removing ${Fullnamee}. You won't be able to revert this!`, 
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        });
+    
+        if (result.isConfirmed) {
+            // Optimistically remove the staff from the UI first
+            setData(prevData => prevData.filter(staff => staff.T_id !== staffId));
+    
+            try {
+                const response = await fetch('/api/Admin_Func/StaffFunc', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ T_id: staffId }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to delete staff');
+                }
+    
+                // Show success alert
+                await Swal.fire('Deleted!', 'The staff has been deleted.', 'success');
+            } catch (error) {
+                console.error('Error deleting staff:', error);
+                await Swal.fire('Error!', 'There was an issue deleting the staff.', 'error');
+                // If there's an error, restore the deleted staff to the table
+                fetchData(); 
+            }
+        }
+    };
+    
 
     return (
         <div className={styles.ItemBodyArea}>
@@ -62,23 +118,6 @@ export default function Incharge_Items() {
                         setCurrentPage(1); 
                     }}
                 />
-
-                <div>
-                    <select 
-                        value={selectedCategory} 
-                        onChange={(e) => {
-                            setSelectedCategory(e.target.value);
-                            setCurrentPage(1);
-                        }}
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-                </div>
 
                 <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddItem")}>
                     Add Staff
@@ -100,19 +139,33 @@ export default function Incharge_Items() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRows.map(({ id, fullname, email, username, password }) => (
-                        <tr key={id}>
-                            <td>{fullname}</td>
-                            <td>{email}</td>
-                            <td>{username}</td>
+                    {currentRows.map((staff) => (  // iterate over currentRows, each item is 'staff'
+                        <tr key={staff.T_id}>  {/* Use staff.T_id as the unique key */}
+                            <td>{staff.T_Fullname}</td> {/* Access staff properties */}
+                            <td>{staff.T_Email}</td>
+                            <td>{staff.T_Username}</td>
                             <td>
-                                {showActions ? password : "******"} {/* Conditionally render password */}
+                                {showActions ? staff.T_Password : "******"} 
                             </td>
                             {showActions && (
                                 <td>
-                                    <button>View</button>
-                                    <button className={styles.EditBtnnn}>Update</button>
-                                    <button className={styles.RemoveBtnnn}>Delete</button>
+                                    <button
+                                    onClick={() => handleViewStaff(staff)}
+                                    >View
+                                    </button>
+
+                                    <button 
+                                        className={styles.EditBtnnn} 
+                                        onClick={() => handleUpdateStaff(staff)}  // Pass full student object
+                                    >
+                                        Update
+                                    </button>
+                                    <button 
+                                        className={styles.RemoveBtnnn} 
+                                        onClick={() => handleDeleteStaff(staff.T_id, staff.T_Fullname)}   
+                                        >                                 
+                                        Remove
+                                    </button>
                                 </td>
                             )}
                         </tr>
@@ -136,12 +189,26 @@ export default function Incharge_Items() {
                 </button>
             </div>
 
-            {SelectedModification === "AddItem" && (
+            {SelectedModification === "ViewStaff" && selectedStaff && (
                 <div className={styles.BlurryBackground}>
-                    {SelectedModification === "AddItem" && <AddItemsForm/>}
+                    <ViewStaffForm staff={selectedStaff} onClose={handleFormClose} onUpdate={fetchData} />
                     <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
+
+            {SelectedModification === "AddItem" && (
+                <div className={styles.BlurryBackground}>
+                    <AddStaffForm onClose={handleFormClose} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+            {SelectedModification === "UpdateStaff" && selectedStaff && (
+                <div className={styles.BlurryBackground}>
+                    <UpdateStaffForm staff={selectedStaff} onClose={handleFormClose} onUpdate={fetchData} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+
         </div>
     );
 }

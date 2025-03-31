@@ -1,15 +1,46 @@
 import styles from "@/styles/User.module.css";
 import * as AiIcons from "react-icons/ai";
 import * as AiIcons_md from "react-icons/md";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import AllTransact from "./User_Pages/User_allTransactions";
 
 export default function Incharge_Main() {
-        const [showActions, setShowActions] = useState(false);
-    const router = useRouter(); 
+    const router = useRouter();     
+    const [UserFullData, setUserFullData] = useState(null);
+
+      useEffect(() => {
+            const fetchUserData = async () => {
+              const userId = sessionStorage.getItem('userId');
+              const userRole = sessionStorage.getItem('userRole');
+        
+              if (!userId || !userRole) {
+                // If there's no userId or userRole, redirect to the login page
+                router.push('/'); // Adjust the path to your login page
+                return;
+              }
+        
+              try {
+                // Make the API call to fetch user data based on userId and userRole
+                const response = await fetch(`/api/User_Data/RetrieveData?userId=${userId}&userRole=${userRole}`);
+                if (!response.ok) {
+                  throw new Error('Failed to fetch user data');
+                }
+        
+                const data = await response.json();
+    
+                setUserFullData(data.user); 
+    
+              } catch (error) {
+                console.error('Error fetching user data:', error);
+              }
+            };
+        
+            fetchUserData();
+          }, [router]);
+
+
     const today = new Date().toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
-    const [search, setSearch] = useState("");
     // Sample filteredData array (replace with actual data)
     const filteredData = [
         { status: "Upcoming", date: "3/6/2025 (1:00PM to 4:00PM)", items: "1 Microphone, 1 Speaker" },
@@ -71,7 +102,7 @@ export default function Incharge_Main() {
                             </div>
                         )}
                         <div className={styles.SeparationLine}></div>
-                        <p>Carl Wyne S. Gallardo</p>
+                        <p>{UserFullData?.fullname}</p>
                         <img onClick={handleProfileClick} className={IsProfileDropdown === true ? styles.ProfileOpened : ""} src="./Assets/Img/UnknownProfile.jpg"></img>  
                         {IsProfileDropdown && (
                             <div className={styles.DropdownMenu}>

@@ -1,62 +1,123 @@
 import styles from "@/styles/Admin.module.css";
-import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
-import AddItemsForm from "./../Incharge_Pages/Forms/AddStudent";
+import React, { useState, useEffect } from 'react';
+import AddStudentForm from "./Forms/Add_Student";
+import ImportStudentForm from "./Forms/Import_Student";
+import UpdateStudentForm from './Forms/Update_Student'; // Import the update form
+import ViewStudentForm from './Forms/View_Student';
+import Swal from 'sweetalert2';  // Import SweetAlert2
 
 export default function Incharge_Items() {
-
-    const [SelectedModification, setSelectForm] = useState("");
-    const handlePageChange = (page) => {
-        setSelectForm(page);
-    };
-
+    const [SelectedModification, setSelectForm] = useState(""); 
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
-    const [showActions, setShowActions] = useState(false); 
+    const [showActions, setShowActions] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [data, setData] = useState([]);
+    const [selectedStudent, setSelectedStudent] = useState(null); // State to store the student to be updated
     const rowsPerPage = 10;
 
-    // Sample data generation
-    const data = Array.from({ length: 30 }, (_, index) => ({
-        id: index + 1,
-        studentId: `C2299${index + 1}`,
-        fullname: [
-            "Alice Reyes", "Bob Santos", "Charlie Dela Cruz", "Diana Lopez", "Ethan Perez", "Fiona Garcia", 
-            "George Mendoza", "Hannah Flores", "Irene Bautista", "Jack Alvarez", "Karen Ramos", "Louis Villanueva", 
-            "Maria Cruz", "Nathan Diaz", "Olivia Santos", "Paulina Reyes", "Quincy Castillo", "Rafael Bautista", 
-            "Sophia Garcia", "Tommy Perez", "Ursula Valdez", "Victor Ramos", "Wendy Mendoza", "Xander Lopez", 
-            "Yvonne Flores", "Zack Alvarez", "Ariana Villanueva", "Brandon Diaz", "Cynthia Cruz", "Daryl Reyes"
-        ][index], // Appropriately set names
-        category: [
-            "Basic Education Department",
-            "Higher Education Department",
-            "Senior High School Department"
-        ][index % 3], // Assign a rotating category to each student
-        level: ["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Freshman", "Sophomore", "Junior", "Senior"][
-            Math.floor(index % 10 / 2)
-        ], // Assign levels based on the student's index
-    }));
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/api/Admin_Func/StudentFunc');
+            if (!response.ok) throw new Error('Failed to fetch data');
+            setData(await response.json());
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-    // Extract unique categories from the data
-    const categories = [...new Set(data.map(item => item.category))];
+    useEffect(() => { fetchData(); }, []);
+
+    const categories = [...new Set(data.map(item => item.S_Category))];
 
     const filteredData = data.filter(
-        ({ studentId, fullname, category }) =>
-            (selectedCategory === "" || category === selectedCategory) &&
-            (studentId.toLowerCase().includes(search.toLowerCase()) ||
-            fullname.toLowerCase().includes(search.toLowerCase()) ||
-            category.toLowerCase().includes(search.toLowerCase()))
+        ({ S_StudentID, S_Fullname, S_Category }) =>
+            (selectedCategory === "" || S_Category === selectedCategory) &&
+            (S_StudentID.toLowerCase().includes(search.toLowerCase()) ||
+            S_Fullname.toLowerCase().includes(search.toLowerCase()) ||
+            S_Category.toLowerCase().includes(search.toLowerCase()))
     );
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const currentRows = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
+    const handlePageChange = (page) => {
+        setSelectForm(page);
+    };
+
+    const handleUpdateStudent = (student) => {
+        setSelectedStudent(student);
+        setSelectForm("UpdateStudent");
+    };
+
+    const handleViewStudent = (student) => {
+        setSelectedStudent(student);
+        setSelectForm("ViewStudent");
+    };
+
+    const handleCloseForm = () => {
+        setSelectForm("");
+        fetchData();
+    };
+
+    const handleDeleteStudent = async (studentId, Fullnamee) => {
+        // SweetAlert confirmation before proceeding with the delete action
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: `Removing ${Fullnamee}. You won't be able to revert this!`, 
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('/api/Admin_Func/StudentFunc', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ S_id: studentId }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete student');
+                }
+
+                // Remove the student from the data list after successful deletion
+                setData(prevData => prevData.filter(student => student.S_id !== studentId));
+
+                // Show success alert
+                await Swal.fire('Deleted!', 'The student has been deleted.', 'success');
+            } catch (error) {
+                console.error('Error deleting student:', error);
+                await Swal.fire('Error!', 'There was an issue deleting the student.', 'error');
+            }
+        }
+    };
+
     return (
         <div className={styles.ItemBodyArea}>
-            <h2>SRCB STUDENTS</h2>
-            <p>Manage account for srcb students</p>
+            
+            
+            <span className={styles.SpanFlex}>
+                <span>
+                    <h2>SRCB STUDENTS</h2>
+                    <p>Manage account for SRCB students</p>
+                </span>
+
+                <button className={styles.SettingsBtn} onClick={() => handlePageChange("ImportStudents")}>
+                    Import Student List
+                </button>
+            </span>
+
+
+
 
             <br /><br />
+
             <div className={styles.ItemFilterArea}>
                 <input
                     type="search"
@@ -67,7 +128,6 @@ export default function Incharge_Items() {
                         setCurrentPage(1); 
                     }}
                 />
-
                 <div>
                     <select 
                         value={selectedCategory} 
@@ -85,7 +145,7 @@ export default function Incharge_Items() {
                     </select>
                 </div>
 
-                <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddItem")}>
+                <button className={styles.SettingsBtn} onClick={() => handlePageChange("AddStudent")}>
                     Add Student
                 </button>
 
@@ -105,23 +165,65 @@ export default function Incharge_Items() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRows.map(({ id, studentId, fullname, category, level }) => (
-                        <tr key={id}>
-                            <td>{studentId}</td>
-                            <td>{fullname}</td>
-                            <td>{category}</td>
-                            <td>{level}</td>
+                    {currentRows.map((student) => (
+                        <tr key={student.S_StudentID}>
+                            <td>{student.S_StudentID}</td>
+                            <td>{student.S_Fullname}</td>
+                            <td>{student.S_Category}</td>
+                            <td>{student.S_Level}</td>
                             {showActions && (
                                 <td>
-                                    <button>View</button>
-                                    <button className={styles.EditBtnnn}>Update</button>
-                                    <button className={styles.RemoveBtnnn}>Delete</button>
+                                    <button
+                                    onClick={() => handleViewStudent(student)}
+                                    >View
+                                    </button>
+                                    
+                                    <button 
+                                        className={styles.EditBtnnn} 
+                                        onClick={() => handleUpdateStudent(student)}  // Pass full student object
+                                    >
+                                        Update
+                                    </button>
+                                    <button 
+                                        className={styles.RemoveBtnnn} 
+                                        onClick={() => handleDeleteStudent(student.S_id, student.S_Fullname)}   
+                                        >                                 
+                                        Remove
+                                    </button>
                                 </td>
                             )}
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {SelectedModification === "ViewStudent" && selectedStudent && (
+                <div className={styles.BlurryBackground}>
+                    <ViewStudentForm student={selectedStudent} onClose={handleCloseForm} onUpdate={fetchData} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+
+            {SelectedModification === "UpdateStudent" && selectedStudent && (
+                <div className={styles.BlurryBackground}>
+                    <UpdateStudentForm student={selectedStudent} onClose={handleCloseForm} onUpdate={fetchData} />
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+
+            {SelectedModification === "AddStudent" && (
+                <div className={styles.BlurryBackground}>
+                    <AddStudentForm onClose={handleCloseForm}/>
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
+
+            {SelectedModification === "ImportStudents" && (
+                <div className={styles.BlurryBackground}>
+                    <ImportStudentForm onClose={handleCloseForm}/>
+                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                </div>
+            )}
 
             <div className={styles.PagenationArea}>
                 <button
@@ -138,13 +240,6 @@ export default function Incharge_Items() {
                     Next
                 </button>
             </div>
-
-            {SelectedModification === "AddItem" && (
-            <div className={styles.BlurryBackground}>
-                 {SelectedModification === "AddItem" && <AddItemsForm/>}
-                <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
-            </div>
-            )}
         </div>
     );
 }

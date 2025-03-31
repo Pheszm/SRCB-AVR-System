@@ -718,15 +718,19 @@ ADD ITEM FORM
 ============================================ */
 
 .AddItemForm{
-    width: 100vw;
+    width: 390px;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.AddItemForm h2{
+    text-align: center;
+}
+
 .AddItemForm form{
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
 }
 .AddItemForm input{
@@ -737,6 +741,15 @@ ADD ITEM FORM
     border-radius: 5px;
     border: none;
 }
+.AddItemForm select{
+    width: 100%;
+    background-color: #e5e5e5;
+    padding: 10px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+}
+
 .CenterItemDIV{
     display: flex;
     align-items: center;
@@ -770,6 +783,17 @@ ADD ITEM FORM
 }
 
 
+.FieldsArea{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    background-color: #e5e5e5;
+    padding: 10px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+}
 
 .AddItemForm button {
     width: 100%;
@@ -794,12 +818,13 @@ ADD ITEM FORM
 }
 
 .ImageArea{
-    height: 200px;
-    width: 350px;
+    height: 150px;
+    width: 310px;
     background-color: #b7b7b7;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-size: cover;
 }
 .ImageArea button{
     padding: 3.5px;
@@ -852,4 +877,9 @@ ADD ITEM FORM
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.SpanFlex{
+    display: flex;
+    justify-content: space-between;
 }

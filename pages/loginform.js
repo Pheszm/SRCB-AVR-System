@@ -3,10 +3,14 @@ import * as AiIcons from "react-icons/ai";
 import React, { useState } from 'react';
 import { QR_Login } from "../components/QR_Scanning";
 import { useRouter } from "next/router"; 
+import Swal from 'sweetalert2';  // Import SweetAlert2
 
-export default function Home() {
+export default function LoginForm() {
   const [showPass, setShowPass] = useState(false);
-  const router = useRouter(); 
+
+  const [loading, setLoading] = useState(false);  // Track loading state
+  const router = useRouter();
+
 
 
   // Open or Close the QR Scanner
@@ -16,7 +20,6 @@ export default function Home() {
     document.querySelector(`.${styles.qrOverlay}`).style.display = isScanning ? 'none' : 'flex';
   };
 
-
   // QR Scanner Data Reciever
   const handleScanSuccess = (decodedText) => {
     console.log("QR Code Scanned:", decodedText);
@@ -24,49 +27,133 @@ export default function Home() {
     toggleScan();
   };
 
-
   // QR Login Process
-  function QRLoginProcess(ID) {
-    const user = Users.find((user) => user.id === ID);
-    if (user) {
-      router.push('/Incharge');
-    } else {
-      console.log("User not found");
-    }
-  }
+  const QRLoginProcess = async (qrcode) => {
+    try {
+      const response = await fetch(`/api/Login_Process/LoginProcess?qrcode=${qrcode}`, {
+        method: 'GET',
+      });
+      const data = await response.json();
 
-  // Sample Data for Logging-in
-  const Users = [
-    { id: "ID-C220023", username: "incharge", password: "incharge", role:"Incharge" },
-    { id: "ID-C220228", username: "student", password: "student", role:"Student" },
-    { id: "ID-C220023", username: "staff", password: "staff", role:"Staff" },
-    { id: "ID-C220030", username: "admin", password: "admin", role:"Admin" },
-  ];
+      if (data.users.length > 0) {
+        await navigateUser(data.users[0]);
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid QR Code',
+          text: 'The QR Code you provided is Invalid.',
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'An error occurred',
+        text: 'There was an issue fetching the user data. Please try again later.',
+      });
+    }
+  };
+
+
+
+
+
+
 
   // Input Login Process
-  const LoginProcess = () => {
-    // Get user input values
-  const username = document.getElementById("UserN").value;
-  const password = document.getElementById("PassW").value;
+  const LoginProcess = async () => {
+    const username = document.getElementById("UserN").value;
+    const password = document.getElementById("PassW").value;
+  
+    // Validate username and password fields
+    if (!username || !password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Input required',
+        text: 'Please enter both username and password.',
+      });
+      return;
+    }
+  
+    // Call the backend to authenticate the user
+    try {
+      setLoading(true);
+      const response = await fetch('/api/Login_Process/LoginProcess');
+      
+      // Check if the response is valid
+      if (!response.ok) {
+        console.error('Failed to fetch users from API');
+        Swal.fire({
+          icon: 'error',
+          title: 'An error occurred',
+          text: 'There was an issue with the login process. Please try again later.',
+        });
+        return;
+      }
+  
+      const data = await response.json();
+  
+      // Check if users array exists and is valid
+      if (data && Array.isArray(data.users)) {
+        const user = data.users.find((user) => user.username === username && user.password === password);
+  
+        if (user) {
+          await navigateUser(user); // Wait for SweetAlert confirmation before proceeding
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'User not found',
+            text: 'Invalid Username or Password.',
+          });
+        }
+      } else {
+        console.error('Invalid response format:', data);
+        Swal.fire({
+          icon: 'error',
+          title: 'An error occurred',
+          text: 'There was an issue while processing your login data.',
+        });
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'An error occurred',
+        text: 'There was an issue during login. Please try again later.',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Navigate user based on role and store ID and role in session
+  const navigateUser = async (user) => {
+    // Store the user ID and role in sessionStorage
+    sessionStorage.setItem('userId', user.id);
+    sessionStorage.setItem('userRole', user.role);
 
-  // Find the user matching the username and password
-  const user = Users.find((user) => user.username === username && user.password === password);
+    // SweetAlert for confirming login before navigation
+    await Swal.fire({
+      icon: 'success',
+      title: 'Login Successful!',
+      text: `You are Login as ${user.role}`,
+    });
 
-  // If user is found
-  if (user) {
-    alert("User found: " + user.username);
     if (user.role === "Admin") {
       router.push('/Admin');
-    } else if (user.role === "Incharge") {
-        router.push('/Incharge');
-    } else if (user.role === "Staff") {
+    } 
+    else if (user.role === "Incharge") {
+      router.push('/Incharge');
+    } 
+    else if (user.role === "Student") {
       router.push('/User');
-    } else if (user.role === "Student") {
+    } 
+    else if (user.role === "Staff") {
       router.push('/User');
     }
-  } else {
-    alert("User not found");
-  }
+    else {
+      router.push('/Home');  // Default redirect if role is not found
+    }
   };
 
   return (
@@ -86,16 +173,29 @@ export default function Home() {
             {showPass ? <AiIcons.AiFillEyeInvisible size={20} /> : <AiIcons.AiFillEye size={20} />}
           </button>
         </div>
-        <button className={styles.Login_btn} onClick={LoginProcess}>Login</button>
+
+        <button 
+          className={styles.Login_btn} 
+          onClick={LoginProcess}
+          disabled={loading}  // Disable the button when loading
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+
         <button className={styles.loginwithQR} onClick={toggleScan}>Login using QR Code</button>
       </div>
 
+      {/* QR Scanner Overlay */}
       <div className={styles.qrOverlay}>
         <button className={styles.closeBtn} onClick={toggleScan}>x</button>
         <div className={styles.qrScanner}>
           <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
         </div>
       </div>
+
+
+
+
     </div>
   );
 }
