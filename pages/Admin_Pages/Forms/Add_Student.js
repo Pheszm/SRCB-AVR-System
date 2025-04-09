@@ -94,8 +94,12 @@ export default function Adding_Item_Form({ onClose }) {
     return (
         <div className={styles.AddItemForm}>
             <form onSubmit={handleSubmit}>
+                <span className={styles.SpanHeader}>
+                    <h2>ADD STUDENT</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
                 {/* Full Name Input */}
-                <h2>ADD STUDENT</h2>
+                
                 <input
                     type="text"
                     placeholder="Full Name"

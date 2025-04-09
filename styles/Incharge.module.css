@@ -695,6 +695,7 @@ ITEM TEBLE DESIGN
 
 
 .BlurryBackground{
+    backdrop-filter: blur(10px);
     width: 100vw;
     height: 100vh;
     position: absolute;

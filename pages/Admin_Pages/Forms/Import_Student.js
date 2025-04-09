@@ -207,7 +207,11 @@ export default function FileImport({ onClose }) {
   return (
     <div className={styles.AddItemForm}>
       <form>
-        <h2>Upload Excel or CSV File</h2>
+        <span className={styles.SpanHeader}>
+          <h2>Upload Excel or CSV File</h2>
+          <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+        </span>
+ 
         <h4>NOTE:</h4>
         <img src="./Assets/Img/HelpArea.jpg" alt="Logo" style={{ width: '700px' }} />
         <p>- Always add the Headers in Row 1 from the Guide.</p>

@@ -83,7 +83,12 @@ export default function UpdateInchargeForm({ incharge, onClose, onUpdate }) {
     return (
         <div className={styles.AddItemForm}>
             <form onSubmit={handleSubmit}>
-                <h2>UPDATE INCHARGE</h2>
+            <span className={styles.SpanHeader}>
+            <h2>UPDATE INCHARGE</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
+
+                
                 <input
                     type="text"
                     placeholder="Full Name"

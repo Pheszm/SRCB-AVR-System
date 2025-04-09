@@ -28,7 +28,12 @@ export default function ViewInchargeForm({ incharge, onClose }) {
     return (
         <div className={styles.AddItemForm}>
             <form>
-                <h2>VIEWING INCHARGE</h2>
+            <span className={styles.SpanHeader}>
+            <h2>VIEWING INCHARGE</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
+
+               
 
                 <span className={styles.FieldsArea}>
                     <label>Fullname:</label>

@@ -102,13 +102,20 @@ CREATE TABLE Transaction (
 
     transac_reason TEXT,
     Transac_Category VARCHAR(255),
-    Transac_Needs TEXT,
 
     dateofuse DATETIME,
-    fromtime DATETIME,
-    totime DATETIME,
+    fromtime TIME,
+    totime TIME,
     returnedtime DATETIME,
 
     comments_afteruse TEXT,
     notif_status VARCHAR(50) DEFAULT 'Unread'
 );
+
+CREATE TABLE Items_needed (
+    needed_id INT AUTO_INCREMENT PRIMARY KEY,
+    transac_id INT,
+    I_id INT,
+    Quantity INT
+);
+

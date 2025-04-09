@@ -30,10 +30,40 @@ export default function UpdateStudentForm({ staff, onClose, onUpdate }) {
     return (
         <div className={styles.AddItemForm}>
             <form>
-                <h2>VIEWING STAFF</h2>
+                <span className={styles.SpanHeader}>
+                    <h2>VIEWING STAFF</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
+                
+
+                <div className={styles.ResponsiveAligner}>
+                    <div className={styles.RightAreaa2}>
+                        
+                <span className={styles.FieldsArea}>
+                    <label>Email:</label>
+                    <p>{T_Email}</p>
+                </span>
+
 
 
                 <span className={styles.FieldsArea}>
+                    <label>Username:</label>
+                    <p>{T_Username}</p>
+                </span>
+
+                <span className={styles.FieldsArea}>
+                    <label>Password:</label>
+                    <p>{T_Password}</p>
+                </span>
+
+                <span className={styles.FieldsArea}>
+                    <label>Created:</label>
+                    <p>{formattedDateTime}</p>
+                </span>
+                    </div>
+
+                    <div>
+                    <span className={styles.FieldsArea}>
                     <label>Fullname:</label>
                     <p>{fullname}</p>
                 </span>
@@ -60,32 +90,11 @@ export default function UpdateStudentForm({ staff, onClose, onUpdate }) {
 
                     <QR_Maker value={T_QRcode} size={150} />
                 </span>
+                    </div>
+                </div>
+                
 
 
-
-
-
-                <span className={styles.FieldsArea}>
-                    <label>Email:</label>
-                    <p>{T_Email}</p>
-                </span>
-
-
-
-                <span className={styles.FieldsArea}>
-                    <label>Username:</label>
-                    <p>{T_Username}</p>
-                </span>
-
-                <span className={styles.FieldsArea}>
-                    <label>Password:</label>
-                    <p>{T_Password}</p>
-                </span>
-
-                <span className={styles.FieldsArea}>
-                    <label>Created:</label>
-                    <p>{formattedDateTime}</p>
-                </span>
 
             </form>
         </div>

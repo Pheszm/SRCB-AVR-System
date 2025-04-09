@@ -95,38 +95,17 @@ export default function UpdateStudentForm({ student, onClose, onUpdate }) {
     return (
         <div className={styles.AddItemForm}>
             <form onSubmit={handleSubmit}>
-                <h2>VIEWING STUDENT</h2>
 
+            <span className={styles.SpanHeader}>
+                    <h2>VIEW STUDENT</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
+
+            <div className={styles.ResponsiveAligner}>
+                <div>
                 <span className={styles.FieldsArea}>
                     <label>Fullname:</label>
                     <p>{fullname}</p>
-                </span>
-
-                <span className={styles.SpanFlex}>
-                    <span>
-                        <span className={styles.FieldsArea}>
-                            <label>Sex:</label>
-                            <p>{S_Sex}</p>
-                        </span>
-
-                        <span className={styles.FieldsArea}>
-                            <label>Student ID:</label>
-                            <p>{S_StudentID}</p>
-                        </span>
-
-                        <span className={styles.FieldsArea}>
-                            <label>Phone No:</label>
-                            <p>{S_PhoneNo}</p>
-                        </span>
-                    </span>
-
-                    <QR_Maker value={S_QRcode} size={150} />
-                </span>
-
-
-                <span className={styles.FieldsArea}>
-                    <label>Category:</label>
-                    <p>{selectedOption}</p>
                 </span>
 
                 <span className={styles.FieldsArea}>
@@ -151,10 +130,45 @@ export default function UpdateStudentForm({ student, onClose, onUpdate }) {
                     <p>{S_Password}</p>
                 </span>
 
+
+                </div>
+
+
+                <div className={styles.RightAreaa2}>
+                <span className={styles.FieldsArea}>
+                    <label>Category:</label>
+                    <p>{selectedOption}</p>
+                </span>
+
+                <span className={styles.SpanFlex}>
+                    <span>
+                        <span className={styles.FieldsArea}>
+                            <label>Sex:</label>
+                            <p>{S_Sex}</p>
+                        </span>
+
+                        <span className={styles.FieldsArea}>
+                            <label>Student ID:</label>
+                            <p>{S_StudentID}</p>
+                        </span>
+
+                        <span className={styles.FieldsArea}>
+                            <label>Phone No:</label>
+                            <p>{S_PhoneNo}</p>
+                        </span>
+                    </span>
+
+                    <QR_Maker value={S_QRcode} size={150} />
+                </span>
                 <span className={styles.FieldsArea}>
                     <label>Created:</label>
                     <p>{formattedDateTime}</p>
                 </span>
+                </div>
+            </div>
+            
+
+             
 
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
             </form>

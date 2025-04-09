@@ -200,28 +200,24 @@ export default function Incharge_Items() {
             {SelectedModification === "ViewStudent" && selectedStudent && (
                 <div className={styles.BlurryBackground}>
                     <ViewStudentForm student={selectedStudent} onClose={handleCloseForm} onUpdate={fetchData} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
 
             {SelectedModification === "UpdateStudent" && selectedStudent && (
                 <div className={styles.BlurryBackground}>
                     <UpdateStudentForm student={selectedStudent} onClose={handleCloseForm} onUpdate={fetchData} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
 
             {SelectedModification === "AddStudent" && (
                 <div className={styles.BlurryBackground}>
                     <AddStudentForm onClose={handleCloseForm}/>
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
 
             {SelectedModification === "ImportStudents" && (
                 <div className={styles.BlurryBackground}>
                     <ImportStudentForm onClose={handleCloseForm}/>
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
                 </div>
             )}
 

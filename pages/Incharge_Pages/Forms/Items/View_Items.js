@@ -49,56 +49,69 @@ export default function ViewItemForm({ item, onClose }) {
     return (
         <div className={styles.AddItemForm}>
             <form>
-                <h2>VIEWING ITEM</h2>
-
-                <span className={styles.FieldsArea}>
-                    <div
-                        className={styles.ImageArea}
-                        style={{ backgroundImage: `url('/uploads/${C_Image}')` }}
-                    ></div>
-                </span>
-                
-                <span className={styles.FieldsArea}>
-                    <label>Item Name:</label>
-                    <p>{I_Name}</p>
+                <span className={styles.SpanHeader}>
+                    <h2>VIEWING ITEM</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
                 </span>
 
-                <span className={styles.SpanFlex}>
-                    <span>
 
+                <div className={styles.ResponsiveAligner}>
+                    <div>
                         <span className={styles.FieldsArea}>
-                            <label>Status:</label>
-                            <p>{I_Status}</p>
+                            <div
+                                className={styles.ImageArea}
+                                style={{ backgroundImage: `url('/uploads/${C_Image}')` }}
+                            ></div>
+                        </span>
+                        
+                        <span className={styles.FieldsArea}>
+                            <label>Item Name:</label>
+                            <p>{I_Name}</p>
+                        </span>
+                    </div>
+
+                    <div className={styles.RightAreaa}>
+                    <span className={styles.FieldsArea}>
+                            <label>Category:</label>
+                            <p>{I_Category}</p>
                         </span>
 
                         <span className={styles.FieldsArea}>
-                            <label>Quantity:</label>
-                            <p>{I_Quantity}</p>
+                            <label>Created By:</label>
+                            <p>{C_Name}</p>
                         </span>
-
                         <span className={styles.FieldsArea}>
-                            <label>Availability:</label>
-                            <p>{I_Availability}</p>
+                            <label>Created:</label>
+                            <p>{formattedDateTime}</p>
+                        </span>
+                        <span className={styles.SpanFlex}>                            
+                            <span className={styles.Spaneexx}>
+                                <span className={styles.FieldsArea}>
+                                    <label>Status:</label>
+                                    <p>{I_Status}</p>
+                                </span>
+
+                                <span className={styles.FieldsArea}>
+                                    <label>Quantity:</label>
+                                    <p>{I_Quantity}</p>
+                                </span>
+
+                                <span className={styles.FieldsArea}>
+                                    <label>Availability:</label>
+                                    <p>{I_Availability}</p>
+                                </span>
+                            </span>
+
+                            <QR_Maker value={I_QRcode} size={150} />
                         </span>
 
-                    </span>
+                       
+                    </div>
+                </div>
 
-                    <QR_Maker value={I_QRcode} size={150} />
-                </span>
+             
 
-                <span className={styles.FieldsArea}>
-                    <label>Category:</label>
-                    <p>{I_Category}</p>
-                </span>
 
-                <span className={styles.FieldsArea}>
-                    <label>Created By:</label>
-                    <p>{C_Name}</p>
-                </span>
-                <span className={styles.FieldsArea}>
-                    <label>Created:</label>
-                    <p>{formattedDateTime}</p>
-                </span>
 
             </form>
         </div>

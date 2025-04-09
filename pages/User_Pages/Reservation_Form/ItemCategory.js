@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from "@/styles/User.module.css";
 
-export default function ItemCategoryForm({ onClose }) { 
+export default function ItemCategoryForm({ onClose, onSelectItem }) { 
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedItem, setSelectedItem] = useState(null); // Store selected item details
   const [borrowQuantity, setBorrowQuantity] = useState(1); // Store borrow quantity
+  const [ItemId, setItemId] = useState(''); // Store borrow quantity
 
   useEffect(() => {
     // Fetch items from your API
@@ -41,22 +42,24 @@ export default function ItemCategoryForm({ onClose }) {
 
   const handleBorrowSubmit = () => {
     if (selectedItem) {
-      console.log(`Borrowing ${borrowQuantity} of ${selectedItem.I_Name}`);
-      // Implement borrowing logic, like making an API request
+      // Pass the selected item and quantity back to the parent component
+      onSelectItem(selectedItem, borrowQuantity);
+      onClose(); // Close the form after selection
     }
   };
 
   return (
     <div className={styles.Formmm}>
-    <span className={styles.SpanFlexx}>
+      <span className={styles.SpanFlexx}>
         <h4>Select Item</h4>
-        <button onClick={onClose}>X</button>
-    </span>
+        <button className={styles.ExitButtoonnn} onClick={onClose}>X</button>
+      </span>
 
-      <input
+      <input 
         type="search"
         placeholder="Search for Item"
         value={searchTerm}
+        className={styles.SearchBarrr}
         onChange={handleSearchChange}
       />
 
@@ -79,23 +82,22 @@ export default function ItemCategoryForm({ onClose }) {
 
       {selectedItem && (
         <div className={styles.SelectedItemDetails}>
-          <h5>{selectedItem.I_Name}</h5>
+          <h5>ITEM: {selectedItem.I_Name}</h5>
           <p>Availability: {selectedItem.I_Availability}</p> {/* Assuming `I_Availability` holds the available quantity */}
           
-
-          <span>
+          <span className={styles.SpanFlexx2}>
             <label htmlFor="quantity">Quantity to Borrow: </label>
             <input
-                type="number"
-                id="quantity"
-                value={borrowQuantity}
-                onChange={handleQuantityChange}
-                min="1"
-                max={selectedItem.I_Availability} // Limit max quantity to availability
+              type="number"
+              id="quantity"
+              value={borrowQuantity}
+              onChange={handleQuantityChange}
+              min="1"
+              max={selectedItem.I_Availability} // Limit max quantity to availability
             />
           </span>
           
-          <button onClick={handleBorrowSubmit}>Borrow</button>
+          <button className={styles.SubmitButtonnn} onClick={handleBorrowSubmit}>Borrow</button>
         </div>
       )}
     </div>

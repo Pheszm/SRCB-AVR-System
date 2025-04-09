@@ -92,8 +92,10 @@ export default function Adding_Item_Form({ category, onClose }) {
     return (
         <div className={styles.AddItemForm}>
             <form onSubmit={handleSubmit}>
+                <span className={styles.SpanHeader}>
                 <h2>ADD ITEM</h2>
-                
+                <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
                 {/* Item Name Input */}
                 <input
                     type="text"
@@ -127,13 +129,15 @@ export default function Adding_Item_Form({ category, onClose }) {
                     onChange={(e) => setItemQuantity(e.target.value)}
                 />
 
-                {/* Item Availability Input */}
-                <input
-                    type="number"
-                    placeholder="Item Availability"
-                    value={itemAvailability}
-                    onChange={(e) => setItemAvailability(e.target.value)}
-                />
+                    {/* Item Availability Input */}
+                    <input
+                        type="number"
+                        placeholder="Item Availability"
+                        value={itemAvailability}
+                        onChange={(e) => setItemAvailability(e.target.value)}
+                    />
+
+
 
                 {/* Image Input */}
                 <input

@@ -691,11 +691,30 @@ ITEM TEBLE DESIGN
 
 
 
+.SpanHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.FormCloseButton{
+    width: 30px !important;
+    height: 30px !important;
+    background-color: #b21414 !important;
+    line-height: 0px;
+}
+.FormCloseButton:focus,
+.FormCloseButton:hover
+{
+    box-shadow: 0 0 0 3px rgba(253, 42, 0, 0.0) !important;
+    background-color: #920e0e !important;
+}
+
 
 
 
 
 .BlurryBackground{
+    backdrop-filter: blur(10px);
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -835,3 +854,4 @@ ADD ITEM FORM
     justify-content: space-between;
     align-items: flex-end;
 }
+

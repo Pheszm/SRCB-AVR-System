@@ -189,20 +189,20 @@ export default function Incharge_Items() {
             {SelectedModification === "ViewIncharge" && selectedIncharge && (
                 <div className={styles.BlurryBackground}>
                     <ViewInchargeForm incharge={selectedIncharge} onClose={handleFormClose} onUpdate={fetchData} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+
                 </div>
             )}
 
             {SelectedModification === "AddItem" && (
                 <div className={styles.BlurryBackground}>
                     <AddInchargeForm onClose={handleFormClose} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+    
                 </div>
             )}
             {SelectedModification === "UpdateIncharge" && selectedIncharge && (
                 <div className={styles.BlurryBackground}>
                     <UpdateInchargeForm incharge={selectedIncharge} onClose={handleFormClose} onUpdate={fetchData} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+
                 </div>
             )}
 

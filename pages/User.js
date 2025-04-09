@@ -15,7 +15,7 @@ export default function Incharge_Main() {
 
     const handleFormClose = () => {
         handlePageChange("");
-        fetchItems();
+      //  fetchItems();
     };
 
     const fetchUserData = async () => {
@@ -95,11 +95,28 @@ export default function Incharge_Main() {
         handlePageChange("StudentReservation");
     };
 
+    // Sidebar Open Close Functionalities
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
 
     return (
         <div className={styles.Gen_Body}>
             <title>SRCB AVR | User</title>
 
+            <aside className={`${styles.SidebarPart} ${isSidebarOpen ? styles.open : styles.closed}`}>   
+                <div className={styles.mainLogo}>
+                    <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
+                    {isSidebarOpen && <h2>SRCB</h2>}
+                </div>             
+
+
+                <button className={styles.SidebarToggler} onClick={toggleSidebar}>
+                    <AiIcons.AiOutlineArrowLeft size={25}/>
+                </button>
+            </aside>
 
             {/* Right Side Area */}
             <div className={styles.RightSideArea}>
@@ -237,7 +254,6 @@ export default function Incharge_Main() {
             {SelectedModification === "StudentReservation" && (
                 <div className={styles.BlurryBackground}>
                 <StudentReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
-                <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
             </div>
 
             )}

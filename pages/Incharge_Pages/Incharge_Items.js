@@ -221,21 +221,21 @@ const removeItem = async (itemId, itemName) => {
             {SelectedModification === "AddItem" && (
                 <div className={styles.BlurryBackground}>
                     <AddItemsForm category={categories} onClose={handleFormClose} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+    
                 </div>
             )}
 
             {SelectedModification === "Viewitem" && (
                 <div className={styles.BlurryBackground}>
                     <ViewItemsForm item={selecteditem} onClose={handleFormClose} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                   
                 </div>
             )}
 
             {SelectedModification === "EditItem" && (
                 <div className={styles.BlurryBackground}>
                     <UpdateItemsForm item={selecteditem} category={categories} onClose={handleFormClose} />
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+       
                 </div>
             )}
         </div>

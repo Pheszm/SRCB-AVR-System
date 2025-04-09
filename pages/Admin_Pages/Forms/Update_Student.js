@@ -88,7 +88,10 @@ export default function UpdateStudentForm({ student, onClose, onUpdate }) {
     return (
         <div className={styles.AddItemForm}>
             <form onSubmit={handleSubmit}>
-                <h2>UPDATE STUDENT</h2>
+                <span className={styles.SpanHeader}>
+                    <h2>UPDATE STUDENT</h2>
+                    <button onClick={onClose} className={styles.FormCloseButton}>X</button>
+                </span>
                 <input
                     type="text"
                     placeholder="Full Name"

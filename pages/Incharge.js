@@ -20,8 +20,8 @@ export default function Incharge_Main() {
           const userRole = sessionStorage.getItem('userRole');
     
           if (!userId || !userRole) {
-            // If there's no userId or userRole, redirect to the login page
-            router.push('/'); // Adjust the path to your login page
+            document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            router.push('/'); 
             return;
           }
     
