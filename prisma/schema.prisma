@@ -7,20 +7,114 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-enum UserType {
-  admin
-  student
-  staff
-  incharge
+model activity_logs {
+  logs_id          Int       @id @default(autoincrement())
+  C_id             Int?      @relation(fields: [C_id], references: [C_id])
+  DateTimeModified DateTime? @default(now()) @db.DateTime(0)
+  Action           String?   @db.VarChar(255)
+  Record_Id        Int?
+  incharge         incharge? @relation(fields: [C_id], references: [C_id])
 }
 
-model Account {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
-  userType  UserType @default(REGULAR)  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model admin {
+  A_id       Int     @id @default(autoincrement())
+  A_QRcode   String? @db.VarChar(255)
+  A_Status   String? @default("Active") @db.VarChar(50)
+  A_Username String? @db.VarChar(255)
+  A_Password String? @db.VarChar(255)
+}
+
+model incharge {
+  C_id              Int       @id @default(autoincrement())
+  C_QRcode          String?   @db.VarChar(255)
+  C_Status          String?   @default("Active") @db.VarChar(50)
+  C_DateTimeCreated DateTime? @default(now()) @db.DateTime(0)
+  C_Fullname        String?   @db.VarChar(255)
+  C_Username        String?   @db.VarChar(255)
+  C_Password        String?   @db.VarChar(255)
+  C_Email           String?   @db.VarChar(255)
+  C_PhoneNo         String?   @db.VarChar(20)
+  C_Sex             String?   @db.VarChar(20)
+  C_Image           String?   @db.Text
+  items             item[]
+  activity_logs     activity_logs[]
+}
+
+model item {
+  I_id              Int       @id @default(autoincrement())
+  C_id              Int?      @relation(fields: [C_id], references: [C_id])
+  I_QRcode          String?   @db.VarChar(255)
+  I_Status          String?   @default("Active") @db.VarChar(50)
+  I_DateTimeCreated DateTime? @default(now()) @db.DateTime(0)
+  I_Name            String?   @db.VarChar(255)
+  I_Category        String?   @db.VarChar(255)
+  I_Quantity        Int?
+  I_Availability    Int?
+  C_Image           String?   @db.Text
+  incharge          incharge? @relation(fields: [C_id], references: [C_id])
+  items_needed      items_needed[]
+}
+
+model items_needed {
+  needed_id  Int  @id @default(autoincrement())
+  transac_id Int? @relation(fields: [transac_id], references: [transac_id])
+  I_id       Int? @relation(fields: [I_id], references: [I_id])
+  Quantity   Int?
+  transaction     transaction? @relation(fields: [transac_id], references: [transac_id])
+  item            item? @relation(fields: [I_id], references: [I_id])
+}
+
+model staff {
+  T_id              Int       @id @default(autoincrement())
+  T_QRcode          String?   @db.VarChar(255)
+  T_Status          String?   @default("Active") @db.VarChar(50)
+  T_DateTimeCreated DateTime? @default(now()) @db.DateTime(0)
+  T_Username        String?   @db.VarChar(255)
+  T_Password        String?   @db.VarChar(255)
+  T_Email           String?   @db.VarChar(255)
+  T_PhoneNo         String?   @db.VarChar(20)
+  T_Sex             String?   @db.VarChar(20)
+  T_Fullname        String?   @db.VarChar(255)
+  transactions_requested transaction[] @relation("requested_by")
+  transactions_approved  transaction[] @relation("approved_by")
+}
+
+model student {
+  S_id              Int       @id @default(autoincrement())
+  S_QRcode          String?   @db.VarChar(255)
+  S_Status          String?   @default("Active") @db.VarChar(50)
+  S_DateTimeCreated DateTime? @default(now()) @db.DateTime(0)
+  S_Level           String?   @db.VarChar(50)
+  S_StudentID       String?   @db.VarChar(50)
+  S_Fullname        String?   @db.VarChar(255)
+  S_Category        String?   @db.VarChar(100)
+  S_Sex             String?   @db.VarChar(20)
+  S_Email           String?   @db.VarChar(255)
+  S_PhoneNo         String?   @db.VarChar(20)
+  S_Username        String?   @db.VarChar(255)
+  S_Password        String?   @db.VarChar(255)
+  transactions      transaction[] @relation("user")
+}
+
+model transaction {
+  transac_id         Int       @id @default(autoincrement())
+  DateTimeFiled      DateTime? @default(now()) @db.DateTime(0)
+  Usertype           String?   @db.VarChar(50)
+  User_id            Int?
+  requestedby_id     Int?      @relation("requested_by", fields: [requestedby_id], references: [T_id])
+  approvedby_id      Int?      @relation("approved_by", fields: [approvedby_id], references: [T_id])
+  reservation_status String?   @default("Pending") @db.VarChar(50)
+  transac_status     String?   @default("Active") @db.VarChar(50)
+  transac_reason     String?   @db.Text
+  Transac_Category   String?   @db.VarChar(255)
+  dateofuse          DateTime? @db.DateTime(0)
+  fromtime           DateTime? @db.Time(0)
+  totime             DateTime? @db.Time(0)
+  returnedtime       DateTime? @db.DateTime(0)
+  comments_afteruse  String?   @db.Text
+  notif_status       String?   @default("Unread") @db.VarChar(50)
+  student           student? @relation("user", fields: [User_id], references: [S_id])
+  staff             staff?   @relation("user", fields: [User_id], references: [T_id])
+  requestedby       staff?   @relation("requested_by", fields: [requestedby_id], references: [T_id])
+  approvedby        staff?   @relation("approved_by", fields: [approvedby_id], references: [T_id])
 }
