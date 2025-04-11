@@ -33,9 +33,39 @@ export default function ViewInchargeForm({ incharge, onClose }) {
                     <button onClick={onClose} className={styles.FormCloseButton}>X</button>
                 </span>
 
-               
+
+
+                <div className={styles.ResponsiveAligner}>
+
+                    <div className={styles.RightAreaa2}>
+
+                    <span className={styles.FieldsArea}>
+                    <label>Email:</label>
+                    <p>{C_Email}</p>
+                </span>
+
+
 
                 <span className={styles.FieldsArea}>
+                    <label>Username:</label>
+                    <p>{C_Username}</p>
+                </span>
+
+                <span className={styles.FieldsArea}>
+                    <label>Password:</label>
+                    <p>{C_Password}</p>
+                </span>
+
+                <span className={styles.FieldsArea}>
+                    <label>Created:</label>
+                    <p>{formattedDateTime}</p>
+                </span>
+                    </div>
+
+
+
+                    <div>
+                    <span className={styles.FieldsArea}>
                     <label>Fullname:</label>
                     <p>{fullname}</p>
                 </span>
@@ -64,29 +94,17 @@ export default function ViewInchargeForm({ incharge, onClose }) {
                     
                     <QR_Maker value={C_QRcode} size={150} />
                 </span>
-
-
-                <span className={styles.FieldsArea}>
-                    <label>Email:</label>
-                    <p>{C_Email}</p>
-                </span>
+                    </div>
 
 
 
-                <span className={styles.FieldsArea}>
-                    <label>Username:</label>
-                    <p>{C_Username}</p>
-                </span>
+                </div>
 
-                <span className={styles.FieldsArea}>
-                    <label>Password:</label>
-                    <p>{C_Password}</p>
-                </span>
 
-                <span className={styles.FieldsArea}>
-                    <label>Created:</label>
-                    <p>{formattedDateTime}</p>
-                </span>
+                
+           
+
+
 
             </form>
         </div>

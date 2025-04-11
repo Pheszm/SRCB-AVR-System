@@ -160,6 +160,7 @@ export default function LoginForm() {
 
   return (
     <div className={styles.Gen_Background}>
+      <div className={styles.secondLayer}>
       <div className={styles.mainForm}>
         <div className={styles.mainLogo}>
           <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
@@ -194,10 +195,7 @@ export default function LoginForm() {
           <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
         </div>
       </div>
-
-
-
-
+      </div>
     </div>
   );
 }

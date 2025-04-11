@@ -221,14 +221,12 @@ const removeItem = async (itemId, itemName) => {
             {SelectedModification === "AddItem" && (
                 <div className={styles.BlurryBackground}>
                     <AddItemsForm category={categories} onClose={handleFormClose} />
-    
                 </div>
             )}
 
             {SelectedModification === "Viewitem" && (
                 <div className={styles.BlurryBackground}>
                     <ViewItemsForm item={selecteditem} onClose={handleFormClose} />
-                   
                 </div>
             )}
 

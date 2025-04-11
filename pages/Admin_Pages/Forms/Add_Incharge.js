@@ -1,4 +1,4 @@
-import styles from "@/styles/Admin.module.css";
+import styles from "@/styles/User.module.css";
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';  // Import SweetAlert2
 

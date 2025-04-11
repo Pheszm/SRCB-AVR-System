@@ -287,6 +287,7 @@ DASHBOARD AREA
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 @media (max-width: 600px) {
@@ -307,8 +308,10 @@ DASHBOARD AREA
 
 }
 
+
 .UpperSquares{
-    display: flex;
+    display: grid;            
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
     gap: 10px;
 }
 
@@ -331,7 +334,7 @@ DASHBOARD AREA
 
 .LowerSquares {
     display: grid;            
-    grid-template-columns: 2fr 1fr; 
+    grid-template-columns: 2fr 1fr 1fr; 
     gap: 10px;
     width: 100%;
     margin-top: 10px;
@@ -813,3 +816,59 @@ ADD ITEM FORM
     justify-content: space-between;
     align-items: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.alignerforDIV2 {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 0 auto;
+    overflow-y: auto;
+  }
+  
+.ScrollAreaHere {
+    text-align: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    margin: 0 auto;
+    overflow-y: auto;
+  }
+  
+  
+.alignerforDIV2 h2 {
+    font-size: 1px !important;
+    color: #0a1f48;
+    margin-bottom: 20px;
+  }
+  
+  .alignerforDIV2 ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .userCard {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userCard p {
+    font-size: 13px;
+    color: #38404f;
+  }
+  
+  .alignerforDIV2 strong {
+    font-weight: bold;
+  }

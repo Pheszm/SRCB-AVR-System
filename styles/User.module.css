@@ -891,6 +891,11 @@ ADD ITEM FORM
 .RightAreaa2{
     width: 300px;
 }
+.SidebarPart button.active {
+    background-color: #101b49; 
+    color: white; 
+    font-weight: bolder;
+}
 .ImageArea{
     height: 264px;
     width: 250px;

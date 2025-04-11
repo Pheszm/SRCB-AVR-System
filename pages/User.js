@@ -15,7 +15,7 @@ export default function Incharge_Main() {
 
     const handleFormClose = () => {
         handlePageChange("");
-      //  fetchItems();
+        window.location.reload();
     };
 
     const fetchUserData = async () => {
@@ -48,8 +48,22 @@ export default function Incharge_Main() {
       };
 
 
+
+
+      const [MyTransactions, setMyTransactions] = useState([]);
+      const FetchTransactionData = async () => {
+        try {
+            const response = await fetch('/api/User_Func/Reservation_Func/Fetch_Transactions');
+            const data = await response.json();
+            setMyTransactions(data); 
+        } catch (error) {
+            console.error("Error fetching transaction data: ", error);
+        }
+    }
+    
       useEffect(() => {
         fetchUserData();
+        FetchTransactionData();
           }, [router]);
 
 
@@ -95,6 +109,12 @@ export default function Incharge_Main() {
         handlePageChange("StudentReservation");
     };
 
+    // Function to set the selected page
+    const [selectedPage, setSelectedPage] = useState("Home");
+    const handlePageChange2 = (page) => {
+        setSelectedPage(page);
+    };
+
     // Sidebar Open Close Functionalities
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const toggleSidebar = () => {
@@ -109,10 +129,11 @@ export default function Incharge_Main() {
             <aside className={`${styles.SidebarPart} ${isSidebarOpen ? styles.open : styles.closed}`}>   
                 <div className={styles.mainLogo}>
                     <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
-                    {isSidebarOpen && <h2>SRCB</h2>}
+                    {isSidebarOpen && <h2 style={{color: "white"}}>SRCB</h2>}
                 </div>             
-
-
+                <br/><br/><br/><br/><br/>
+                <button className={selectedPage === "Home" ? styles.active : ""} onClick={() => handlePageChange2("Home")}><AiIcons.AiOutlineHome size={25}/>{isSidebarOpen && 'Home'}</button>
+                <button className={selectedPage === "Transactions" ? styles.active : ""} onClick={() => handlePageChange2("Transactions")}><AiIcons.AiOutlineAppstoreAdd size={25}/>{isSidebarOpen && 'Transactions'}</button>
                 <button className={styles.SidebarToggler} onClick={toggleSidebar}>
                     <AiIcons.AiOutlineArrowLeft size={25}/>
                 </button>
@@ -121,9 +142,9 @@ export default function Incharge_Main() {
             {/* Right Side Area */}
             <div className={styles.RightSideArea}>
                 <header className={styles.HeaderPart}>
+                <button className={styles.BurgerIcon} onClick={toggleSidebar}><AiIcons.AiOutlineMenu size={30} /></button>
                     <div className={styles.mainLogo}>
-                        <img src="./Assets/Img/AVR_Logo_Blue.png" alt="Logo" />
-                        <h2>SRCB</h2>
+                        <h2></h2>
                     </div>    
 
                     <div className={styles.HeaderProfilePart}>
@@ -152,103 +173,141 @@ export default function Incharge_Main() {
                 </header>
                 <div className={styles.BodyArea}>
 
+                {selectedPage === "Transactions" && (
+                    <AllTransact/>
+                )}
 
 
 
 
-
+                {selectedPage === "Home" && (
                 <div className={styles.DashBodyArea}>
 
-                    <div className={styles.UpperSquares}>
-                        <div className={styles.CenterItemDIV}>
-                            <span>
-                                <button 
-                                onClick={handleReservationForm}
-                                className={styles.CommonButtonn}>
-                                    <AiIcons.AiOutlineCalendar size={30} /> 
-                                    RESERVE NOW
-                                </button>
-                            </span>
-                        </div>
-
-                        <div>
-                            <span>
-                                <AiIcons.AiOutlineAppstore  size={30} /> 
-                            </span>
-                            <span>
-                                <p>Total Transactions</p>
-                                <h4>20</h4>
-                            </span>
-                        </div>
-
-                        <div>
-                            <span>
-                                <AiIcons.AiOutlineWallet size={30} /> 
-                            </span>
-                            <span>
-                                <p>Transactions Today</p>
-                                <h4>7</h4>
-                            </span>
-                        </div>
-
-                        <div>
-                            <span>
-                                <AiIcons.AiOutlineClockCircle size={30} /> 
-                            </span>
-                            <span>
-                                <p>Date Today</p>
-                                <h4>{today}</h4>
-                            </span>
-                        </div>
+                <div className={styles.UpperSquares}>
+                    <div className={styles.CenterItemDIV}>
+                        <span>
+                            <button 
+                            onClick={handleReservationForm}
+                            className={styles.CommonButtonn}>
+                                <AiIcons.AiOutlineCalendar size={30} /> 
+                                RESERVE NOW
+                            </button>
+                        </span>
                     </div>
 
+                    <div>
+                        <span>
+                            <AiIcons.AiOutlineAppstore  size={30} /> 
+                        </span>
 
+                        <span>
+                            <p>Total Transactions</p>
+                            <h4>
+                            {MyTransactions.reduce((count, transaction) => {
+                                if (transaction.Usertype.toString() === userRole.toString() && 
+                                    transaction.User_id.toString() === userId.toString()) {
+                                count += 1;
+                                }
+                                return count;
+                            }, 0)}
+                            </h4>
+                        </span>
 
-                    <div className={styles.LowerSquares}>
-
-                        <div className={styles.LowerSquaresDIV}>
-                            <h3>Upcoming Transactions</h3>
-                            <div className={styles.DashTableWrapper}>
-                                <table className={styles.DashTable}>
-                                    <thead>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>Date & Time</th>
-                                            <th>Item/Venue</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Upcoming</td>
-                                            <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                            <td>1 Microphone, 1 Speaker</td>
-                                            <td>
-                                                <button>View</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ongoing</td>
-                                            <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                            <td>1 Projector</td>
-                                            <td>
-                                                <button>View</button>
-                                                <button className={styles.SuccessBtnnn}>Returned</button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> 
-
-
-                        <div className={styles.LowerSquaresDIV}>
-                            <AllTransact/>
-                        </div>
                     </div>
 
+                    <div>
+                        <span>
+                            <AiIcons.AiOutlineWallet size={30} /> 
+                        </span>
+                        <span>
+                            <p>Transactions Today</p>
+                            <h4>
+                                {
+                                    MyTransactions.filter(transaction => {
+                                        const transactionDate = new Date(transaction.dateofuse);
+                                        if (isNaN(transactionDate)) return false;
+
+                                        const formattedTransactionDate = `${(transactionDate.getMonth() + 1).toString().padStart(2, '0')}/${transactionDate.getDate().toString().padStart(2, '0')}/${transactionDate.getFullYear()}`;
+
+                                        const manilaNow = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+                                        const formattedToday = `${(manilaNow.getMonth() + 1).toString().padStart(2, '0')}/${manilaNow.getDate().toString().padStart(2, '0')}/${manilaNow.getFullYear()}`;
+
+                                        return (
+                                            transaction.Usertype.toString() === userRole.toString() &&
+                                            transaction.User_id.toString() === userId.toString() &&
+                                            formattedTransactionDate === formattedToday
+                                        );
+                                    }).length
+                                }
+                            </h4>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span>
+                            <AiIcons.AiOutlineClockCircle size={30} /> 
+                        </span>
+                        <span>
+                            <p>Date Today</p>
+                            <h4>{today}</h4>
+                        </span>
+                    </div>
                 </div>
+
+
+
+                <div className={styles.LowerSquares}>
+
+                    <div className={styles.LowerSquaresDIV}>
+                        <h3>Upcoming Transactions</h3>
+                        <div className={styles.DashTableWrapper}>
+                            <table className={styles.DashTable}>
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Date & Time</th>
+                                        <th>Item/Venue</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Upcoming</td>
+                                        <td>3/6/2025 (1:00PM to 4:00PM)</td>
+                                        <td>1 Microphone, 1 Speaker</td>
+                                        <td>
+                                            <button>View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ongoing</td>
+                                        <td>3/6/2025 (1:00PM to 4:00PM)</td>
+                                        <td>1 Projector</td>
+                                        <td>
+                                            <button>View</button>
+                                            <button className={styles.SuccessBtnnn}>Returned</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+
+
+                    <div className={styles.LowerSquaresDIV}>
+                        <AllTransact/>
+                    </div>
+                </div>
+
+            </div>
+
+            )}
+
+
+
+
+
             </div>
 
             {SelectedModification === "StudentReservation" && (
