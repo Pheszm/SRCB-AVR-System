@@ -7,7 +7,8 @@ export default async function handler(req, res) {
     // Query the database to fetch items, properly using LEFT JOIN
     const [itemsData] = await pool.query(
       `SELECT * FROM Items_needed
-       LEFT JOIN Transaction ON Items_needed.transac_id = Transaction.transac_id`
+       LEFT JOIN Transaction ON Items_needed.transac_id = Transaction.transac_id
+       WHERE Transaction.reservation_status = "Approved"`
     );
     res.status(200).json(itemsData); // Return the fetched items as an array
   } catch (error) {

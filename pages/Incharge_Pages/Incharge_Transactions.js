@@ -1,6 +1,6 @@
 import styles from "@/styles/Incharge.module.css";
 import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Incharge_AVRLogs() {
     const [SelectedModification, setSelectForm] = useState("");
@@ -14,6 +14,22 @@ export default function Incharge_AVRLogs() {
     const [selectedMonth, setSelectedMonth] = useState("");  // New state for month filter
     const [showActions, setShowActions] = useState(false); // For toggling action buttons in the table
     const rowsPerPage = 10;
+
+    const [AllTransactions, setAllTransactions] = useState([]);
+    const FetchTransactionData = async () => {
+        try {
+            const response = await fetch('/api/Incharge_Func/Reservation_Func/Fetch_AllTransaction');
+            const Transacdata = await response.json();
+            setAllTransactions(Transacdata); 
+        } catch (error) {
+            console.error("Error fetching transaction data: ", error);
+        }
+    };
+    useEffect(() => {
+        FetchTransactionData();
+    }, [router]);
+
+
 
     // Sample names array
     const sampleNames = [
@@ -37,7 +53,7 @@ export default function Incharge_AVRLogs() {
     const categories = [...new Set(data.map(item => item.category))];
     const actions = [...new Set(data.map(item => item.action))];  // Extract unique actions
 
-    const filteredData = data.filter(
+    const filteredData = AllTransactions.filter(
         ({ reservationDate, fullName, action, record, category }) => {
             // Extract the year and month from reservationDate (formatted as MM/DD/YYYY HH:MMAM/PM to HH:MMAM/PM)
             const dateParts = reservationDate.split(" ")[0].split("/"); // Extract MM/DD/YYYY
@@ -128,22 +144,21 @@ export default function Incharge_AVRLogs() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRows.map(({ id, reservationDate, fullName, action, record, category }) => (
-                        <tr key={id}>
-                            <td>{action}</td>  {/* Display action/status */}
-                            <td>{reservationDate}</td>
-                            <td>{fullName}</td>
-                            <td>{record}</td>
-                            <td>{category}</td>
-                            {showActions && (
+                {currentRows.map((transaction, index) => (
+                            <tr key={index}>
                                 <td>
-                                    <button>View</button>
-                                    <button className={styles.EditBtnnn}>Update</button>
-                                    <button className={styles.RemoveBtnnn}>Delete</button>
+                                    {formatDate(transaction.dateofuse)}, {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}
                                 </td>
-                            )}
-                        </tr>
-                    ))}
+                                <td>{transaction.Usertype}</td>
+                                <td>{transaction.fullName}</td>
+                                <td>
+                                    {transaction.items && Array.isArray(transaction.items) && transaction.items.length > 0 
+                                        ? transaction.items.map(item => `${item.Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ') 
+                                        : 'N/A'}
+                                </td>
+                </tr>
+                ))}
+
                 </tbody>
             </table>
 

@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   try {
     // Query the database to fetch items, properly using LEFT JOIN
     const [Venue_Transac] = await pool.query(
-      `SELECT * FROM transaction WHERE Transac_Category = "AVRVENUE"`
+      `SELECT * FROM transaction WHERE Transac_Category = "AVRVENUE" AND reservation_status = "Approved"`
     );
     res.status(200).json(Venue_Transac); // Return the fetched items as an array
   } catch (error) {
