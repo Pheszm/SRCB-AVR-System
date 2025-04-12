@@ -960,6 +960,7 @@ ADD ITEM FORM
 
 .SpanFlex{
     display: flex;
+    gap: 10px;
     justify-content: space-between;
 }
 
@@ -1087,3 +1088,67 @@ ADD ITEM FORM
     background-color: #0f5490; 
     box-shadow: 0 0 0 3px rgba(19, 142, 203, 0.5);
 }
+
+.WarningBtn{
+    text-align: left;
+    margin-top: 0px;
+    font-size: 13px;
+    border: none;
+    background-color: transparent !important;
+    border: none !important;
+    text-decoration: underline;
+    font-weight: 500;
+    color: #ff4848 !important;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.WarningBtn:focus,
+.WarningBtn:hover{
+    outline: none !important; 
+    border: none !important;
+    box-shadow: none !important;
+    color: #c32d2d !important;
+}
+
+
+.ConflictDropdown {
+    position: absolute;
+    left: 10px;
+    width: 360px;
+    bottom: 50px;
+    max-height: 300px; 
+    overflow-y: auto;
+    background-color: #ffbcbc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Ensure dropdown appears on top */
+    padding: 10px;
+
+  }
+  
+  .ConflictDropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .ConflictDropdown li {
+    padding: 10px;
+    border-bottom: 1px solid #da2e2e;
+    font-size: 14px;
+    color: #902828;
+  }
+  
+  .ConflictDropdown li:last-child {
+    border-bottom: none; /* Remove border on the last item */
+  }
+  
+  .ConflictDropdown strong {
+    font-weight: 500;
+    color: #831111;
+  }
+  
+
+  .Formmmm{
+    position: relative;
+  }

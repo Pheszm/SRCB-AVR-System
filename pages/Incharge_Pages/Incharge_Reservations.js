@@ -1,63 +1,180 @@
 import styles from "@/styles/Incharge.module.css";
 import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
-import AddItemsForm from "./Forms/AddStudent";
+import React, { useState, useEffect } from 'react';
+import AddItemsForm from "./Forms/Transaction/View_Transaction";
+import { useRouter } from "next/router";
+import Swal from 'sweetalert2'; 
+
+
+// Dummy categories and userTypes, replace with actual data fetching if needed
+const categories = ["AVRITEMS", "AVRVENUE"];
+const userTypes = ["Staff", "Student"];
 
 export default function Incharge_Reservations() {
+    const router = useRouter();  
     const [SelectedModification, setSelectForm] = useState("");
-    const handlePageChange = (page) => {
-        setSelectForm(page);
-    };
-
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [showActions, setShowActions] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedUserType, setSelectedUserType] = useState(""); // New state for userType filter
+    const [selectedUserType, setSelectedUserType] = useState("");
     const rowsPerPage = 10;
+    const [AllTransactions, setAllTransactions] = useState([]);
 
-    const data = Array.from({ length: 500 }, (_, index) => ({
-        id: index + 1,
-        reservationDate: `3/${(index % 30) + 1}/2025 ${(index % 12) + 1}:00PM to ${(index % 12) + 2}:00PM`,  // Example date and time
-        userType: index % 2 === 0 ? 'Student' : 'Faculty', // Example usertype
-        fullName: index % 5 === 0 ? 'John Doe' :
-              index % 5 === 1 ? 'Jane Smith' :
-              index % 5 === 2 ? 'Alice Johnson' :
-              index % 5 === 3 ? 'Bob Brown' :
-              'Emily Davis',  // Example full name
-        need: index % 5 === 0 ? 'AVR Venue' :
-        index % 5 === 1 ? 'Microphone' :
-        index % 5 === 2 ? 'Speaker' :
-        index % 5 === 3 ? 'Projector' :
-        'Whiteboard',
-        category: index % 2 === 0 ? 'Item' : 'Venue',   // Example category (Category 1 to Category 5)
-    }));
+    const FetchTransactionData = async () => {
+        try {
+            const response = await fetch('/api/Incharge_Func/Reservation_Func/Fetch_AllTransaction');
+            const Transacdata = await response.json();
+            setAllTransactions(Transacdata); 
+        } catch (error) {
+            console.error("Error fetching transaction data: ", error);
+        }
+    };
 
-    // Extract unique categories and user types from the data
-    const categories = [...new Set(data.map(item => item.category))];
-    const userTypes = [...new Set(data.map(item => item.userType))]; // Get unique user types
 
-    const filteredData = data.filter(
-        ({ reservationDate, userType, fullName, need, category }) =>
-            (selectedCategory === "" || category === selectedCategory) &&
-            (selectedUserType === "" || userType === selectedUserType) &&  // Added filter for userType
-            (reservationDate.toLowerCase().includes(search.toLowerCase()) ||
-            userType.toLowerCase().includes(search.toLowerCase()) ||
-            fullName.toLowerCase().includes(search.toLowerCase()) ||
-            need.toLowerCase().includes(search.toLowerCase()) ||
-            category.toLowerCase().includes(search.toLowerCase()))
-    );
+
+    const handleFormClose = () => {
+        FetchTransactionData();
+        setSelectForm("");
+    };
+
+    const [SelectedTransaction, setSelectedTransaction] = useState(null);
+    const handleViewReservation = (transaction) => {
+        setSelectedTransaction(transaction);
+        setSelectForm("ViewTransaction");
+    };
+
+    
+    useEffect(() => {
+        FetchTransactionData();
+    }, [router]);
+
+    // Helper functions
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        });
+    };
+
+    const convertTo12HourFormat = (time) => {
+        const [hour, minute] = time.split(':');
+        const h = parseInt(hour, 10);
+        const suffix = h >= 12 ? "PM" : "AM";
+        const hour12 = h % 12 || 12;
+        return `${hour12}:${minute} ${suffix}`;
+    };
+
+    // Apply filters
+    const filteredData = AllTransactions.filter(trasaction => {
+        const matchesSearch =   trasaction.Usertype.toLowerCase().includes(search.toLowerCase()) ||   
+                                trasaction.dateofuse.toLowerCase().includes(search.toLowerCase()) ||
+                                trasaction.fromtime.toLowerCase().includes(search.toLowerCase()) ||
+                                trasaction.totime.toLowerCase().includes(search.toLowerCase()) ||
+                                trasaction.fullName.toLowerCase().includes(search.toLowerCase()) ||
+                                trasaction.Transac_Category.toLowerCase().includes(search.toLowerCase());
+        const matchesCategory = selectedCategory ? trasaction.Transac_Category === selectedCategory : true;
+        const matchesUserType = selectedUserType ? trasaction.Usertype === selectedUserType : true;
+        return matchesSearch && matchesCategory && matchesUserType;
+    });
+
+
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const currentRows = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
+
+
+
+
+
+
+
+
+    const handleAction = async (transac_id, actionType) => {
+        if (actionType === "approve") {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You are approving this reservation.",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#28a745",
+                confirmButtonText: "Yes, approve it!"
+            });
+    
+            if (result.isConfirmed) {
+                try {
+                    const res = await fetch("/api/Incharge_Func/Reservation_Func/Action_Reservation", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            transac_id,
+                            action: "approve",
+                            comment: null
+                        })
+                    });
+    
+                    const data = await res.json();
+                    if (res.ok) {
+                        Swal.fire("Approved!", data.message, "success");
+                        FetchTransactionData(); // refresh table
+                    } else {
+                        Swal.fire("Error!", data.message, "error");
+                    }
+                } catch (err) {
+                    Swal.fire("Error!", "Something went wrong.", "error");
+                }
+            }
+        }
+    
+        if (actionType === "decline") {
+            const { value: comment } = await Swal.fire({
+                title: "Decline Reservation",
+                input: "textarea",
+                inputLabel: "Reason for declining",
+                inputPlaceholder: "Type your reason here...",
+                inputAttributes: {
+                    "aria-label": "Type your reason here"
+                },
+                showCancelButton: true
+            });
+    
+            if (comment) {
+                try {
+                    const res = await fetch("/api/Incharge_Func/Reservation_Func/Action_Reservation", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            transac_id,
+                            action: "decline",
+                            comment
+                        })
+                    });
+    
+                    const data = await res.json();
+                    if (res.ok) {
+                        Swal.fire("Declined!", data.message, "success");
+                        FetchTransactionData(); // refresh table
+                    } else {
+                        Swal.fire("Error!", data.message, "error");
+                    }
+                } catch (err) {
+                    Swal.fire("Error!", "Something went wrong.", "error");
+                }
+            }
+        }
+    };
+
+
+
+    
     return (
         <div className={styles.ItemBodyArea}>
-
             <h2>Reservations</h2>
             <p>Manage and track reservation requests</p>
-            <br/><br/>
-
+            <br /><br />
 
             <div className={styles.ItemFilterArea}>
                 <input
@@ -73,7 +190,7 @@ export default function Incharge_Reservations() {
                 <div>
                     <select 
                         value={selectedCategory} 
-                        onChange={(e) => {setSelectedCategory(e.target.value), setCurrentPage(1);}}
+                        onChange={(e) => {setSelectedCategory(e.target.value); setCurrentPage(1);}}
                     >
                         <option value="">All Categories</option>
                         {categories.map((category) => (
@@ -87,7 +204,7 @@ export default function Incharge_Reservations() {
                 <div>
                     <select 
                         value={selectedUserType} 
-                        onChange={(e) => {setSelectedUserType(e.target.value), setCurrentPage(1);}}
+                        onChange={(e) => {setSelectedUserType(e.target.value); setCurrentPage(1);}}
                     >
                         <option value="">All User Types</option>
                         {userTypes.map((userType) => (
@@ -98,7 +215,10 @@ export default function Incharge_Reservations() {
                     </select>
                 </div>
 
-                <button className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} onClick={() => setShowActions(!showActions)}>
+                <button 
+                    className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} 
+                    onClick={() => setShowActions(!showActions)}
+                >
                     Settings
                 </button>
             </div>
@@ -111,29 +231,50 @@ export default function Incharge_Reservations() {
                         <th className={styles.QtyColumn}>Fullname</th>
                         <th className={styles.QtyColumn}>Need</th>
                         <th>Category</th>
-                        {showActions && (
-                        <th>Actions</th>
-                    )}
+                        {showActions && <th>Actions</th>}
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRows.map(({ id, reservationDate, userType, fullName, need, category }) => (
-                        <tr key={id}>
-                            <td>{reservationDate}</td>
-                            <td>{userType}</td>
-                            <td>{fullName}</td>
-                            <td>{need}</td>
-                            <td>{category}</td>
-                            {showActions && (
-                            <td>
-                                <button>View</button>
-                                <button className={styles.SuccessBtnnn}>Approve</button>
-                                <button className={styles.RemoveBtnnn}>Decline</button>
-                            </td>
-                            )}
-                        </tr>
-                    ))}
+                    {currentRows
+                        .filter(transaction => transaction.reservation_status === "Pending")
+                        .map((transaction, index) => (
+                            <tr key={index}>
+                                <td>
+                                    {formatDate(transaction.dateofuse)}, {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}
+                                </td>
+                                <td>{transaction.Usertype}</td>
+                                <td>{transaction.fullName}</td>
+                                <td>
+                                    {transaction.items && Array.isArray(transaction.items) && transaction.items.length > 0 
+                                        ? transaction.items.map(item => `${item.Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ') 
+                                        : 'N/A'}
+                                </td>
+                                <td>{transaction.Transac_Category}</td>
+                                {showActions && (
+                                    <td>
+                                    <button
+                                    onClick={() => handleViewReservation(transaction)}
+                                    >View
+                                    </button>
+
+                                    <button 
+                                            className={styles.SuccessBtnnn} 
+                                            onClick={() => handleAction(transaction.transac_id, "approve")}
+                                        >
+                                            Approve
+                                        </button>
+                                        <button 
+                                            className={styles.RemoveBtnnn} 
+                                            onClick={() => handleAction(transaction.transac_id, "decline")}
+                                        >
+                                            Decline
+                                        </button>
+                                    </td>
+                                )}
+                            </tr>
+                        ))}
                 </tbody>
+
             </table>
 
             <div className={styles.PagenationArea}>
@@ -143,7 +284,7 @@ export default function Incharge_Reservations() {
                 >
                     Previous
                 </button>
-                <span>{currentPage}</span>
+                <span>{`${currentPage}`}</span>
                 <button
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage === totalPages}
@@ -152,12 +293,12 @@ export default function Incharge_Reservations() {
                 </button>
             </div>
 
-            {SelectedModification === "AddItem" && (
-            <div className={styles.BlurryBackground}>
-                 {SelectedModification === "AddItem" && <AddItemsForm/>}
-                <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
-            </div>
+            {SelectedModification === "ViewTransaction" && SelectedTransaction && (
+                <div className={styles.BlurryBackground}>
+                    <AddItemsForm transaction={SelectedTransaction} onClose={handleFormClose} />
+                </div>
             )}
+
         </div>
     );
 }
