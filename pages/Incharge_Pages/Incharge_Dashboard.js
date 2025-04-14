@@ -2,23 +2,13 @@ import styles from "@/styles/Incharge.module.css";
 import * as AiIcons from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
 import BarChart from "./Forms/BarChartGenerateee";
-
+import TodayTransactions from "./Forms/Today_Transactions";
+import TopUsers from "./Forms/TopUsers";
 
 export default function Incharge_Dashboard() {
     const today = new Date().toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
 
-    const [users, setUsers] = useState([]);
     useEffect(() => {
-        // Simulate fetching static data for multiple users
-        const staticUsers = [
-          { name: "John Doe", reservations: 15, itemsCheckedOut: 8 },
-          { name: "Jane Smith", reservations: 20, itemsCheckedOut: 12 },
-          { name: "Mark Taylor", reservations: 10, itemsCheckedOut: 5 },
-          { name: "Emily Davis", reservations: 18, itemsCheckedOut: 10 },
-          { name: "Chris Johnson", reservations: 12, itemsCheckedOut: 6 },
-        ];
-        
-        setUsers(staticUsers);
         FetchTransactionData();
         FetchAllItems();
       }, []);
@@ -118,71 +108,20 @@ export default function Incharge_Dashboard() {
 
 
             <div className={styles.LowerSquares}>
-
-                <div className={styles.DashTableContainer}>
+                <div className={styles.DIVwithTabless}>
                     <h3>Transaction Today</h3>
-                    <div className={styles.DashTableWrapper}>
-                        <table className={styles.DashTable}>
-                            <thead>
-                                <tr>
-                                    <th>Status</th>
-                                    <th>Date & Time</th>
-                                    <th>Name</th>
-                                    <th>Item/Venue</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Upcoming</td>
-                                    <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                    <td>Joshua B. Salan</td>
-                                    <td>1 Microphone, 1 Speaker</td>
-                                    <td>
-                                        <button>View</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ongoing</td>
-                                    <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                    <td>Carl Wyne S. Gallardo</td>
-                                    <td>1 Projector</td>
-                                    <td>
-                                        <button>View</button>
-                                        <button className={styles.SuccessBtnnn}>Returned</button>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+                    <TodayTransactions/>
                 </div>  
                 
-                <div className={styles.alignerforDIV}>   
-                    <h3>Mostly Used Item<br/> in March 2025</h3>
+                <div className={styles.alignerforDIV}>         
+                    <h3>Mostly Used Item<br/> in the Current Month</h3>
                     <BarChart/>   
                 </div>
 
                 <div className={styles.alignerforDIV2}>   
-                    <h3>Top Users<br/> in March 2025</h3>
-                    <div className={styles.ScrollAreaHere}>
-                    {users.length > 0 ? (
-        <ul>
-          {users.map((user, index) => (
-            <li key={index} className={styles.userCard}>
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Reservations Made:</strong> {user.reservations}</p>
-              <p><strong>Items Checked Out:</strong> {user.itemsCheckedOut}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading users...</p>
-      )} 
-                    </div>
-                
+                    <TopUsers/>   
                 </div>
-    </div>
+            </div>
     
     </div>
     );

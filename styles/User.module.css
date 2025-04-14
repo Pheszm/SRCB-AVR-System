@@ -896,6 +896,9 @@ ADD ITEM FORM
     color: white; 
     font-weight: bolder;
 }
+
+
+
 .ImageArea{
     height: 264px;
     width: 250px;
@@ -1152,3 +1155,5 @@ ADD ITEM FORM
   .Formmmm{
     position: relative;
   }
+
+

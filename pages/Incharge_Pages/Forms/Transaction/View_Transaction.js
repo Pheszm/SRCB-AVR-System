@@ -57,6 +57,7 @@ export default function ViewTransaction({ transaction, onClose }) {
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({
                               transac_id,
+                              approvedby_id: sessionStorage.getItem('userId'),
                               action: "approve",
                               comment: null
                           })
@@ -95,6 +96,7 @@ export default function ViewTransaction({ transaction, onClose }) {
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({
                               transac_id,
+                              approvedby_id: sessionStorage.getItem('userId'),
                               action: "decline",
                               comment
                           })

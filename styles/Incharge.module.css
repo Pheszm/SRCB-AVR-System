@@ -301,14 +301,14 @@ DASHBOARD AREA
     .UpperSquares{
         display: block;
         gap: 10px;
-        flex-direction: column;
+        grid-template-columns: 1fr !important;
     }
-    
-
-
 }
 
 
+.MainAreaDiv{
+    width: 100%;
+}
 .UpperSquares{
     display: grid;            
     grid-template-columns: 1fr 1fr 1fr 1fr; 
@@ -322,8 +322,6 @@ DASHBOARD AREA
     border-radius: 5px;
     display: flex;
     gap: 10px;
-    width: 100%;
-    white-space: nowrap;
 }
 .UpperSquares span{
     display: flex;
@@ -380,6 +378,8 @@ DASHBOARD AREA
     color: #333;
     padding: 5px;
 }
+
+
 
 .DashTableWrapper {
     border: 1px solid #ddd;
@@ -694,9 +694,6 @@ ITEM TEBLE DESIGN
 
 
 
-
-
-
 .BlurryBackground{
     backdrop-filter: blur(10px);
     width: 100vw;
@@ -830,10 +827,9 @@ ADD ITEM FORM
 
 .alignerforDIV2 {
     text-align: center;
-    background-color: #fff;
     border-radius: 8px;
     margin: 0 auto;
-    overflow-y: auto;
+    padding: 0 !important;
   }
   
 .ScrollAreaHere {

@@ -1,4 +1,4 @@
-import styles from "@/styles/Incharge.module.css";
+import styles from "@/styles/User.module.css";
 import * as AiIcons from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';  // Make sure to import the router
@@ -15,8 +15,7 @@ export default function Incharge_AVRLogs() {
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedMonth, setSelectedMonth] = useState("");  // New state for month filter
-    const [showActions, setShowActions] = useState(false); // For toggling action buttons in the table
-    const rowsPerPage = 10;
+    const rowsPerPage = 7;
 
     const [AllTransactions, setAllTransactions] = useState([]);
 
@@ -80,98 +79,41 @@ export default function Incharge_AVRLogs() {
     };
 
     return (
-        <div className={styles.ItemBodyArea}>
-            {/* Updated Header Section */}
-            <header className={styles.HeaderSection}>
-                <div>
-                    <h2>Transactions</h2>
-                    <p>Keep track of transactions to monitor system events and user activities.</p>
-                    <br /><br />
-                </div>
-                <div>
-                    <button className={styles.SettingsBtn}>Export Table</button>
-                    <button className={`${styles.SettingsBtn} ${showActions ? styles.SettingsBtnOpened : ""}`} onClick={() => setShowActions(!showActions)}>
-                        Settings
-                    </button>
-                </div>
-            </header>
-
-            <div className={styles.ItemFilterArea}>
-                <input
-                    type="search"
-                    placeholder="Search for Transactions"
-                    value={search}
-                    onChange={(e) => {
-                        setSearch(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                />
-
-                <div className={styles.datefiltering}>
-                    <label>Month:</label>
-                    <input
-                        type="month"
-                        value={selectedMonth}
-                        placeholder="Select Month"
-                        className={styles.DatePickerrr}
-                        onChange={(e) => { setSelectedMonth(e.target.value), setCurrentPage(1); }}
-                    />
-                </div>
-
-                <div>
-                    <select
-                        value={selectedCategory}
-                        onChange={(e) => { setSelectedCategory(e.target.value), setCurrentPage(1); }}
-                    >
-                        <option value="">All Categories</option>
-                        {categories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-            </div>
+        <div>
 
             {/* Updated Table */}
-            <table className={styles.ItemTable}>
+            <table className={styles.DashTable}>
                 <thead>
                     <tr>
                         <th>Status</th> {/* Could be the action or status */}
                         <th>Date & Time</th>
                         <th>Fullname</th>
                         <th>Item/Venue</th> {/* Can be renamed based on context */}
-                        <th>Category</th>
-                        {showActions && <th>Actions</th>} {/* Conditionally show the Actions column */}
+                         <th>Actions</th> {/* Conditionally show the Actions column */}
                     </tr>
                 </thead>
                 <tbody>
                     {currentRows.map((transaction, index) => (
                         <tr key={index}>
                             <td>{transaction.reservation_status}</td> {/* Display the status */}
-                            <td>{formatDate(transaction.dateofuse)} from {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
+                            <td>{convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
                             <td>{transaction.fullName}</td>
                             <td>
                                 {transaction.items && transaction.items.length > 0
                                     ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')
                                     : 'No items'}
                             </td>
-                            <td>{transaction.Transac_Category}</td>
-                            {showActions && (
                                 <td>
                                     {/* Add action buttons or functionality here */}
-                                    <button>Edit</button>
-                                    <button>Delete</button>
+                                    <button>Returned</button>
                                 </td>
-                            )}
                         </tr>
                     ))}
                 </tbody>
             </table>
-
-            <div className={styles.PagenationArea}>
-                <button
+            
+            <span className={styles.PagenationArea}>
+            <button
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage === 1}
                 >
@@ -184,14 +126,7 @@ export default function Incharge_AVRLogs() {
                 >
                     Next
                 </button>
-            </div>
-
-            {SelectedModification === "AddItem" && (
-                <div className={styles.BlurryBackground}>
-                    {SelectedModification === "AddItem" && <AddItemsForm />}
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
-                </div>
-            )}
+            </span>
         </div>
     );
 }

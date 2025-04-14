@@ -1,6 +1,6 @@
 import styles from "@/styles/Loginpage.module.css";
 import * as AiIcons from "react-icons/ai";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QR_Login } from "../components/QR_Scanning";
 import { useRouter } from "next/router"; 
 import Swal from 'sweetalert2';  // Import SweetAlert2
@@ -10,6 +10,7 @@ export default function LoginForm() {
 
   const [loading, setLoading] = useState(false);  // Track loading state
   const router = useRouter();
+
 
 
 
