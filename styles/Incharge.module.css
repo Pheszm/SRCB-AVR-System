@@ -689,11 +689,6 @@ ITEM TEBLE DESIGN
     background-color: #111c47;
 }
 
-
-
-
-
-
 .BlurryBackground{
     backdrop-filter: blur(10px);
     width: 100vw;
@@ -706,6 +701,10 @@ ITEM TEBLE DESIGN
     top: 0;
     right: 0;
 }
+
+
+
+
 
 /* ============================================
 ADD ITEM FORM

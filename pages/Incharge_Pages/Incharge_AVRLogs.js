@@ -46,6 +46,54 @@ export default function Incharge_AVRLogs() {
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const currentRows = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
+    // Function to export data to CSV
+    const exportToCSV = () => {
+        // Define headers first
+        const headers = ["Date & Time", "Action", "Item", "By"];
+
+        // Prepare the rows by formatting the data first
+        const rows = currentRows.map(log => {
+            const date = new Date(log.DateTimeModified);
+            const formattedDateTime = date.toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+            });
+
+            // Wrap Date & Time in quotes to ensure it's treated as a single field in the CSV
+            const quotedDateTime = `"${formattedDateTime.replace(/"/g, '""')}"`;  // Escape any quotes inside the DateTime
+
+            // Format the Item/Venue (handling multiple items if needed)
+            const quotedItem = `"${log.I_Name.replace(/"/g, '""')}"`; // Escape any quotes inside the Item
+
+            // Return the row data
+            return [
+                quotedDateTime,  // Wrapped Date & Time in quotes
+                log.Action,
+                quotedItem,      // Wrapped Item in quotes
+                log.C_Fullname   // No quotes needed for Full Name
+            ];
+        });
+
+        // Join headers and rows to create the CSV content
+        const csvContent = [
+            headers.join(","),
+            ...rows.map(row => row.join(","))
+        ].join("\n");
+
+        // Create a Blob and trigger the download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = "activity_logs.csv";
+        link.click();
+    };
+
     return (
         <div className={styles.ItemBodyArea}>
             {/* Updated Header Section */}
@@ -56,7 +104,9 @@ export default function Incharge_AVRLogs() {
                     <br /><br />
                 </div>
                 <div>
-                    <button className={styles.SettingsBtn}>Export Table</button>
+                    <button className={styles.SettingsBtn} onClick={exportToCSV}>
+                        Export Table
+                    </button>
                 </div>
             </header>
 

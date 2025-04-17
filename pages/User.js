@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import AllTransact from "./User_Pages/User_allTransactions";
 import StudentReservationForm from "./User_Pages/Reservation_Form/student_reservation_form";
-
+import TodayTransaction from "./User_Pages/Dashboard_Forms/Todays_Trasanction";
 
 export default function Incharge_Main() {
     const router = useRouter();     
@@ -259,39 +259,7 @@ export default function Incharge_Main() {
                 <div className={styles.LowerSquares}>
 
                     <div className={styles.LowerSquaresDIV}>
-                        <h3>Upcoming Transactions</h3>
-                        <div className={styles.DashTableWrapper}>
-                            <table className={styles.DashTable}>
-                                <thead>
-                                    <tr>
-                                        <th>Status</th>
-                                        <th>Date & Time</th>
-                                        <th>Item/Venue</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Upcoming</td>
-                                        <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                        <td>1 Microphone, 1 Speaker</td>
-                                        <td>
-                                            <button>View</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ongoing</td>
-                                        <td>3/6/2025 (1:00PM to 4:00PM)</td>
-                                        <td>1 Projector</td>
-                                        <td>
-                                            <button>View</button>
-                                            <button className={styles.SuccessBtnnn}>Returned</button>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
+                        <TodayTransaction/>
                     </div> 
 
 

@@ -1,6 +1,8 @@
 import styles from "@/styles/User.module.css";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
+import AddItemsForm from "./Dashboard_Forms/ViewTransaction";
+
 
 export default function Incharge_Main() {
     const [showActions, setShowActions] = useState(false);
@@ -8,6 +10,19 @@ export default function Incharge_Main() {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 7;
+    const [SelectedModification, setSelectForm] = useState("");
+
+    
+        const handleFormClose = () => {
+            setSelectForm("");
+        };
+    
+        const [SelectedTransaction, setSelectedTransaction] = useState(null);
+        const handleViewReservation = (transaction) => {
+            setSelectedTransaction(transaction);
+            setSelectForm("ViewTransaction");
+        };
+
 
     // Filtered data based on search term
     const filteredData = transactions.filter(item => 
@@ -25,7 +40,7 @@ export default function Incharge_Main() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('/api/User_Func/Reservation_Func/Fetch_Transactions');
+                const response = await fetch('/api/Incharge_Func/Reservation_Func/Fetch_AllTransaction');
                 const data = await response.json();
                 setTransactions(data);
             } catch (error) {
@@ -143,7 +158,12 @@ export default function Incharge_Main() {
                                         </td>
                                         {showActions && (
                                             <td>
-                                                <button>View</button>
+                                        <button
+                                        onClick={() => handleViewReservation(transaction)}
+                                        >View
+                                        </button>
+
+
                                                 {transaction.transac_status === "Ongoing" && (
                                                     <button className={styles.SuccessBtnnn}>Returned</button>
                                                 )}
@@ -173,6 +193,12 @@ export default function Incharge_Main() {
                     Next
                 </button>
             </span>
+
+            {SelectedModification === "ViewTransaction" && SelectedTransaction && (
+                <div className={styles.BlurryBackground}>
+                    <AddItemsForm transaction={SelectedTransaction} onClose={handleFormClose} />
+                </div>
+            )}
         </div>
     );
 }
