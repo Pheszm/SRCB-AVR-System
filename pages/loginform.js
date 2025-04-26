@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { QR_Login } from "../components/QR_Scanning";
 import { useRouter } from "next/router"; 
 import Swal from 'sweetalert2';  // Import SweetAlert2
+import Cookie from 'js-cookie';
+
 
 export default function LoginForm() {
   const [showPass, setShowPass] = useState(false);
@@ -130,16 +132,19 @@ export default function LoginForm() {
   // Navigate user based on role and store ID and role in session
   const navigateUser = async (user) => {
     // Store the user ID and role in sessionStorage
-    sessionStorage.setItem('userId', user.id);
-    sessionStorage.setItem('userRole', user.role);
-    
-    document.cookie = "user=authenticated; path=/";
 
-    // SweetAlert for confirming login before navigation
-    await Swal.fire({
-      icon: 'success',
-      title: 'Login Successful!',
-      text: `You are Login as ${user.role}`,
+    document.cookie = `userID=${user.id}; path=/`;
+    document.cookie = `userRole=${user.role}; path=/`;
+
+
+    Swal.fire({
+      icon: 'success', 
+      title: 'Login Successful!', 
+      text: `You have successfully logged in as ${user.role}.`,
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      allowOutsideClick: false
     });
 
     if (user.role === "Admin") {
@@ -167,8 +172,8 @@ export default function LoginForm() {
           <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
           <h2>SRCB</h2>
         </div>
-        <h4>AVR Reservation & Management</h4>
-        <h3>Login Form</h3>
+        <h4>AVR Reservation & Inventory</h4>
+        <h3>Login</h3>
         <input id="UserN" type="text" placeholder="Username" />
 
         <div className={styles.passwordContainer}>
@@ -190,12 +195,10 @@ export default function LoginForm() {
       </div>
 
       {/* QR Scanner Overlay */}
-      <div className={styles.qrOverlay}>
-        <button className={styles.closeBtn} onClick={toggleScan}>x</button>
-        <div className={styles.qrScanner}>
-          <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} />
+        <div className={styles.qrOverlay}>
+            <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} CloseForm={toggleScan}/>
         </div>
-      </div>
+
       </div>
     </div>
   );

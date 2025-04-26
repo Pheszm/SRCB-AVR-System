@@ -3,48 +3,52 @@ import pool from '@/lib/db';
 export default async function handler(req, res) {
     try {
         const query = `
-            SELECT 
-                t.transac_id, 
-                t.DateTimeFiled,
-                t.Usertype, 
-                t.User_id, 
-                t.requestedby_id, 
-                t.approvedby_id, 
-                t.reservation_status, 
-                t.transac_status, 
-                t.transac_reason, 
-                t.Transac_Category, 
-                t.dateofuse, 
-                t.fromtime, 
-                t.totime, 
-                t.returnedtime, 
-                t.comments_afteruse, 
-                t.notif_status,
+                SELECT 
+                    t.transac_id, 
+                    t.DateTimeFiled,
+                    t.Usertype, 
+                    t.User_id, 
+                    t.requestedby_id, 
+                    t.approvedby_id, 
+                    t.reservation_status, 
+                    t.transac_status, 
+                    t.transac_reason, 
+                    t.Transac_Category, 
+                    t.dateofuse, 
+                    t.fromtime, 
+                    t.totime, 
+                    t.returnedtime, 
+                    t.comments_afteruse, 
+                    t.notif_status,
 
-                COALESCE(s.S_Fullname, st.T_Fullname) AS fullName,
-                rb.T_Fullname AS requestedby_fullname,
+                    COALESCE(s.S_Fullname, st.T_Fullname) AS fullName,
+                    rb.T_Fullname AS requestedby_fullname,
+                    ic.C_Fullname AS approvedby_fullname,  
 
-                i.I_id, 
-                i.I_Name, 
-                i.I_Category, 
-                i.I_Quantity, 
-                i.I_Availability,
-                ineed.Quantity 
+                    i.I_id, 
+                    i.I_Name, 
+                    i.I_Category, 
+                    i.I_Quantity, 
+                    i.I_Availability,
+                    ineed.Quantity 
 
-            FROM 
-                Transaction t
-            LEFT JOIN 
-                Items_needed ineed ON t.transac_id = ineed.transac_id
-            LEFT JOIN 
-                Item i ON ineed.I_id = i.I_id
-            LEFT JOIN 
-                student s ON t.Usertype = 'Student' AND t.User_id = s.S_id
-            LEFT JOIN 
-                staff st ON t.Usertype = 'Staff' AND t.User_id = st.T_id
-            LEFT JOIN 
-                staff rb ON t.requestedby_id = rb.T_id
-            ORDER BY 
-                t.DateTimeFiled DESC;
+                FROM 
+                    Transaction t
+                LEFT JOIN 
+                    Items_needed ineed ON t.transac_id = ineed.transac_id
+                LEFT JOIN 
+                    Item i ON ineed.I_id = i.I_id
+                LEFT JOIN 
+                    student s ON t.Usertype = 'Student' AND t.User_id = s.S_id
+                LEFT JOIN 
+                    staff st ON t.Usertype = 'Staff' AND t.User_id = st.T_id
+                LEFT JOIN 
+                    staff rb ON t.requestedby_id = rb.T_id
+                LEFT JOIN 
+                    incharge ic ON t.approvedby_id = ic.C_id 
+                ORDER BY 
+                    t.DateTimeFiled DESC;
+
         `;
 
         const [rows] = await pool.query(query);
@@ -83,6 +87,7 @@ export default async function handler(req, res) {
                     comments_afteruse: row.comments_afteruse,
                     notif_status: row.notif_status,
                     fullName: row.fullName,
+                    approvedby_fullname: row.approvedby_fullname,
                     items: [item]
                 });
             }

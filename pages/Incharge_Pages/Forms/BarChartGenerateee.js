@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2'; // <-- Use Pie instead of Doughnut
 import { Chart as ChartJS, CategoryScale, ArcElement, Tooltip, Legend } from 'chart.js';
 
 // Register the required Chart.js components
 ChartJS.register(CategoryScale, ArcElement, Tooltip, Legend);
 
-const DoughnutChart = () => {
+const PieChart = () => {
   const [itemData, setItemData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,14 +74,14 @@ const DoughnutChart = () => {
   };
 
   return (
-    <div style={{ width: '90%', margin: '0 auto', display: 'flex', alignItems: 'center' }}>
+    <div style={{ width: '100%', margin: 'auto', display: 'flex', alignItems: 'center' }}>
       {loading ? (
         <p>Loading chart...</p>
       ) : (
-        <Doughnut data={chartData} options={options} />
+        <Pie data={chartData} options={options} /> 
       )}
     </div>
   );
 };
 
-export default DoughnutChart;
+export default PieChart;

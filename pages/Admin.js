@@ -6,16 +6,19 @@ import { useRouter } from "next/router";
 import Inchargee from "./Admin_Pages/Admin_Incharge";
 import Stafff from "./Admin_Pages/Admin_Staff";
 import Studentt from "./Admin_Pages/Admin_Student";
+import Cookies from 'js-cookie'; 
 
 export default function Incharge_Main() {
     const router = useRouter(); 
 
 
   useEffect(() => {
-    const userId = sessionStorage.getItem('userId');
-    const userRole = sessionStorage.getItem('userRole');
+    const userId = Cookies.get('userID');
+    const userRole = Cookies.get('userRole'); 
 
     if (!userId || !userRole) {
+    document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       router.push('/');  // Adjust the path to your actual login page
     }
   }, [router]);
@@ -47,7 +50,8 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
-        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         router.push('/');
     }
 
@@ -58,7 +62,7 @@ export default function Incharge_Main() {
             
             <aside className={`${styles.SidebarPart} ${isSidebarOpen ? styles.open : styles.closed}`}>   
                 <div className={styles.mainLogo}>
-                    <img src="./Assets/Img/AVR_Logo_Blue.png" alt="Logo" />
+                    <img src="./Assets/Img/AVR_Logo_White.png" alt="Logo" />
                     {isSidebarOpen && <h2>SRCB</h2>}
                 </div>             
 

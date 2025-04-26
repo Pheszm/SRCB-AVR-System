@@ -2,6 +2,8 @@ import styles from "@/styles/User.module.css";
 import * as AiIcons from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';  // Make sure to import the router
+import Cookies from 'js-cookie'; 
+
 
 export default function Incharge_AVRLogs() {
     const router = useRouter();  // Initialize the router
@@ -37,19 +39,33 @@ export default function Incharge_AVRLogs() {
     const categories = [...new Set(AllTransactions.map(item => item.Transac_Category))];
     const actions = [...new Set(AllTransactions.map(item => item.transac_status))];
 
+    
     const filteredData = AllTransactions.filter(
-        ({ dateofuse, fullName, transac_status, Transac_Category }) => {
+        ({ dateofuse, fullName, transac_status, Transac_Category, User_id, Usertype, reservation_status }) => {
+            
             const transactionMonth = new Date(dateofuse).toISOString().slice(0, 7);  // Extract YYYY-MM from dateofuse
-            return (
-                (selectedCategory === "" || Transac_Category === selectedCategory) &&
-                (selectedMonth === "" || transactionMonth === selectedMonth) &&  // Compare with YYYY-MM format
-                (dateofuse.toLowerCase().includes(search.toLowerCase()) ||
-                    fullName.toLowerCase().includes(search.toLowerCase()) ||
-                    transac_status.toLowerCase().includes(search.toLowerCase()) ||
-                    Transac_Category.toLowerCase().includes(search.toLowerCase()))
-            );
+                const userId = Cookies.get('userID'); 
+                const userRole = Cookies.get('userRole'); 
+    
+            // Make sure User_id and Usertype match the session data and reservation_status is approved
+            if (parseInt(User_id) === parseInt(userId) && Usertype === userRole &&
+                reservation_status === "Approved") { 
+    
+                // Filter based on category, month, and search term
+                return (
+                    (selectedCategory === "" || Transac_Category === selectedCategory) &&
+                    (selectedMonth === "" || transactionMonth === selectedMonth) &&  // Compare with YYYY-MM format
+                    (dateofuse.toString().toLowerCase().includes(search.toLowerCase()) ||
+                        fullName.toLowerCase().includes(search.toLowerCase()) ||
+                        transac_status.toLowerCase().includes(search.toLowerCase()) ||
+                        Transac_Category.toLowerCase().includes(search.toLowerCase()))
+                );
+            }
+    
+            return false; // Ensure the function returns a boolean value
         }
     );
+    
     
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
@@ -82,25 +98,26 @@ export default function Incharge_AVRLogs() {
         <div>
             <h3>Upcoming Transactions</h3>
             <br></br>
-            {/* Updated Table */}
+
             <table className={styles.DashTable}>
                 <thead>
                     <tr>
-                        <th>Status</th> {/* Could be the action or status */}
+                        <th>Status</th> 
                         <th>Time</th>
-                        <th>Item/Venue</th> {/* Can be renamed based on context */}
+                        <th>Item/Venue</th> 
                     </tr>
                 </thead>
                 <tbody>
                     {currentRows.map((transaction, index) => {
-                        const userId = sessionStorage.getItem('userId'); // Get the userId from sessionStorage
-                        const userRole = sessionStorage.getItem('userRole'); // Get the userRole from sessionStorage
+                        const userId = Cookies.get('userID'); 
+                        const userRole = Cookies.get('userRole'); 
 
+        
                         if (parseInt(transaction.User_id) === parseInt(userId) && transaction.Usertype === userRole &&
-                        transaction.reservation_status === "Pending") {  // CHANGE THIS IF ITS FINAL ALREADY
+                        transaction.reservation_status === "Approved") {  // CHANGE THIS IF ITS FINAL ALREADY
                             return (
                                 <tr key={index}>
-                                    <td>{transaction.reservation_status}</td> {/* Display the status */}
+                                    <td>{transaction.reservation_status}</td> 
                                     <td>{convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
                                     <td>
                                         {transaction.items && transaction.items.length > 0

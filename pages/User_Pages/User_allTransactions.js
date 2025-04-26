@@ -2,7 +2,7 @@ import styles from "@/styles/User.module.css";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import AddItemsForm from "./Dashboard_Forms/ViewTransaction";
-
+import Cookies from 'js-cookie'; 
 
 export default function Incharge_Main() {
     const [showActions, setShowActions] = useState(false);
@@ -12,11 +12,10 @@ export default function Incharge_Main() {
     const rowsPerPage = 7;
     const [SelectedModification, setSelectForm] = useState("");
 
-    
         const handleFormClose = () => {
             setSelectForm("");
         };
-    
+
         const [SelectedTransaction, setSelectedTransaction] = useState(null);
         const handleViewReservation = (transaction) => {
             setSelectedTransaction(transaction);
@@ -24,12 +23,22 @@ export default function Incharge_Main() {
         };
 
 
-    // Filtered data based on search term
-    const filteredData = transactions.filter(item => 
-        item.transac_status.toLowerCase().includes(search.toLowerCase()) || 
-        item.dateofuse.toLowerCase().includes(search.toLowerCase()) || 
-        item.Transac_Category.toLowerCase().includes(search.toLowerCase())
-    );
+        const filteredData = transactions.filter(item => {
+            const userId = Cookies.get('userID'); 
+            const userRole = Cookies.get('userRole');  
+    
+            // Check if the transaction matches the userId and userRole
+            if (parseInt(item.User_id) === parseInt(userId) && item.Usertype === userRole) {
+                // Check if any of the fields match the search criteria
+                return (
+                    item.transac_status.toLowerCase().includes(search.toLowerCase()) || 
+                    item.dateofuse.toLowerCase().includes(search.toLowerCase()) || 
+                    item.Transac_Category.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+            return false; // Only return true if the transaction matches both user criteria and the search criteria
+        });
+        
 
     // Calculate total pages based on filtered data
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
@@ -141,11 +150,7 @@ export default function Incharge_Main() {
                     </thead>
                     <tbody>
                         {currentRows.map((transaction, index) => {
-                            const userId = sessionStorage.getItem('userId'); // Get the userId from sessionStorage
-                            const userRole = sessionStorage.getItem('userRole'); // Get the userRole from sessionStorage
 
-
-                            if (parseInt(transaction.User_id) === parseInt(userId) && transaction.Usertype === userRole) {
                                 return (
                                     <tr key={index}>
                                         <td>{transaction.reservation_status}</td>
@@ -171,7 +176,7 @@ export default function Incharge_Main() {
                                         )}
                                     </tr>
                                 );
-                            }
+                            
                             return null; // If the condition doesn't match, render nothing
                         })}
                     </tbody>

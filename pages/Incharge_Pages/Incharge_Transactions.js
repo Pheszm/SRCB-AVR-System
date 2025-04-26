@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as AiIcons from "react-icons/ai";
 import styles from "@/styles/Incharge.module.css";
 import { useRouter } from 'next/router';
+import ViewTransaction from "./Forms/ViewTransaction";
+
 
 export default function Incharge_AVRLogs() {
     const router = useRouter();
@@ -11,12 +13,20 @@ export default function Incharge_AVRLogs() {
         setSelectForm(page);
     };
 
+
+    const [SelectedTransaction, setSelectedTransaction] = useState(null);
+    const handleViewReservation = (transaction) => {
+        setSelectedTransaction(transaction);
+        setSelectForm("ViewTransaction");
+    };
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedMonth, setSelectedMonth] = useState("");
     const [showActions, setShowActions] = useState(false);
-    const rowsPerPage = 10;
+    const rowsPerPage = 8;
 
     const [AllTransactions, setAllTransactions] = useState([]);
 
@@ -198,7 +208,10 @@ const exportToCSV = () => {
                             <td>{transaction.Transac_Category}</td>
                             {showActions && (
                                 <td>
-                                    <button>View</button>
+                                    <button
+                                    onClick={() => handleViewReservation(transaction)}
+                                    >View
+                                    </button>
                                 </td>
                             )}
                         </tr>
@@ -222,10 +235,9 @@ const exportToCSV = () => {
                 </button>
             </div>
 
-            {SelectedModification === "AddItem" && (
+            {SelectedModification === "ViewTransaction" && SelectedTransaction && (
                 <div className={styles.BlurryBackground}>
-                    {SelectedModification === "AddItem" && <AddItemsForm />}
-                    <button className={styles.closeBtn} onClick={() => handlePageChange("")}>X</button>
+                    <ViewTransaction transaction={SelectedTransaction} onClose={() => handlePageChange("")} />
                 </div>
             )}
         </div>

@@ -36,7 +36,10 @@ export default function TopUsers() {
           }, {});
 
           // Convert the object to an array for easier rendering
-          setUsers(Object.values(userTransactions));
+          // Sort the users by reservations in descending order
+          const sortedUsers = Object.values(userTransactions).sort((a, b) => b.reservations - a.reservations);
+          
+          setUsers(sortedUsers);
         } else {
           setError('Error fetching users: ' + data.message);
         }

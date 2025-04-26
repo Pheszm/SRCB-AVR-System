@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from "@/styles/User.module.css";
+import * as AiIcons_md from "react-icons/md";
+import { QR_Login } from "@/components/QR_Scanning";
 
 export default function ItemCategoryForm({ onClose, onSelectItem }) { 
   const [items, setItems] = useState([]);
@@ -7,6 +9,23 @@ export default function ItemCategoryForm({ onClose, onSelectItem }) {
   const [selectedItem, setSelectedItem] = useState(null); // Store selected item details
   const [borrowQuantity, setBorrowQuantity] = useState(1); // Store borrow quantity
   const [ItemId, setItemId] = useState(''); // Store borrow quantity
+
+
+
+    // Open or Close the QR Scanner
+    const [isScanning, setIsScanning] = useState(false);
+    const toggleScan = () => {
+      setIsScanning(prev => !prev);
+      document.querySelector(`.${styles.qrOverlay}`).style.display = isScanning ? 'none' : 'flex';
+    };
+  
+    // QR Scanner Data Reciever
+    const handleScanSuccess = (decodedText) => {
+      setSearchTerm(decodedText);
+      console.log("QR Code Scanned:", decodedText);
+      toggleScan();
+    };
+
 
   useEffect(() => {
     // Fetch items from your API
@@ -28,7 +47,8 @@ export default function ItemCategoryForm({ onClose, onSelectItem }) {
   };
 
   const filteredItems = items.filter(item =>
-    item.I_Name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.I_Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.I_QRcode.includes(searchTerm)
   );
 
   const handleItemClick = (item) => {
@@ -55,13 +75,19 @@ export default function ItemCategoryForm({ onClose, onSelectItem }) {
         <button className={styles.ExitButtoonnn} onClick={onClose}>X</button>
       </span>
 
-      <input 
-        type="search"
-        placeholder="Search for Item"
-        value={searchTerm}
-        className={styles.SearchBarrr}
-        onChange={handleSearchChange}
-      />
+      <span className={styles.SpanFlexx3}>
+        <input 
+          type="search"
+          placeholder="Search for Item"
+          value={searchTerm}
+          className={styles.SearchBarrr}
+          onChange={handleSearchChange}
+        />
+        <button onClick={toggleScan}>
+          <AiIcons_md.MdQrCode size={30}/>
+        </button>
+      </span>
+
 
       <div className={styles.ScrollableBoxx}>
         {filteredItems.map(item => (
@@ -100,6 +126,16 @@ export default function ItemCategoryForm({ onClose, onSelectItem }) {
           <button className={styles.SubmitButtonnn} onClick={handleBorrowSubmit}>Borrow</button>
         </div>
       )}
+
+      {isScanning && (
+              <div className={styles.BlurryBackground}>
+              <div className={styles.AddItemForm}>
+                <QR_Login ScanningStatus={isScanning} onScanSuccess={handleScanSuccess} CloseForm={toggleScan} />
+              </div>
+          </div>
+      )}
+
+      
     </div>
   );
 }

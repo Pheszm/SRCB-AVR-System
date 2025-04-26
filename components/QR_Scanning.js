@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import styles from "@/styles/User.module.css";
 
-const QR_Login = ({ ScanningStatus, onScanSuccess }) => {
+
+const QR_Login = ({ ScanningStatus, onScanSuccess, CloseForm }) => {
   const [scanner, setScanner] = useState(null);
 
   useEffect(() => {
@@ -46,7 +48,19 @@ const QR_Login = ({ ScanningStatus, onScanSuccess }) => {
     }
   }, [ScanningStatus, scanner, onScanSuccess]);
 
-  return <div id="reader" style={{ display: ScanningStatus ? 'block' : 'none' }}></div>;
+  return (
+    <div className={styles.Formmm}>
+      {/* Close button to stop scanning */}
+      <span className={styles.SpanFlex}>
+        <p/>
+      <button className={styles.FormCloseButton} onClick={CloseForm}>X</button>
+      </span>
+
+
+      {/* QR Code Scanner */}
+      <div id="reader" style={{ display: ScanningStatus ? 'block' : 'none' }}></div>
+    </div>
+  );
 };
 
 export { QR_Login };

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AddItemsForm from "./Forms/Transaction/View_Transaction";
 import { useRouter } from "next/router";
 import Swal from 'sweetalert2'; 
-
+import Cookies from 'js-cookie'; 
 
 // Dummy categories and userTypes, replace with actual data fetching if needed
 const categories = ["AVRITEMS", "AVRVENUE"];
@@ -67,18 +67,33 @@ export default function Incharge_Reservations() {
         return `${hour12}:${minute} ${suffix}`;
     };
 
-    // Apply filters
-    const filteredData = AllTransactions.filter(trasaction => {
-        const matchesSearch =   trasaction.Usertype.toLowerCase().includes(search.toLowerCase()) ||   
-                                trasaction.dateofuse.toLowerCase().includes(search.toLowerCase()) ||
-                                trasaction.fromtime.toLowerCase().includes(search.toLowerCase()) ||
-                                trasaction.totime.toLowerCase().includes(search.toLowerCase()) ||
-                                trasaction.fullName.toLowerCase().includes(search.toLowerCase()) ||
-                                trasaction.Transac_Category.toLowerCase().includes(search.toLowerCase());
-        const matchesCategory = selectedCategory ? trasaction.Transac_Category === selectedCategory : true;
-        const matchesUserType = selectedUserType ? trasaction.Usertype === selectedUserType : true;
-        return matchesSearch && matchesCategory && matchesUserType;
-    });
+// Apply filters
+const filteredData = AllTransactions.filter(transaction => {
+    // Filter for transactions with "Pending" status
+    if (transaction.reservation_status !== "Pending") {
+        return false; // Exclude transactions that are not "Pending"
+    }
+
+
+    
+    // Match search terms
+    const matchesSearch = 
+        transaction.Usertype.toLowerCase().includes(search.toLowerCase()) ||   
+        transaction.dateofuse.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.fromtime.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.totime.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.fullName.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.Transac_Category.toLowerCase().includes(search.toLowerCase());
+
+    // Match category if selectedCategory is set
+    const matchesCategory = selectedCategory ? transaction.Transac_Category === selectedCategory : true;
+
+    // Match user type if selectedUserType is set
+    const matchesUserType = selectedUserType ? transaction.Usertype === selectedUserType : true;
+
+    // Return true if all conditions match
+    return matchesSearch && matchesCategory && matchesUserType;
+});
 
 
 
@@ -111,7 +126,7 @@ export default function Incharge_Reservations() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             transac_id,
-                            approvedby_id: sessionStorage.getItem('userId'),
+                            approvedby_id: Cookies.get('userID'),
                             action: "approve",
                             comment: null
                         })
@@ -149,7 +164,7 @@ export default function Incharge_Reservations() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             transac_id,
-                            approvedby_id: sessionStorage.getItem('userId'),
+                            approvedby_id: Cookies.get('userID'),
                             action: "decline",
                             comment
                         })

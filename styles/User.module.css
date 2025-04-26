@@ -765,12 +765,17 @@ ADD ITEM FORM
 }
 
 .SpanUpper{
-    margin-top: 30px;
+    margin-top: 30px;       
     }
 
 .AddItemForm label{
     font-size: 10px;
+    color: #6c6c6c;
     line-height: 1px;
+}
+.AddItemForm p{
+    font-size: 14px;
+    color: #001e71;
 }
 .AddItemForm select{
     width: 100%;
@@ -810,6 +815,8 @@ ADD ITEM FORM
     box-shadow: 0 0 0 3px rgba(253, 42, 0, 0.0) !important;
     background-color: #920e0e !important;
 }
+
+
 
 
 
@@ -854,7 +861,7 @@ ADD ITEM FORM
     width: 100%;
     background-color: #fff;
     border: none;
-    border-bottom: 1px solid #59595a;
+    border-bottom: 1px solid #e7e7e7;
     padding: 10px;
     margin: 5px 0px;
     border-radius: 5px;
@@ -1046,6 +1053,28 @@ ADD ITEM FORM
     margin-bottom: 10px;
 }
 
+.SpanFlexx3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    gap: 10px;
+}
+.SpanFlexx3 button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border: none;
+    color: #142f93;
+    transition: all 0.3s ease;
+}
+.SpanFlexx3 button:hover{
+    color: #0a184e;
+}
+
 .ExitButtoonnn{
     background-color: #ce2d2d;
     color: #fff;
@@ -1062,7 +1091,7 @@ ADD ITEM FORM
     padding: 2px 15px;
     font-size: 13px;  
     border: 2px solid #979797;  
-    border-radius: 1px; 
+    border-radius: 8px; 
     background-color: #f5f5f5; 
     outline: none;
     transition: all 0.3s ease-in-out;  
@@ -1157,3 +1186,20 @@ ADD ITEM FORM
   }
 
 
+
+
+.NotificationItem{
+    display: flex;
+    padding: 5px;
+
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15); 
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+}
+
+.NotifText{
+    font-size: 10px !important;
+}

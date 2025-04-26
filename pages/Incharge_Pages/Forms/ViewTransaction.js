@@ -173,7 +173,6 @@ export default function ViewTransaction({ transaction, onClose }) {
                   
                   // Add conflict details to the conflicts array
                   conflicts.push({
-                    Name: ExistTransac.fullName,
                     item: row.I_Name,  // Item name from the row in the transaction
                     conflictQuantity: existingQuantity,
                     transactionId: ExistTransac.transac_id, 
@@ -245,7 +244,6 @@ export default function ViewTransaction({ transaction, onClose }) {
 
 
                     if(transaction.transac_id != ExistTransac.transac_id){
-                      console.log("Checking Conflict...");
                       if (formatDate(transaction.dateofuse) == existingDate) {
                         if (
                                   (requestedFromTime < existingToTimeFormated && requestedFromTime >= existingFromTimeFormated) || 
@@ -310,7 +308,7 @@ export default function ViewTransaction({ transaction, onClose }) {
     <div className={styles.AddItemForm}>
       <form className={styles.Formmmm}>
         <span className={styles.SpanHeader}>
-          <h2>PENDING RESERVATION</h2>
+          <h2>VIEW TRANSACTION</h2>
           <button onClick={onClose} className={styles.FormCloseButton}>X</button>
         </span>
 
@@ -335,6 +333,27 @@ export default function ViewTransaction({ transaction, onClose }) {
               <label>Purpose:</label>
               <p>{transaction.transac_reason}</p>
             </span>
+
+            {
+              transaction.reservation_status === "Declined" && (
+                transaction.comments_afteruse !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Decline Comment:</label>
+                    <p>{transaction.comments_afteruse}</p>
+                  </span>
+                )
+              )
+            }
+            {
+              transaction.reservation_status === "Success" && (
+                transaction.comments_afteruse !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Comment:</label>
+                    <p>{transaction.comments_afteruse}</p>
+                  </span>
+                )
+              )
+            }
           </div>
 
 
@@ -365,11 +384,40 @@ export default function ViewTransaction({ transaction, onClose }) {
               <label>Date Filed:</label>
               <p>{FormatDateTimeFromDB(transaction.DateFiled)}</p>
             </span>
+            
+            {
+              transaction.reservation_status === "Declined" && (
+                transaction.approvedby_fullname !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Declined By:</label>
+                    <p>{transaction.approvedby_fullname}</p>
+                  </span>
+                )
+              )
+            }
+            {
+              transaction.reservation_status === "Approved" && (
+                transaction.approvedby_fullname !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Approved By:</label>
+                    <p>{transaction.approvedby_fullname}</p>
+                  </span>
+                )
+              )
+            }
+            {
+              transaction.returnedtime !== null && (
+                <span className={styles.FieldsArea}>
+                  <label>Returned Date:</label>
+                  <p>{FormatDateTimeFromDB(transaction.returnedtime)}</p>
+                </span>
+              )
+            }
+            
           </div>
         </div>
 
         <span className={styles.SpanFlex}>
-            <p></p>
         {WarningSign === "Warning" && (
           <button
             type="button"
@@ -389,16 +437,6 @@ export default function ViewTransaction({ transaction, onClose }) {
             <b>Warning:</b> {conflicts.length} item(s) have a conflict schedule!
           </button>
         )}
-            <span className={styles.SpanFlex}>
-                <button className={styles.SuccessBtnnn}   onClick={(e) => {
-                  e.preventDefault();
-                  handleAction(transaction.transac_id, "approve");
-                }}>Approve</button>
-                <button className={styles.RemoveBtnnn}  onClick={(e) => {
-                  e.preventDefault();
-                  handleAction(transaction.transac_id, "decline");
-                }}>Decline</button>
-            </span>
         </span>
         
 
@@ -406,8 +444,7 @@ export default function ViewTransaction({ transaction, onClose }) {
           <div className={styles.ConflictDropdown}>
             <ul>
               {conflicts.map((conflict, index) => (
-                <li key={index}> 
-                  <strong>Name:</strong> {conflict.Name}<br />
+                <li key={index}>
                   <strong>Item:</strong> {conflict.conflictQuantity} {conflict.item}<br />
                   <strong>Requested Date:</strong> {conflict.conflictDate}<br />
                   <strong>Requested Time:</strong> {conflict.existingFromTime} to {conflict.existingToTime}<br />

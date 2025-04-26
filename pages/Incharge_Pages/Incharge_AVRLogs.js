@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function Incharge_AVRLogs() {
     const [logsData, setLogsData] = useState([]);  // To store fetched logs
-    const [selectedModification, setSelectForm] = useState("");
+    const [selectedModification, setSelectForm] = useState(""); 
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [selectedAction, setSelectedAction] = useState("");  // Action filter
@@ -96,7 +96,6 @@ export default function Incharge_AVRLogs() {
 
     return (
         <div className={styles.ItemBodyArea}>
-            {/* Updated Header Section */}
             <header className={styles.HeaderSection}>
                 <div>
                     <h2>Activity Logs</h2>
@@ -172,8 +171,8 @@ export default function Incharge_AVRLogs() {
                             <tr key={log.logs_id}>
                                 <td>{formattedDateTime}</td>
                                 <td>{log.Action}</td>
-                                <td>{log.I_Name}</td>  {/* Display I_Name from Item table */}
-                                <td>{log.C_Fullname}</td>  {/* Display C_Fullname from Incharge table */}
+                                <td>{log.I_Name}</td> 
+                                <td>{log.C_Fullname}</td>
                             </tr>
                         );
                     })}

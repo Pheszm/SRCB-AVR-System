@@ -308,7 +308,7 @@ export default function ViewTransaction({ transaction, onClose }) {
     <div className={styles.AddItemForm}>
       <form className={styles.Formmmm}>
         <span className={styles.SpanHeader}>
-          <h2>PENDING RESERVATION</h2>
+          <h2>VIEW TRANSACTION</h2>
           <button onClick={onClose} className={styles.FormCloseButton}>X</button>
         </span>
 
@@ -333,6 +333,28 @@ export default function ViewTransaction({ transaction, onClose }) {
               <label>Purpose:</label>
               <p>{transaction.transac_reason}</p>
             </span>
+
+
+            {
+              transaction.reservation_status === "Declined" && (
+                transaction.comments_afteruse !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Decline Comment:</label>
+                    <p>{transaction.comments_afteruse}</p>
+                  </span>
+                )
+              )
+            }
+            {
+              transaction.reservation_status === "Success" && (
+                transaction.comments_afteruse !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Comment:</label>
+                    <p>{transaction.comments_afteruse}</p>
+                  </span>
+                )
+              )
+            }
           </div>
 
 
@@ -363,6 +385,36 @@ export default function ViewTransaction({ transaction, onClose }) {
               <label>Date Filed:</label>
               <p>{FormatDateTimeFromDB(transaction.DateFiled)}</p>
             </span>
+            
+            {
+              transaction.reservation_status === "Declined" && (
+                transaction.approvedby_fullname !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Declined By:</label>
+                    <p>{transaction.approvedby_fullname}</p>
+                  </span>
+                )
+              )
+            }
+            {
+              transaction.reservation_status === "Approved" && (
+                transaction.approvedby_fullname !== null && (
+                  <span className={styles.FieldsArea}>
+                    <label>Approved By:</label>
+                    <p>{transaction.approvedby_fullname}</p>
+                  </span>
+                )
+              )
+            }
+
+            {
+              transaction.returnedtime !== null && (
+                <span className={styles.FieldsArea}>
+                  <label>Returned Date:</label>
+                  <p>{FormatDateTimeFromDB(transaction.returnedtime)}</p>
+                </span>
+              )
+            }
           </div>
         </div>
 

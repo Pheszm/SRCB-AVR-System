@@ -6,7 +6,7 @@
 MAIN BODY AREA
 ============================================ */
 .Gen_Background {
-    background-image: url("../public/Assets/Img/Login_SRCB_BackgroundImg.png");
+    background-image: url("../public/Assets/Img/Login_SRCB_BackgroundImg_LowGPX.png");
     background-size: cover;
     background-blend-mode: multiply;
     background-color: #727272;

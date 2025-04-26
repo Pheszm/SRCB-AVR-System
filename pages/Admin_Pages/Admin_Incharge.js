@@ -137,8 +137,8 @@ export default function Incharge_Items() {
                 </thead>
                 <tbody>
                     {currentRows.map((incharge) => (  // iterate over currentRows, each item is 'incharge'
-                        <tr key={incharge.C_id}>  {/* Use incharge.C_id as the unique key */}
-                            <td>{incharge.C_Fullname}</td> {/* Access incharge properties */}
+                        <tr key={incharge.C_id}>  
+                            <td>{incharge.C_Fullname}</td> 
                             <td>{incharge.C_Email}</td>
                             <td>{incharge.C_Username}</td>
                             <td>

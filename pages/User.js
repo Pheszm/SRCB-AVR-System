@@ -6,6 +6,9 @@ import { useRouter } from "next/router";
 import AllTransact from "./User_Pages/User_allTransactions";
 import StudentReservationForm from "./User_Pages/Reservation_Form/student_reservation_form";
 import TodayTransaction from "./User_Pages/Dashboard_Forms/Todays_Trasanction";
+import Notificationss from "./User_Pages/Dashboard_Forms/Notifications";
+import Cookies from 'js-cookie'; 
+
 
 export default function Incharge_Main() {
     const router = useRouter();     
@@ -19,11 +22,12 @@ export default function Incharge_Main() {
     };
 
     const fetchUserData = async () => {
-        const storedUserId = sessionStorage.getItem('userId');
-        const storedUserRole = sessionStorage.getItem('userRole');
+        const storedUserId = Cookies.get('userID');
+        const storedUserRole = Cookies.get('userRole'); 
   
         if (!storedUserId || !storedUserRole) {
-          // If there's no userId or userRole, redirect to the login page
+            document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
           router.push('/'); // Adjust the path to your login page
           return;
         }
@@ -96,7 +100,8 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess() {
-        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         router.push('/');
     }
 
@@ -139,7 +144,6 @@ export default function Incharge_Main() {
                 </button>
             </aside>
 
-            {/* Right Side Area */}
             <div className={styles.RightSideArea}>
                 <header className={styles.HeaderPart}>
                 <button className={styles.BurgerIcon} onClick={toggleSidebar}><AiIcons.AiOutlineMenu size={30} /></button>
@@ -154,7 +158,7 @@ export default function Incharge_Main() {
                             <div className={styles.NotifBox}>
                                 <h4>Notifications</h4>
                                 <div>
-                                    Notif Main Body
+                                    <Notificationss/>
                                 </div>
                             </div>
                         )}

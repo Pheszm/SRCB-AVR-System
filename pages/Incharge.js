@@ -8,7 +8,7 @@ import Reservations from "./Incharge_Pages/Incharge_Reservations";
 import AVRLogs from "./Incharge_Pages/Incharge_AVRLogs";
 import Items from "./Incharge_Pages/Incharge_Items";
 import Transactions from "./Incharge_Pages/Incharge_Transactions";
-
+import Cookies from 'js-cookie'; 
 
 export default function Incharge_Main() {
     const router = useRouter(); 
@@ -16,11 +16,12 @@ export default function Incharge_Main() {
 
     useEffect(() => {
         const fetchUserData = async () => {
-          const userId = sessionStorage.getItem('userId');
-          const userRole = sessionStorage.getItem('userRole');
+          const userId = Cookies.get('userID');
+          const userRole = Cookies.get('userRole'); 
     
           if (!userId || !userRole) {
-            document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
             router.push('/'); 
             return;
           }
@@ -72,7 +73,8 @@ export default function Incharge_Main() {
     };
 
     function LogoutProcess(){
-        document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = 'userID=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = 'userRole=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         router.push('/');
     }
 
