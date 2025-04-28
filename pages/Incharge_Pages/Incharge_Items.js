@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import AddItemsForm from "./Forms/Items/Add_Items";
 import ViewItemsForm from "./Forms/Items/View_Items";
 import UpdateItemsForm from "./Forms/Items/Update_Items";
+import Cookies from 'js-cookie'; 
+
+
 
 export default function Incharge_Items() {
     const [SelectedModification, setSelectForm] = useState("");
@@ -44,7 +47,7 @@ export default function Incharge_Items() {
     // Function to remove an item (update status to "Removed")
     // Function to remove an item (update status to "Removed")
 const removeItem = async (itemId, itemName) => {
-    const C_id = sessionStorage.getItem('userId'); // Get C_id (userId) from sessionStorage
+    const C_id = Cookies.get('userID'); // Get C_id (userId) from sessionStorage
     
     if (!C_id) {
         await Swal.fire('Error!', 'User ID is not available. Please log in.', 'error');

@@ -12,8 +12,8 @@ export default async function handler(req, res) {
         const finalComment = action === "approve" ? null : comment;
 
         const [result] = await pool.query(
-            `UPDATE Transaction SET approvedby_id = ?, reservation_status = ?, comments_afteruse = ? WHERE transac_id = ?`,
-            [approvedby_id, status, finalComment, transac_id]
+            `UPDATE Transaction SET approvedby_id = ?, reservation_status = ?, comments_afteruse = ?, transac_status = ? WHERE transac_id = ?`,
+            [approvedby_id, status, finalComment, "Upcoming", transac_id]
         );
 
         return res.status(200).json({ message: `Reservation ${status.toLowerCase()} successfully.` });

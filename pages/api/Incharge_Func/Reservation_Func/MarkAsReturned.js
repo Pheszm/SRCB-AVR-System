@@ -5,7 +5,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { transac_id, comments_afteruse } = req.body;
+    const { transac_id, comments_afteruse, ReturnedOntime } = req.body;  
 
     try {
         // First verify the transaction exists and is in correct state
@@ -25,14 +25,19 @@ export default async function handler(req, res) {
             });
         }
 
-        // Update the transaction
+        // Update the transaction, using ReturnedOntime for transac_status
         const [updateResult] = await pool.query(
             `UPDATE Transaction 
              SET reservation_status = 'Success',
                  returnedtime = NOW(),
+                 transac_status = ?,
                  comments_afteruse = ?
              WHERE transac_id = ?`,
-            [comments_afteruse, transac_id]
+            [
+                ReturnedOntime ? 'On-Time' : 'Late',  // Conditional 'On-Time' or 'Late'
+                comments_afteruse,
+                transac_id
+            ]
         );
 
         if (updateResult.affectedRows === 0) {

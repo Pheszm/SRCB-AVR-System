@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from "@/styles/User.module.css";
 import styles2 from "@/styles/ReservationPage.module.css";
 import Swal from 'sweetalert2'; 
+import Cookies from 'js-cookie'; 
+
 
 export default function ViewTransaction({ transaction, onClose }) {
   const [WarningSign, setWarningSign] = useState(null);
@@ -57,7 +59,7 @@ export default function ViewTransaction({ transaction, onClose }) {
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({
                               transac_id,
-                              approvedby_id: sessionStorage.getItem('userId'),
+                              approvedby_id: Cookies.get('userID'),
                               action: "approve",
                               comment: null
                           })
@@ -96,7 +98,7 @@ export default function ViewTransaction({ transaction, onClose }) {
                           headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({
                               transac_id,
-                              approvedby_id: sessionStorage.getItem('userId'),
+                              approvedby_id: Cookies.get('userID'),
                               action: "decline",
                               comment
                           })

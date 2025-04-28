@@ -109,7 +109,7 @@ export default function Incharge_Dashboard() {
 
             <div className={styles.LowerSquares}>
                 <div className={styles.DIVwithTabless}>
-                    <h3>Upcomming Transaction</h3>
+                    <h3>Active Transaction</h3>
                     <TodayTransactions/>
                 </div>  
                 

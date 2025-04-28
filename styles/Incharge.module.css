@@ -348,6 +348,7 @@ DASHBOARD AREA
     gap: 10px;
     width: 100%;
     height: 500px;
+    overflow: hidden;
 }
 
 .DashTable {
@@ -833,10 +834,11 @@ ADD ITEM FORM
   
 .ScrollAreaHere {
     text-align: center;
-    background-color: #f0f0f0;
     border-radius: 8px;
     margin: 0 auto;
     overflow-y: auto;
+    width: 100%;
+    padding: 10px;
   }
   
   

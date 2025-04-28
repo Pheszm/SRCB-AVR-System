@@ -28,6 +28,14 @@ export default function UpdateInchargeForm({ incharge, onClose, onUpdate }) {
             });
             return;
         }
+                if (C_Password.length < 8) {
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Password is too short',
+                        text: 'Password must be at least 8 characters long.',
+                    });
+                    return;
+                }
 
         setIsSubmitting(true);
         setErrorMessage('');

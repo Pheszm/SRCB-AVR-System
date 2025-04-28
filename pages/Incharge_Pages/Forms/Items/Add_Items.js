@@ -1,6 +1,7 @@
 import styles from "@/styles/User.module.css";
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie'; 
 
 export default function Adding_Item_Form({ category, onClose }) {
     const [itemName, setItemName] = useState('');
@@ -12,8 +13,8 @@ export default function Adding_Item_Form({ category, onClose }) {
     const [errorMessage, setErrorMessage] = useState('');
   const [categories, setCategories] = useState(category); 
 
-    // Get the userId (C_id) from sessionStorage
-    const C_id = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
+
+    const C_id = Cookies.get('userID'); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();

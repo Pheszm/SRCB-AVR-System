@@ -56,7 +56,7 @@ export default function TopUsers() {
   return (
     <div className={styles.MainAreaDiv}>
       <h3>Top Users<br/> in the Current Month</h3>
-      <div className={styles.ScrollAreaHere}>
+      <span className={styles.ScrollAreaHere}>
         {loading ? (
           <p>Loading users...</p>
         ) : error ? (
@@ -76,7 +76,7 @@ export default function TopUsers() {
             )}
           </ul>
         )}
-      </div>
+      </span>
     </div>
   );
 }

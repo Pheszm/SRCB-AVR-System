@@ -49,7 +49,7 @@ export default function Incharge_AVRLogs() {
     
             // Make sure User_id and Usertype match the session data and reservation_status is approved
             if (parseInt(User_id) === parseInt(userId) && Usertype === userRole &&
-                reservation_status === "Approved") { 
+                reservation_status === "Approved" && transactionMonth != null) { 
     
                 // Filter based on category, month, and search term
                 return (
@@ -111,14 +111,16 @@ export default function Incharge_AVRLogs() {
                     {currentRows.map((transaction, index) => {
                         const userId = Cookies.get('userID'); 
                         const userRole = Cookies.get('userRole'); 
+                        const DayOfUse = new Date(transaction.dateofuse).toISOString().slice(0, 10).replace(/-/g, '-');
 
-        
                         if (parseInt(transaction.User_id) === parseInt(userId) && transaction.Usertype === userRole &&
                         transaction.reservation_status === "Approved") {  // CHANGE THIS IF ITS FINAL ALREADY
                             return (
                                 <tr key={index}>
                                     <td>{transaction.reservation_status}</td> 
-                                    <td>{convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
+                                    
+                                    
+                                    <td>({DayOfUse}) {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
                                     <td>
                                         {transaction.items && transaction.items.length > 0
                                             ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')

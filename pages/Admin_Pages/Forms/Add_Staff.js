@@ -24,6 +24,14 @@ export default function Adding_Item_Form({ onClose }) {
             });
             return;
         }
+        if (password.length < 8) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Password is too short',
+                text: 'Password must be at least 8 characters long.',
+            });
+            return;
+        }
 
         setIsSubmitting(true);
         setErrorMessage('');  // Clear previous error message

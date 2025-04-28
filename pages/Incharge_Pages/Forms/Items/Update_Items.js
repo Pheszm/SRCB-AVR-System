@@ -1,6 +1,7 @@
 import styles from "@/styles/User.module.css";
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie'; 
 
 export default function Updating_Item_Form({ item, category, onClose }) {
   const [itemName, setItemName] = useState(item.I_Name || '');
@@ -13,8 +14,8 @@ export default function Updating_Item_Form({ item, category, onClose }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [categories, setCategories] = useState(category);
 
-  // Get the userId (C_id) from sessionStorage
-  const C_id = sessionStorage.getItem('userId'); // Assuming userId is stored in sessionStorage
+
+  const C_id = Cookies.get('userID');
 
   const handleSubmit = async (e) => {
     e.preventDefault();

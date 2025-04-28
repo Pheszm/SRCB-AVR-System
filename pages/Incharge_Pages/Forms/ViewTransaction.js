@@ -408,11 +408,20 @@ export default function ViewTransaction({ transaction, onClose }) {
             {
               transaction.returnedtime !== null && (
                 <span className={styles.FieldsArea}>
+                  <label>Return Status:</label>
+                  <p>{transaction.transac_status}</p>
+                </span>
+              )
+            }
+            {
+              transaction.returnedtime !== null && (
+                <span className={styles.FieldsArea}>
                   <label>Returned Date:</label>
                   <p>{FormatDateTimeFromDB(transaction.returnedtime)}</p>
                 </span>
               )
             }
+
             
           </div>
         </div>
