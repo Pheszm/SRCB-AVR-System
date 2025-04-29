@@ -41,7 +41,7 @@ export default function Incharge_Dashboard() {
 
             <div className={styles.UpperSquares}>
                 <div>
-                    <span>
+                    <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineCalendar size={30} /> 
                     </span>
                     <span>
@@ -58,7 +58,7 @@ export default function Incharge_Dashboard() {
                 </div>
 
                 <div>
-                    <span>
+                    <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineAppstore  size={30} /> 
                     </span>
                     <span>
@@ -68,7 +68,7 @@ export default function Incharge_Dashboard() {
                 </div>
 
                 <div>
-                    <span>
+                    <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineWallet size={30} /> 
                     </span>
                     <span>
@@ -95,13 +95,13 @@ export default function Incharge_Dashboard() {
                 </div>
 
                 <div>
-                    <span>
+                    <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineClockCircle size={30} /> 
                     </span>
                     <span>
                         <p>Date Today</p>
-                        <h4>{today}</h4>
-                    </span>
+                        <h4>{new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })).toISOString().slice(0, 10).replace(/-/g, '-')}</h4>
+                        </span>
                 </div>
             </div>
 

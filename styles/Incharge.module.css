@@ -320,6 +320,7 @@ DASHBOARD AREA
     color: #0a1f48;
     padding: 20px;
     border-radius: 5px;
+    align-items: center;
     display: flex;
     gap: 10px;
 }
@@ -694,6 +695,7 @@ ITEM TEBLE DESIGN
     backdrop-filter: blur(10px);
     width: 100vw;
     height: 100vh;
+    z-index: 10;
     position: absolute;
     display: flex;
     align-items: center;
@@ -869,3 +871,21 @@ ADD ITEM FORM
   .alignerforDIV2 strong {
     font-weight: bold;
   }
+
+
+  .IconCircle{
+    background-color: #1d2781 !important;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}
+
+
+
+
+
+
+

@@ -337,6 +337,7 @@ DASHBOARD AREA
     display: flex;
     gap: 10px;
     width: 100%;
+    align-items: center;
     white-space: nowrap;
 }
 .UpperSquares span{
@@ -823,7 +824,7 @@ ADD ITEM FORM
 .CommonButtonn{
     padding: 8px 20px;
     width: 100%;
-    background-color: #00145a;
+    background-color: #051963;
     color: #fff;
     margin: 5px 0px;
     border-radius: 5px;
@@ -1203,3 +1204,117 @@ ADD ITEM FORM
 .NotifText{
     font-size: 10px !important;
 }
+
+
+.IconCircle{
+    background-color: #1d2781 !important;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}
+
+.BtnIconCircle{
+    background-color: #fff !important;
+    color: #1d2781;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    height: 23px;
+    border-radius: 100%;
+}
+
+
+
+
+
+
+
+.FormCloseButton2{
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    border: 2px solid #ffffff !important;
+    width: 30px !important;
+    height: 30px !important;
+    background-color: #b21414 !important;
+    line-height: 0px;
+}
+.FormCloseButton2:focus,
+.FormCloseButton2:hover
+{
+    box-shadow: 0 0 0 3px rgba(253, 42, 0, 0.0) !important;
+    background-color: #920e0e !important;
+}
+
+.ProfileAreaHeader{
+    background-color: #d3d3d3;
+    border-radius: 8px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ProfileImg img{
+    position: absolute;
+    left: 6px;
+    top: 35px;
+}
+.ProfileImg img{
+    width: 70px;
+    border-radius: 100%;
+    border: 5px solid #ffff;
+}
+.FullnameArea{
+    padding-left: 80px;
+    color: #00145a;
+}
+.Titleee{
+    font-weight: 300;
+    font-size: 15px;
+}
+.FormEditButton{
+    position: absolute;
+    top: 110px;
+    right: 10px;
+    width: 25px !important;
+    height: 25px !important;
+    padding: 5px !important;
+    display: flex;
+    align-items: center;
+    background-color: #3c3535 !important;
+}
+.FormEditButton:hover{
+    background-color: #252121 !important;
+}
+.SpanFlexer{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.FormCancelButton{
+   font-weight: 500;
+   color: #414141;
+   cursor: pointer;
+   padding: 3px;
+   font-size: 13px;
+}
+
+.FormSubmitButton{
+    font-weight: 500;
+    color: #fff;
+    background-color: #0670b3;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80px;
+    text-align: center;
+    padding: 3px;
+    font-size: 13px;
+ }
+
+ .Formmmm222{
+    position: relative;
+    width: 350px;
+  }

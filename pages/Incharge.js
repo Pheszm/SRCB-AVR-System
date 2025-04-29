@@ -8,11 +8,21 @@ import Reservations from "./Incharge_Pages/Incharge_Reservations";
 import AVRLogs from "./Incharge_Pages/Incharge_AVRLogs";
 import Items from "./Incharge_Pages/Incharge_Items";
 import Transactions from "./Incharge_Pages/Incharge_Transactions";
+import MyProfile from "./User_Pages/Profile_Modal";
 import Cookies from 'js-cookie'; 
 
 export default function Incharge_Main() {
     const router = useRouter(); 
     const [UserFullData, setUserFullData] = useState(null);
+
+        const [SelectedModification, setSelectForm] = useState("");
+        const handlePageChange2 = (page) => {
+                setSelectForm(page);
+            };
+            
+            const handleFormClose = () => {
+                handlePageChange2("");
+            };
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -120,7 +130,7 @@ export default function Incharge_Main() {
                         {IsProfileDropdown && (
                             <div className={styles.DropdownMenu}>
                                 <ul>
-                                    <li><AiIcons_md.MdSettings  size={15} style={{ marginRight: '5px' }}/>Profile Settings</li>
+                                    <li onClick={() => handlePageChange2("ViewMyProfile")}><AiIcons_md.MdSettings  size={15} style={{ marginRight: '5px' }}/>Profile Settings</li>
                                     <li onClick={LogoutProcess}><AiIcons_md.MdExitToApp  size={15} style={{ marginRight: '5px' }}/>Logout</li>
                                 </ul>
                             </div>
@@ -136,6 +146,11 @@ export default function Incharge_Main() {
                 </div>
             </div>
 
+            {SelectedModification === "ViewMyProfile" && (
+                <div className={styles.BlurryBackground}>
+                <MyProfile onClose={handleFormClose} />
+            </div>
+            )}
         </div>
     );
 }

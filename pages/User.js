@@ -7,6 +7,7 @@ import AllTransact from "./User_Pages/User_allTransactions";
 import StudentReservationForm from "./User_Pages/Reservation_Form/student_reservation_form";
 import TodayTransaction from "./User_Pages/Dashboard_Forms/Todays_Trasanction";
 import Notificationss from "./User_Pages/Dashboard_Forms/Notifications";
+import MyProfile from "./User_Pages/Profile_Modal";
 import Cookies from 'js-cookie'; 
 
 
@@ -168,7 +169,7 @@ export default function Incharge_Main() {
                         {IsProfileDropdown && (
                             <div className={styles.DropdownMenu}>
                                 <ul>
-                                    <li><AiIcons_md.MdSettings  size={15} style={{ marginRight: '5px' }}/>Profile Settings</li>
+                                    <li onClick={() => handlePageChange("ViewMyProfile")}><AiIcons_md.MdSettings  size={15} style={{ marginRight: '5px' }}/>Profile Settings</li>
                                     <li onClick={LogoutProcess}><AiIcons_md.MdExitToApp  size={15} style={{ marginRight: '5px' }}/>Logout</li>
                                 </ul>
                             </div>
@@ -193,14 +194,17 @@ export default function Incharge_Main() {
                             <button 
                             onClick={handleReservationForm}
                             className={styles.CommonButtonn}>
-                                <AiIcons.AiOutlineCalendar size={30} /> 
+                                <span className={styles.BtnIconCircle}>
+                                <AiIcons.AiOutlineCalendar size={18} /> 
+                                </span>
+                                
                                 RESERVE NOW
                             </button>
                         </span>
                     </div>
 
                     <div>
-                        <span>
+                        <span className={styles.IconCircle}>
                             <AiIcons.AiOutlineAppstore  size={30} /> 
                         </span>
 
@@ -220,7 +224,7 @@ export default function Incharge_Main() {
                     </div>
 
                     <div>
-                        <span>
+                        <span className={styles.IconCircle}>
                             <AiIcons.AiOutlineWallet size={30} /> 
                         </span>
                         <span>
@@ -248,7 +252,7 @@ export default function Incharge_Main() {
                     </div>
 
                     <div>
-                        <span>
+                        <span className={styles.IconCircle}>
                             <AiIcons.AiOutlineClockCircle size={30} /> 
                         </span>
                         <span>
@@ -286,7 +290,12 @@ export default function Incharge_Main() {
                 <div className={styles.BlurryBackground}>
                 <StudentReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
             </div>
+            )}
 
+            {SelectedModification === "ViewMyProfile" && (
+                <div className={styles.BlurryBackground}>
+                <MyProfile userId={userId} userRole={userRole} onClose={handleFormClose} />
+            </div>
             )}
         </div>
     </div>

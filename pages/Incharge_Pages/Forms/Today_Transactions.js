@@ -200,7 +200,7 @@ export default function Incharge_AVRLogs() {
                                 {DayOfUse === CurrentDay && transaction.transac_status === "Upcoming" && (
                                     <button onClick={() => handleCheckout(transaction.transac_id)}>check-out</button>
                                 )}           
-                                {DayOfUse === CurrentDay && transaction.transac_status === "Checked-Out" && (
+                                {transaction.transac_status === "Checked-Out" && (
                                     <button onClick={() => handleReturn(transaction.transac_id, DayOfUse, transaction24HrTime)}>Returned</button>
                                 )}                         
                             </td>
