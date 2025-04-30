@@ -17,9 +17,7 @@ export default async function handler(req, res) {
       JOIN 
         Transaction t ON t.transac_id = ineed.transac_id
       WHERE 
-        t.transac_status = 'Active' 
-        AND t.reservation_status = 'Pending'
-        AND MONTH(t.DateTimeFiled) = ? 
+        MONTH(t.DateTimeFiled) = ? 
         AND YEAR(t.DateTimeFiled) = ?
       GROUP BY 
         i.I_Name

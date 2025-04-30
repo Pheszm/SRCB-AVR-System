@@ -1318,3 +1318,15 @@ ADD ITEM FORM
     position: relative;
     width: 350px;
   }
+
+
+.CancelBtn{
+    background-color: #932c2c !important;
+}
+.CancelBtn:hover{
+    background-color: #781f1f !important;
+}
+.CancelBtn:focus{
+    background-color: #781f1f !important;
+    box-shadow: 0 0 0 3px rgba(170, 5, 5, 0.5) !important;
+}

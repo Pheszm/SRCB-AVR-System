@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     } = req.body;
 
     // Validate required fields
-    if (!Usertype || !User_id || !requestedby_id || !dateofuse || !fromtime || !totime) {
+    if (!Usertype || !User_id || !dateofuse || !fromtime || !totime) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 

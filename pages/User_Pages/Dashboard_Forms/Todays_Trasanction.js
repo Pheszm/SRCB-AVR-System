@@ -3,7 +3,7 @@ import * as AiIcons from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';  // Make sure to import the router
 import Cookies from 'js-cookie'; 
-
+import Swal from 'sweetalert2';
 
 export default function Incharge_AVRLogs() {
     const router = useRouter();  // Initialize the router
@@ -30,6 +30,43 @@ export default function Incharge_AVRLogs() {
             console.error("Error fetching transaction data: ", error);
         }
     };
+
+
+    const RevokeTransaction = async (transac_id) => {
+        const { value: reason } = await Swal.fire({
+          title: 'Revoke Transaction',
+          input: 'textarea',
+          inputLabel: 'Reason for revocation',
+          inputPlaceholder: 'Enter reason here...',
+          inputAttributes: {
+            'aria-label': 'Reason for revocation'
+          },
+          showCancelButton: true
+        });
+      
+        if (reason) {
+          try {
+            const res = await fetch('/api/User_Func/Transaction_Func/Revoke_Transaction', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ transac_id, transac_reason: reason })
+            });
+      
+            const data = await res.json();
+            if (data.success) {
+              Swal.fire('Success!', 'Transaction has been revoked.', 'success');
+              window.location.reload();
+            } else {
+              Swal.fire('Error', 'Failed to revoke transaction.', 'error');
+            }
+          } catch (error) {
+            Swal.fire('Error', error.message, 'error');
+          }
+        }
+      };
+
 
     useEffect(() => {
         FetchTransactionData();
@@ -105,6 +142,7 @@ export default function Incharge_AVRLogs() {
                         <th>Status</th> 
                         <th>Time</th>
                         <th>Item/Venue</th> 
+                        <th>Action</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -120,11 +158,20 @@ export default function Incharge_AVRLogs() {
                                     <td>{transaction.reservation_status}</td> 
                                     
                                     
-                                    <td>({DayOfUse}) {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
-                                    <td>
+                                    <td title={`Day of Use: ${DayOfUse}, From: ${convertTo12HourFormat(transaction.fromtime)}, To: ${convertTo12HourFormat(transaction.totime)}`}
+                                    >({DayOfUse}) {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
+                                    <td title={
+                                    transaction.items && transaction.items.length > 0
+                                    ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')
+                                    : 'No items'
+                                }
+                                    >
                                         {transaction.items && transaction.items.length > 0
                                             ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')
                                             : 'No items'}
+                                    </td>
+                                    <td>
+                                        <button className={styles.CancelBtn} onClick={() => RevokeTransaction(transaction.transac_id)}>Revoke</button>
                                     </td>
                                 </tr>
                             );

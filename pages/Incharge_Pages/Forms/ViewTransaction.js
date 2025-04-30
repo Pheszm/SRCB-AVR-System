@@ -330,7 +330,11 @@ export default function ViewTransaction({ transaction, onClose }) {
             </span>
 
             <span className={styles.FieldsArea}>
-              <label>Purpose:</label>
+              <label>
+                {transaction.transac_status === "Cancelled" 
+                  ? "Reason of Cancelation:" 
+                  : "Purpose:"}
+              </label>
               <p>{transaction.transac_reason}</p>
             </span>
 

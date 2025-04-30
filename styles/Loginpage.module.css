@@ -165,12 +165,26 @@ QR SCANNER AREA
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background-color:rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(10px);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 999;
 }
+.qrOverlay button{
+    background-color: #2477d0;
+    padding: 4px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+.qrOverlay button:hover{
+    background-color: #115aa8;
+}
+
+
 
 .qrScanner {
     position: relative;

@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import AllTransact from "./User_Pages/User_allTransactions";
 import StudentReservationForm from "./User_Pages/Reservation_Form/student_reservation_form";
+import StaffReservationForm from "./User_Pages/Reservation_Form/staff_reservation_form";
 import TodayTransaction from "./User_Pages/Dashboard_Forms/Todays_Trasanction";
 import Notificationss from "./User_Pages/Dashboard_Forms/Notifications";
 import MyProfile from "./User_Pages/Profile_Modal";
@@ -21,6 +22,11 @@ export default function Incharge_Main() {
         handlePageChange("");
         window.location.reload();
     };
+
+    const handleFormClose2 = () => {
+        handlePageChange("");
+    };
+
 
     const fetchUserData = async () => {
         const storedUserId = Cookies.get('userID');
@@ -288,13 +294,18 @@ export default function Incharge_Main() {
 
             {SelectedModification === "StudentReservation" && (
                 <div className={styles.BlurryBackground}>
-                <StudentReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
+                    { userRole === "Student" && (
+                            <StudentReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
+                        ) }
+                    { userRole === "Staff" && (
+                            <StaffReservationForm userId={userId} userRole={userRole} onClose={handleFormClose} />
+                        ) }
             </div>
-            )}
+            )} 
 
             {SelectedModification === "ViewMyProfile" && (
                 <div className={styles.BlurryBackground}>
-                <MyProfile userId={userId} userRole={userRole} onClose={handleFormClose} />
+                <MyProfile userId={userId} userRole={userRole} onClose={handleFormClose2} />
             </div>
             )}
         </div>

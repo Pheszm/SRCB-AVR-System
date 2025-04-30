@@ -176,9 +176,9 @@ export default function Incharge_AVRLogs() {
                         const transaction24HrTime = `${transactionHours}:${transactionMinutes}`;
 
                         const rowStyle = 
-                                transaction.transac_status === "Checked-Out" && DayOfUse === CurrentDay && transaction24HrTime >= CurrentTime
+                                transaction.transac_status === "Checked-Out" && DayOfUse === CurrentDay && transaction24HrTime <= CurrentTime
                                 ? { backgroundColor: '#ceffcd' }
-                                : transaction.transac_status === "Checked-Out" && DayOfUse === CurrentDay && transaction24HrTime <= CurrentTime
+                                : transaction.transac_status === "Checked-Out" && (DayOfUse != CurrentDay || transaction24HrTime >= CurrentTime)
                                 ? { backgroundColor: '#ffcdcd' }
                                 : transaction.transac_status === "Upcoming"
                                 ? { backgroundColor: '#ffff' }
@@ -189,9 +189,14 @@ export default function Incharge_AVRLogs() {
                         return(
                         <tr key={index} style={rowStyle}>
                             <td>{transaction.transac_status}</td>
-                            <td>({DayOfUse}) {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
+                            <td  title={`Day of Use: ${DayOfUse}, From: ${convertTo12HourFormat(transaction.fromtime)}, To: ${convertTo12HourFormat(transaction.totime)}`}
+                            >({DayOfUse}) {convertTo12HourFormat(transaction.fromtime)} to {convertTo12HourFormat(transaction.totime)}</td>
                             <td>{transaction.fullName}</td>
-                            <td>
+                            <td title={
+                                    transaction.items && transaction.items.length > 0
+                                    ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')
+                                    : 'No items'
+                                }>
                                 {transaction.items && transaction.items.length > 0
                                     ? transaction.items.map(item => `${item.I_Quantity || ""} ${item.I_Name || 'AVR Venue'}`).join(', ')
                                     : 'No items'}
