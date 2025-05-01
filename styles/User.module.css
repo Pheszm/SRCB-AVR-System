@@ -82,10 +82,21 @@ HEADER PART AREA
 }
 
 .NotifBtn{
+    position: relative;
     background-color: transparent;
     border: none;
     color: #1a2866;  
     transition: transform 0.3s ease, color 0.3s ease;
+}
+.NotifBtn p{
+    position: absolute;
+    top: -5px;
+    left: 13px;
+    background-color: #fa3939;
+    padding: 3px;
+    border-radius: 10px;
+    line-height: 9px;
+    font-size: 10px;    
 }
 .NotifBtn:hover{
     scale: 1.1;
@@ -122,7 +133,6 @@ HEADER PART AREA
     font-size: 13px; 
     width: 200px;
     height: 200px;
-    overflow: hidden;
 }
 .NotifBox h4{
     width: 100%;
@@ -133,7 +143,7 @@ HEADER PART AREA
     font-weight: 400;
 }
 .NotifBox div{
-    padding: 5px;
+    padding: 2px;
 }
 .SeparationLine {
     width: 1px;
@@ -729,6 +739,19 @@ ITEM TEBLE DESIGN
     right: 0;
     z-index: 10;
 }
+.BlurryBackground2{
+    backdrop-filter: blur(10px);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(0, 0, 0, 0.7); 
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
 
 /* ============================================
 ADD ITEM FORM
@@ -1191,8 +1214,8 @@ ADD ITEM FORM
 
 .NotificationItem{
     display: flex;
-    padding: 5px;
-
+    padding: 7px 5px;
+    cursor: pointer;
     background-color: #fff;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.15); 
     margin-bottom: 4px;
@@ -1329,4 +1352,16 @@ ADD ITEM FORM
 .CancelBtn:focus{
     background-color: #781f1f !important;
     box-shadow: 0 0 0 3px rgba(170, 5, 5, 0.5) !important;
+}
+
+.Unread{
+    background-color: #ffbcbc;
+}
+
+.NotificationWrapper{
+    position: absolute;
+    overflow-y: auto;
+    height: 100% !important;
+    width: 100% !important;
+    scrollbar-width: thin; 
 }

@@ -27,6 +27,13 @@ export default function Incharge_Main() {
         handlePageChange("");
     };
 
+    const setStatusists = (storedUserId, storedUserRole) => {
+        setuserId(storedUserId);
+        setuserRole(storedUserRole);
+        calculateUnreadCount(storedUserId, storedUserRole);
+    }
+
+
 
     const fetchUserData = async () => {
         const storedUserId = Cookies.get('userID');
@@ -39,8 +46,7 @@ export default function Incharge_Main() {
           return;
         }
   
-        setuserId(storedUserId); 
-        setuserRole(storedUserRole); 
+        setStatusists(storedUserId, storedUserRole);
 
         try {
           // Make the API call to fetch user data based on userId and userRole
@@ -62,11 +68,14 @@ export default function Incharge_Main() {
 
 
       const [MyTransactions, setMyTransactions] = useState([]);
+      const StoreTransacData = (data) => {
+        setMyTransactions(data);
+      };
       const FetchTransactionData = async () => {
         try {
             const response = await fetch('/api/User_Func/Reservation_Func/Fetch_Transactions');
             const data = await response.json();
-            setMyTransactions(data); 
+            StoreTransacData(data);
         } catch (error) {
             console.error("Error fetching transaction data: ", error);
         }
@@ -75,7 +84,7 @@ export default function Incharge_Main() {
       useEffect(() => {
         fetchUserData();
         FetchTransactionData();
-          }, [router]);
+        }, [router]);
 
 
     const today = new Date().toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
@@ -133,6 +142,37 @@ export default function Incharge_Main() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    const [count, setCount] = useState(0);
+    const calculateUnreadCount = async (storedUserId, storedUserRole) => {
+        try {
+          const response = await fetch('/api/User_Func/Reservation_Func/Fetch_Transactions');
+          const CheckData = await response.json();
+      
+          let count = 0;
+      
+          CheckData.forEach(item => {
+
+      
+            if (
+              (item.Usertype.toString() === storedUserRole.toString() || item.Usertype.toString() === userRole.toString()) &&
+              (item.User_id.toString() === storedUserId.toString() || item.User_id.toString() === userId.toString()) &&
+              item.notif_status === "Unread" &&
+              item.approvedby_id != null
+            ) {
+              console.log("COUNT: " + count); 
+              count += 1;
+            }
+          });
+      
+          // Set the final count
+          setCount(count);
+      
+        } catch (error) {
+          console.error("Error fetching transactions:", error);
+        }
+      };
+      
+      
 
     return (
         <div className={styles.Gen_Body}>
@@ -159,8 +199,15 @@ export default function Incharge_Main() {
                     </div>    
 
                     <div className={styles.HeaderProfilePart}>
-                        <button onClick={toggleNotifBar}   className={`${styles.NotifBtn} ${IsNotifBarOpen ? styles.NotifBtnOpened : ""}`}
-                        ><AiIcons_md.MdNotifications size={22} /></button>
+                        <button 
+                        onClick={() => {
+                            toggleNotifBar(); 
+                            calculateUnreadCount("", ""); 
+                          }}
+                        className={`${styles.NotifBtn} ${IsNotifBarOpen ? styles.NotifBtnOpened : ""}`}
+                        ><AiIcons_md.MdNotifications size={22} />
+                        {count !== 0 && <p>{count}</p>} 
+                        </button>
                         {IsNotifBarOpen && (
                             <div className={styles.NotifBox}>
                                 <h4>Notifications</h4>
