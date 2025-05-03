@@ -357,6 +357,13 @@ DASHBOARD AREA
     border-collapse: collapse;
 }
 
+.DashTable tr{
+    transition: all 0.3s ease;
+}
+.DashTable tr:hover{
+    background-color: #e3e3e3 !important;
+}
+
 .DashTable th,
 .DashTable td {
     color: #000;
@@ -545,6 +552,14 @@ ITEM TEBLE DESIGN
     text-align: left;
     border: 1px solid #ddd;
 }
+
+.ItemTable tr{
+    transition: all 0.3s ease;
+}
+.ItemTable tr:hover{
+    background-color: #e3e3e3 !important;
+}
+
 
 .IdColumn{
     width: 20px !important;

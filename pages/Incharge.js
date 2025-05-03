@@ -138,7 +138,7 @@ export default function Incharge_Main() {
                     </div>
                 </header>
                 <div className={styles.BodyArea}>
-                    {selectedPage === "Dashboard" && <Dashboard />}
+                    {selectedPage === "Dashboard" && <Dashboard ChangePage={setSelectedPage} />}
                     {selectedPage === "Reservations" && <Reservations />}
                     {selectedPage === "AVRLogs" && <AVRLogs />}
                     {selectedPage === "Items" && <Items />}

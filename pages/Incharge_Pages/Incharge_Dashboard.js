@@ -5,7 +5,7 @@ import BarChart from "./Forms/BarChartGenerateee";
 import TodayTransactions from "./Forms/Today_Transactions";
 import TopUsers from "./Forms/TopUsers";
 
-export default function Incharge_Dashboard() {
+export default function Incharge_Dashboard({ ChangePage }) {
     const today = new Date().toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function Incharge_Dashboard() {
         <div className={styles.DashBodyArea}>
 
             <div className={styles.UpperSquares}>
-                <div>
+                <div onClick={() => ChangePage("Reservations")}>
                     <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineCalendar size={30} /> 
                     </span>
@@ -57,7 +57,7 @@ export default function Incharge_Dashboard() {
                     </span>
                 </div>
 
-                <div>
+                <div onClick={() => ChangePage("Items")}>
                     <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineAppstore  size={30} /> 
                     </span>
@@ -67,7 +67,7 @@ export default function Incharge_Dashboard() {
                     </span>
                 </div>
 
-                <div>
+                <div onClick={() => ChangePage("Transactions")}>
                     <span className={styles.IconCircle}>
                         <AiIcons.AiOutlineWallet size={30} /> 
                     </span>

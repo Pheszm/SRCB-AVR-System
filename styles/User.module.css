@@ -410,6 +410,13 @@ DASHBOARD AREA
     color: #333;
     padding: 5px;
 }
+.DashTable tr{
+    transition: all 0.3s ease;
+}
+.DashTable tr:hover{
+    background-color: #f3f3f3 !important;
+}
+
 
 .DashTableWrapper {
     border: 1px solid #ddd;

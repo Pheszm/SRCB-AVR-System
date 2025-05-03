@@ -323,6 +323,7 @@ DASHBOARD AREA
     align-items: center;
     display: flex;
     gap: 10px;
+    cursor: pointer;
 }
 .UpperSquares span{
     display: flex;
@@ -381,6 +382,12 @@ DASHBOARD AREA
     padding: 5px;
 }
 
+.DashTable tr{
+    transition: all 0.3s ease;
+}
+.DashTable tr:hover{
+    background-color: #e3e3e3 !important;
+}
 
 
 .DashTableWrapper {
@@ -401,6 +408,8 @@ DASHBOARD AREA
 .DashTable tr:nth-child(odd) {
     background-color: #e9e9e9;
 }
+
+
 
 .DashTable button {
     padding: 2px 8px;
@@ -547,6 +556,13 @@ ITEM TEBLE DESIGN
     padding: 10px;
     text-align: left;
     border: 1px solid #ddd;
+    transition: color 0.3s ease;
+}
+.ItemTable tr{
+    transition: all 0.3s ease;
+}
+.ItemTable tr:hover{
+    background-color: #e3e3e3 !important;
 }
 
 .IdColumn{
