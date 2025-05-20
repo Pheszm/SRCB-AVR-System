@@ -7,7 +7,7 @@ const QR_Maker = ({ value, size = 256 }) => {
   useEffect(() => {
     // Dynamically load the QRCode.js script from the local path
     const script = document.createElement('script');
-    script.src = './Assets/QR_Integration/QR_Generator.js';  // Path to your locally saved qrcode.min.js
+    script.src = './QR_Integration/QR_Generator.js';  // Path to your locally saved qrcode.min.js
     script.async = true;
 
     script.onload = () => {

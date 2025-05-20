@@ -1,0 +1,22 @@
+npm install prisma @prisma/client
+
+
+Generate Client:
+npx prisma generate
+
+
+Pull model from db:
+npx prisma db pull
+
+
+Push model to db:
+npx prisma db push
+
+
+
+View Data:
+npx prisma studio
+
+
+To Apply Schema Changes:
+npx prisma migrate dev

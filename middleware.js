@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function middleware(request) {
   const { pathname, origin } = request.nextUrl
-  const userRole = request.cookies.get('userRole')?.value
-  const userID = request.cookies.get('userID')?.value
+  const user_type = request.cookies.get('user_type')?.value
+  const user_id = request.cookies.get('user_id')?.value
 
   // Public routes
   if (pathname === '/login' || pathname === '/') {
@@ -13,35 +13,35 @@ export async function middleware(request) {
 
   // Redirect to role-specific dashboards
   if (pathname === '/') {
-    if (!userRole || !userID) return NextResponse.redirect(new URL('/login', origin))
+    if (!user_type || !user_id) return NextResponse.redirect(new URL('/login', origin))
     
     const rolePath = {
       'Incharge': '/Incharge',
       'Admin': '/Admin',
       'Student': '/User',
       'Staff': '/User'
-    }[userRole]
+    }[user_type]
     
     if (rolePath) return NextResponse.redirect(new URL(rolePath, origin))
   }
 
   // Route protection with absolute URLs
-  if (pathname.startsWith('/Incharge') && userRole !== 'Incharge') {
+  if (pathname.startsWith('/Incharge') && user_type !== 'Incharge') {
     return NextResponse.redirect(new URL('/', origin))
   }
 
-  if (pathname.startsWith('/Admin') && userRole !== 'Admin') {
+  if (pathname.startsWith('/Admin') && user_type !== 'Admin') {
     return NextResponse.redirect(new URL('/', origin))
   }
 
-  if (pathname.startsWith('/User') && userRole !== 'Student' && userRole !== 'Staff') {
+  if (pathname.startsWith('/User') && user_type !== 'Student' && user_type !== 'Staff') {
     return NextResponse.redirect(new URL('/', origin))
   }
 
   // Add user info to headers for backend use
   const response = NextResponse.next()
-  if (userID) response.headers.set('x-user-id', userID)
-  if (userRole) response.headers.set('x-user-role', userRole)
+  if (user_id) response.headers.set('x-user-id', user_id)
+  if (user_type) response.headers.set('x-user-role', user_type)
 
   return response
 }

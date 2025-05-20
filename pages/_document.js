@@ -5,10 +5,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="icon" href="./App_Icon.png" type="image/png" />
-        <link href="./googlefont_Poppins.css" rel="stylesheet" />
-
       </Head>
-      <body>
+      <body className="antialiased">
         <Main />
         <NextScript />
       </body>

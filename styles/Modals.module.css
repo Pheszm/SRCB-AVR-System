@@ -1,0 +1,253 @@
+/*===============================================================*/
+/*MODAL MAIN BODY AREA*/
+/*===============================================================*/
+.ModalMainBody {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.BlurryBackground{
+    z-index: 11;
+    backdrop-filter: blur(10px);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(8, 8, 50, 0.7); 
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.OverlayBackground{
+    z-index: 11;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+
+
+
+
+
+/*===============================================================*/
+/*LOGIN FORM AREA*/
+/*===============================================================*/
+.LoginFormBody{
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    overflow: hidden;
+}
+.LoginLeftSide{
+    width: 100%;
+    height: 100%;
+}
+.LoginRightSide{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.LoginButton{
+    margin-top: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    background-color: #042eab;
+    padding: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.LoginButton:hover{
+    background-color: #012699;
+}
+.LoginButton:focus{
+    background-color: #012182;
+}
+
+
+
+
+@media (max-width: 720px) {
+    .LoginFormBody{
+        width: 350px;
+    }
+    .LoginLeftSide{
+        display: none;
+    }
+}
+
+
+
+
+
+
+/*===============================================================*/
+/*MODAL FORM AREA*/
+/*===============================================================*/
+.FormBody{
+    position: relative;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.HeaderTitleArea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #061042;
+}
+
+.HeaderTitleArea h1{
+    color: #061042;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.HeaderTitleArea h2{
+    color: #061042;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.InputTitle{
+    font-size: 13px;
+    padding-top: 10px;
+    color: #4e4e4e;
+}
+
+.TypableInput{
+    outline: none;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    padding: 5px;
+    width: 100%;
+}
+
+.TypableInput:focus{
+    border-bottom: 1px solid #000247;
+}
+
+.AddButton{
+    margin-top: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #017bd8;
+    padding: 6px 20px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.AddButton:hover{
+    background-color: #0172c9;
+}
+.AddButton:focus{
+    background-color: #0066b4;
+}
+
+.CancelBtn{
+    margin-top: 20px;
+    border-radius: 5px;
+    color: #7b7b7b;
+    font-size: 14px;
+    padding: 6px 20px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.CancelBtn:hover{
+    color: #5f5f5f;
+}
+.CancelBtn:focus{
+    color: rgb(104, 104, 104);
+}
+
+
+
+.UpdateButton{
+    margin-top: 23px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #e0ca00;
+    padding: 6px 20px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.UpdateButton:hover{
+    background-color: #ceba01;
+}
+.UpdateButton:focus{
+    background-color: #b6a400;
+}
+
+
+.DivSeparation{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.InputBodyAreaDiv{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+
+
+.SpanFlex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.SpanRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.SpanColumn{
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media (max-width: 720px) {
+    .DivSeparation{
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+    .InputBodyAreaDiv{
+        width: 250px;
+    }
+}
+
+
+
+

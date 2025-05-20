@@ -1,0 +1,31 @@
+.ScannerDiv div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #121f2d;
+    padding: 1px;
+    border: none;
+}
+.ScannerDiv{
+    border: none;
+}
+
+
+.ScannerDiv button{
+    background-color: rgb(5, 66, 180);
+    color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+.ScannerDiv button:hover{
+    background-color: rgb(3, 44, 119);
+}
+
+.ScannerDiv select{
+    background-color: rgb(211, 211, 211);
+    border-radius: 3px;
+    padding: 3px;
+}

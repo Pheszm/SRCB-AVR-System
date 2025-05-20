@@ -1,0 +1,328 @@
+
+
+
+
+/* ============================================
+MAIN BODY AREA
+============================================ */
+
+.Gen_Body{
+  background-color: #fff;
+  height: 100vh;
+  width: 100vw;
+  color: black;
+  display: flex;
+}
+
+
+
+
+
+/* ============================================
+HEADER PART AREA
+============================================ */
+
+.HeaderPart{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); 
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  padding: 0px 10px;
+  background-color: #fff;
+  height: 60px;
+  width: 100%;
+}
+
+.HeaderProfilePart{
+  display: flex;
+  align-items: center;
+}
+
+.HeaderProfilePart img{
+  background-color: #bdbdbd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, border 0.3s ease;
+  cursor: pointer;
+}
+
+.HeaderProfilePart img:hover{
+  border: 1px solid #1a2866; 
+}
+
+.HeaderProfilePart img.ProfileOpened{
+  border: 2px solid #1a2866; 
+  transform: scale(1.1);
+}
+
+.HeaderProfilePart p{
+  font-size: 13px;
+  margin-right: 10px;   
+}
+
+.DropdownMenu {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  font-size: 13px;
+  z-index: 5;
+}
+
+.DropdownMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.DropdownMenu li {
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.DropdownMenu li:hover {
+  background-color: #f1f1f1;
+}
+
+.NotifBtn{
+  background-color: transparent;
+  border: none;
+  color: #061042;  
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.NotifBtn:hover{
+  scale: 1.1;
+}
+
+.NotifBtnOpened{
+  background-color: transparent;
+  border: none;
+  color: #383838;  
+  scale: 1.1;
+}
+
+.NotifBox{
+  z-index: 5;
+  position: absolute;
+  top: 50px;
+  right: 160px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 13px; 
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.NotifBox h4{
+  width: 100%;
+  text-align: center;
+  background-color: #061042;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.NotifBox div{
+  padding: 5px;
+}
+
+.SeparationLine {
+  width: 1px;
+  height: 40px; 
+  background-color: #ccc; 
+  margin: 0 10px; 
+}
+
+.CustomLine {
+  width: 80%;
+  border-top: 1px solid #222c63;
+}
+
+@media (max-width: 720px) {
+  .HeaderPart{
+      justify-content:space-between;
+  } 
+  .ImageArea{
+      height: 150px;
+      width: 310px;
+      background-color: #b7b7b7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+  }
+}
+
+
+
+
+
+/* ============================================
+SIDEBAR PART AREA
+============================================ */
+
+.SidebarPart{
+  background: linear-gradient(to bottom, #0b1961, #061042);
+  height: 100%;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width 0.3s ease; 
+  overflow: hidden;
+  position: relative;
+}
+
+.SidebarPart.closed {
+  width: 80px;
+}
+
+.SidebarPart.closed button {
+  justify-content: center; 
+}
+
+.mainLogo{
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.0)); 
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  line-height: 1px;
+}
+
+.mainLogo img{
+  width: 40px;
+}
+
+.mainLogo h2{
+  color: #061042;
+  padding-left: 3px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.SidebarPart button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: transparent; 
+  color: white;
+  width: 95%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.SidebarPart button.active {
+  background-color: #020e3d; 
+  color: white; 
+  font-weight: bolder;
+  border-radius: 8px;
+}
+
+.SidebarPart svg {
+  margin-right: 8px; 
+}
+
+.SidebarToggler{
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  width: 50px !important;
+  height: 50px !important;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 50px !important;
+}
+
+.SidebarPart.closed .SidebarToggler {
+  transition: transform 0.3s ease; 
+  transform: rotate(180deg); 
+}
+
+.BurgerIcon{
+  display: none;
+  background-color: transparent;
+  color: #061042;
+  border: none;
+}
+
+@media (max-width: 720px) {
+  .SidebarPart {
+      width: 0px;
+  }
+
+  .BurgerIcon{
+      display: flex !important;
+  }
+
+  .SidebarPart.closed {
+      width: 80px;
+  }
+  .SidebarPart.open button {
+    display: none;
+}
+
+  .SidebarPart.closed .SidebarToggler {
+      transition: transform 0.3s ease; 
+      transform: rotate(0deg); 
+  }
+
+  .mainLogo h2{
+    display: none;
+  }
+}
+
+.LogoutButton{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.LogoutButton:hover{
+  background-color: #010a2f; 
+  border-radius: 8px;
+}
+
+
+
+
+/* ============================================
+BODY AREA
+============================================ */
+
+.RightSideArea{
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+.BodyArea{
+  background-color: transparent;
+  height: 90%;
+  width: 100%;
+  padding: 10px;
+  overflow: auto;
+  padding-bottom:50px;
+}
+
+@media (max-width: 600px) {
+  .BodyArea{
+      height: 80%;
+  } 
+}
+
+
+
+
