@@ -3,6 +3,11 @@ import styles from "@/styles/Modals.module.css";
 import { useState, useEffect } from 'react';
 
 export default function ViewReservation({ onClose, reservation }) {
+
+    if (!reservation) {
+        return null;
+    }
+
     const {
         users_transactions_user_idTousers,
         users_transactions_requested_by_idTousers,

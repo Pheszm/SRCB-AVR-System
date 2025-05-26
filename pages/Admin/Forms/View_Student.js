@@ -4,6 +4,11 @@ import styles from "@/styles/Modals.module.css";
 
 
 export default function ViewProgram({ onClose, student }) {
+
+    if (!student) {
+        return null;
+    }
+
     return (
         <div className={styles.ModalMainBody}>
 

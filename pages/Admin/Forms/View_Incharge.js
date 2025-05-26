@@ -6,12 +6,7 @@ import styles from "@/styles/Modals.module.css";
 export default function ViewProgram({ onClose, incharge }) {
     
     if (!incharge) {
-        return (
-            <div className={styles.ModalMainBody}>
-                <p>Incharge data not available.</p>
-                <button className={styles.CancelBtn} onClick={onClose}>Close</button>
-            </div>
-        );
+        return null;
     }
 
     return (

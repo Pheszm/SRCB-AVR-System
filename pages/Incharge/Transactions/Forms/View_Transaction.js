@@ -2,6 +2,13 @@ import * as MdIcons from 'react-icons/md';
 import styles from "@/styles/Modals.module.css";
 
 export default function ViewTransaction({ onClose, transaction }) {
+
+    if (!transaction) {
+        return null;
+    }
+
+
+
     const {
         users_transactions_user_idTousers,
         users_transactions_approved_by_idTousers,

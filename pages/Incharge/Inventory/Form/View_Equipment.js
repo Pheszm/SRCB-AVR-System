@@ -4,6 +4,12 @@ import { QR_Maker } from '@/components/QR_Maker';
 import { useState, useRef } from 'react';
 
 export default function ViewEquipment({ onClose, equipment }) {
+
+    if (!equipment) {
+        return null;
+    }
+
+
     const [showQRCode, setShowQRCode] = useState(false); // State to toggle QR code visibility
     const qrRef = useRef(null); // Create a reference to the QR_Maker div
 

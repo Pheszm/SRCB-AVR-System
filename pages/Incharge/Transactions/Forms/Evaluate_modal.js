@@ -2,6 +2,11 @@
 import { useState } from 'react';
 
 export default function EvaluateModal({ transaction, onClose, onSubmit }) {
+
+    if (!transaction) {
+        return null;
+    }
+
   const [evaluations, setEvaluations] = useState(
     transaction.needed.map(n => ({
       needed_id: n.needed_id,

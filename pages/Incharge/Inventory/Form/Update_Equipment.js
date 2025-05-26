@@ -4,6 +4,12 @@ import styles from "@/styles/Modals.module.css";
 import Swal from 'sweetalert2';
 
 export default function UpdateEquipment({ onClose, equipment }) {
+
+
+    if (!equipment) {
+        return null;
+    }
+
     const [formData, setFormData] = useState({
         equipment_id: '',
         qr_code: '',
