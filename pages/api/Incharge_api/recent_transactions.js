@@ -20,9 +20,10 @@ export default async function handler(req, res) {
           users_transactions_requested_by_idTousers: true,
           users_transactions_approved_by_idTousers: true,
         },
-        orderBy: {
-          start_time: 'asc',
-        },
+        orderBy: [
+          { date_of_use: 'desc' },
+          { start_time: 'asc' },
+        ],
       });
 
       const formatted = reservations.map(reservation => ({
