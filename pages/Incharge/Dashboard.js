@@ -112,7 +112,7 @@ export default function Overview_Instructor() {
   const newCount = equipmentHealth.find(e => e.status === 'New')?.count || 0;
   const totalCount = equipmentHealth.reduce((sum, e) => sum + e.count, 0);
   const totalCategories = equipmentCategories.length;
-  const ongoingMaintenanceCount = 3;
+  const ongoingMaintenanceCount = 0;
 
   return (
     <div className="space-y-6">

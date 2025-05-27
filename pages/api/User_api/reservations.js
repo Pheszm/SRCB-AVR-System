@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       const reservations = await prisma.transactions.findMany({
         where: {
           user_id: parseInt(user_id),
+          transaction_status: 'Upcoming',
           OR: [
             {
               // Today's events that haven't started yet or are ongoing

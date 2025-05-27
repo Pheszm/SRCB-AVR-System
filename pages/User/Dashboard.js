@@ -15,7 +15,18 @@ export default function User_Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`/api/User_api/dashboard?user_id=${user_id}`);
+        const res = await fetch('/api/User_api/dashboard', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_id }),
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch dashboard data');
+        }
+
         const data = await res.json();
         setReservationStats(data.reservationStats);
         setTimelineData(data.timelineData);
@@ -43,13 +54,13 @@ export default function User_Dashboard() {
             data: reservationStats.map(item => item.count),
             backgroundColor: reservationStats.map(item => {
               switch (item.status) {
-                case 'Pending': return 'rgba(147, 197, 253, 0.7)';   // blue-300
-                case 'Approved': return 'rgba(59, 130, 246, 0.7)';    // blue-600
-                case 'Rejected': return 'rgba(239, 68, 68, 0.7)';     // red-500 (kept for visibility)
-                case 'Upcoming': return 'rgba(96, 165, 250, 0.7)';    // blue-400
-                case 'Completed': return 'rgba(29, 78, 216, 0.7)';    // blue-800
-                case 'Cancelled': return 'rgba(191, 219, 254, 0.7)';  // blue-100
-                default: return 'rgba(147, 197, 253, 0.7)';           // blue-300
+                case 'Pending': return 'rgba(147, 197, 253, 0.7)';
+                case 'Approved': return 'rgba(59, 130, 246, 0.7)';
+                case 'Rejected': return 'rgba(239, 68, 68, 0.7)';
+                case 'Upcoming': return 'rgba(96, 165, 250, 0.7)';
+                case 'Completed': return 'rgba(29, 78, 216, 0.7)';
+                case 'Cancelled': return 'rgba(191, 219, 254, 0.7)';
+                default: return 'rgba(147, 197, 253, 0.7)';
               }
             }),
             borderColor: reservationStats.map(item => {
@@ -132,6 +143,14 @@ export default function User_Dashboard() {
   const approvedCount = reservationStats.find(s => s.status === 'Approved')?.count || 0;
   const upcomingCount = reservationStats.find(s => s.status === 'Upcoming')?.count || 0;
   const totalReservations = reservationStats.reduce((sum, item) => sum + item.count, 0);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

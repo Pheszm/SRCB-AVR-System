@@ -58,7 +58,6 @@ useEffect(() => {
       const data = await res.json();
       if (res.ok) {
         setUser(data);
-        console.log('User profile fetched successfully:', data);
       } else {
         console.error('Error fetching user profile:', data.error || 'Unknown error');
       }
